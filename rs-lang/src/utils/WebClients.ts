@@ -49,7 +49,7 @@ const postRequest = async <T>(url: string, body: T, token?: string) => {
     body: JSON.stringify(body),
   });
 
-  if (!res.ok) throw Error(res.statusText);
+  if (!res.ok) throw Error(res.status.toString());
 
   return res.json();
 };
