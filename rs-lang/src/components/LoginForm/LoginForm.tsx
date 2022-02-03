@@ -1,10 +1,10 @@
-import LoaderButton from "../btn_type_loader/LoaderButton";
-import closeIcon from "../../assets/svg/close.svg";
-import CustomInput from "../CustomInput/CustomInput";
 import { useState } from "react";
-import { loginUser } from "../../utils/WebClients";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import closeIcon from "../../assets/svg/close.svg";
 import { UserDto } from "../../interfaces/interfaces";
+import { loginUser } from "../../utils/WebClients";
+import LoaderButton from "../btn_type_loader/loaderButton";
+import CustomInput from "../CustomInput/CustomInput";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -39,9 +39,9 @@ export default function LoginForm() {
 
   return (
     <div className="login-container relative rounded bg-gray-700 w-96 h-96 px-11">
-      <a href="/" className="absolute text-gray-200 top-4 right-4">
+      <Link to="/" className="absolute text-gray-200 top-4 right-4">
         <img src={closeIcon} alt="close" />
-      </a>
+      </Link>
       <form
         className="login flex flex-col items-center justify-center border-b-2 border-gray-400 pt-9 pb-6"
         onSubmit={handleSubmit}
@@ -78,12 +78,12 @@ export default function LoginForm() {
           Войти
         </LoaderButton>
       </form>
-      <a
-        href="/signup"
+      <Link
+        to="/signup"
         className="text-green-500 hover:text-green-400 transition-colors block text-center text-xs tracking-wide mx-auto mt-6"
       >
         Зарегистрировать аккаунт
-      </a>
+      </Link>
     </div>
   );
 }
