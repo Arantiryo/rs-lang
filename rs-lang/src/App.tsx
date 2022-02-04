@@ -2,7 +2,7 @@ import Routes from "./Routes/Routes";
 
 export default function App() {
   return (
-    <div>
+    <div className="font-sans">
       <Routes />
     </div>
   );
