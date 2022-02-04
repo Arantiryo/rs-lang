@@ -3,7 +3,7 @@ import LoaderButton from "../LoaderButton/LoaderButton";
 import welcomeImage from "../../assets/svg/welcome__img.svg";
 import welcomePseudoElem2 from "../../assets/svg/welcome__pseudo-elem-2.svg";
 
-export default function Promo() {
+export default function Welcome() {
   return (
     <div className="promo-section relative w-full">
       <h2 className="text-xs leading-3 text-blue-400 tracking-widest mb-1">
