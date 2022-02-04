@@ -14,19 +14,3 @@ export interface Word {
   textMeaningTranslate: string;
   textExampleTranslate: string;
 }
-
-export interface UserDto {
-  email: string;
-  password: string;
-}
-
-export interface CreateUserDto extends UserDto {
-  name: string;
-}
-
-export interface CreateUserWordDto {
-  userId: string;
-  wordId: string;
-  word: Object;
-  token: string;
-}

@@ -1,8 +1,4 @@
-import {
-  CreateUserDto,
-  CreateUserWordDto,
-  UserDto,
-} from "../interfaces/interfaces";
+import { CreateUserDto, CreateUserWordDto, UserDto } from "../interfaces/user";
 
 const base = "https://react-rslang-be.herokuapp.com";
 
