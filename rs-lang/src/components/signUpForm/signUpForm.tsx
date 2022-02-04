@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import closeIcon from "../../assets/svg/close.svg";
-import { CreateUserDto } from "../../interfaces/interfaces";
+import { CreateUserDto } from "../../interfaces/user";
 import { createUser } from "../../utils/WebClients";
-import LoaderButton from "../btn_type_loader/loaderButton";
 import CustomInput from "../CustomInput/CustomInput";
+import LoaderButton from "../LoaderButton/LoaderButton";
 
 export default function SignUpForm() {
   const [name, setName] = useState("");

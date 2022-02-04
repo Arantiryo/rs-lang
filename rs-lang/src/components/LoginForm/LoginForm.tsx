@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
 import closeIcon from "../../assets/svg/close.svg";
-import { UserDto } from "../../interfaces/interfaces";
+import { SuccessfulLogin, UserDto } from "../../interfaces/user";
 import { loginUser } from "../../utils/WebClients";
-import LoaderButton from "../btn_type_loader/loaderButton";
 import CustomInput from "../CustomInput/CustomInput";
+import LoaderButton from "../LoaderButton/LoaderButton";
+import { updateUserInfo } from "./loginSlice";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useAppDispatch();
 
   const history = useHistory();
 
@@ -18,9 +21,10 @@ export default function LoginForm() {
     const user: UserDto = { email, password };
 
     loginUser(user)
-      .then((res) => {
+      .then((res: SuccessfulLogin) => {
         alert("Успех! Вы будете перенаправлены на главную страницу!");
-        console.log(res);
+        // console.log(res);
+        dispatch(updateUserInfo(res));
         setTimeout(() => history.push("/"), 3000);
       })
       .catch((err) => {
