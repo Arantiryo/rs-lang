@@ -1,12 +1,15 @@
 import { useAppSelector } from "../../app/hooks";
+import Header from "../../components/Header/Header";
 
 export default function Home() {
   const userInfo = useAppSelector((state) => state.userLoginInfo);
   console.log(userInfo);
 
   return (
-    <div className="home">
-      <h1>Home page</h1>
+    <div className="home bg-gray-800">
+      <div className="px-5">
+        <Header />
+      </div>
     </div>
   );
 }
