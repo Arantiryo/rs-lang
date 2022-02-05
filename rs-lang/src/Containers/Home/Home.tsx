@@ -1,5 +1,6 @@
 import { useAppSelector } from "../../app/hooks";
 import Benefits from "../../components/Benefits/Benefits";
+import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import MiniGames from "../../components/Mini-games/MiniGames";
 import ResultsTracking from "../../components/ResultsTracking/ResultsTracking";
@@ -17,6 +18,7 @@ export default function Home() {
         <Benefits />
         <MiniGames />
         <ResultsTracking />
+        <Footer />
       </div>
     </div>
   );
