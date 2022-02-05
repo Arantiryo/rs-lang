@@ -26,7 +26,7 @@ export default function MiniGames() {
           Начать <MdKeyboardArrowRight className="text-lg" />
         </span>
       </LoaderButton>
-      <div className="pt-10 relative">
+      <div className="pt-10 relative flex flex-col items-center">
         <div className="rotate-12 relative">
           <GameSprint width="170px" fontMd="10px" fontSm="8px" />
         </div>

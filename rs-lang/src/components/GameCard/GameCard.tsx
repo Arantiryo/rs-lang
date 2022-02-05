@@ -29,7 +29,7 @@ export function GameCard({
   return (
     <div
       className={`relative flex items-center justify-between max-h-20 aspect-[5/2] 
-      bg-gray-700 rounded-md w-[${width}] gap-1 p-2 mx-auto
+      bg-gray-700 rounded-md w-[${width}] gap-1 p-2 
       hover:scale-110 hover:translate-y-[-30px] transition duration-500 ease-in-out`}
     >
       <div
