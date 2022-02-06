@@ -4,14 +4,14 @@ import { GameAudioCall, GameSprint, GameWordle } from "../GameCard/GameCard";
 
 export default function MiniGames() {
   return (
-    <div className="minigames-section relative w-full">
-      <h3 className="text-xs leading-3 text-blue-400 tracking-widest mb-1">
+    <div className="minigames-section relative w-full sm:w-2/3">
+      <h3 className="text-xs sm:text-sm leading-3 text-blue-400 tracking-widest mb-1">
         Каталог мини-игр
       </h3>
-      <h2 className="text-lg leading-5 text-emerald-600 font-bold tracking-wider mb-5">
+      <h2 className="text-lg sm:text-2xl leading-5 text-emerald-600 font-bold tracking-wider mb-5">
         Разнообразные игры для обучения
       </h2>
-      <p className="text-xs leading-5 text-white mb-2">
+      <p className="text-xs sm:text-sm leading-5 text-white mb-2">
         Проведите время с пользой, закрепите и обновите ваши лингвистические
         навыки с помощью игр, которые не дадут заскучать и сохранят мотивацию к
         изучению английского языка.
@@ -26,7 +26,7 @@ export default function MiniGames() {
           Начать <MdKeyboardArrowRight className="text-lg" />
         </span>
       </LoaderButton>
-      <div className="pt-10 relative flex flex-col items-center">
+      <div className="pt-10 relative flex flex-col items-center sm:bottom-[50px] sm:left-[200px]">
         <div className="rotate-12 relative">
           <GameSprint />
         </div>

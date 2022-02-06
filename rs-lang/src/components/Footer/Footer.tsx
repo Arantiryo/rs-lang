@@ -11,7 +11,11 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src={footerRsschool} alt="rsschool logo" />
+          <img
+            className="sm:w-[100px]"
+            src={footerRsschool}
+            alt="rsschool logo"
+          />
         </Link>
       </div>
       <div className="year">

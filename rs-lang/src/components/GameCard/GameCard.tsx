@@ -12,20 +12,24 @@ type GameProps = {
 export function GameCard({ gameType, name, description, picture }: GameProps) {
   return (
     <div
-      className={`relative flex items-center justify-between max-h-20 aspect-[5/2] 
-      bg-gray-700 rounded-md w-[170px] xs:w-[210px] gap-1 p-2 
+      className={`relative flex items-center justify-between max-w-[300px] max-h-[80px] sm:max-h-[120px] aspect-[5/2] 
+      bg-gray-700 rounded-md w-[170px] xs:w-[210px] sm:w-[300px] gap-1 p-2 sm:gap-2
       hover:scale-110 hover:translate-y-[-30px] transition duration-500 ease-in-out`}
     >
       <div className={`overflow-hidden grow-2`}>
-        <p className={`text-yellow-500 font-medium text-[8px] md:text-[10px]`}>
+        <p
+          className={`text-yellow-500 font-medium text-[8px] sm:text-[12px] sm:leading-[13px] sm:mb-2`}
+        >
           {gameType}
         </p>
         <h4
-          className={`text-white font-semibold tracking-[1px] text-[10px] md:text-[12px]`}
+          className={`text-white font-semibold tracking-[1px] text-[10px] sm:text-[16px] sm:leading-[18px] sm:mb-2`}
         >
           {name}
         </h4>
-        <p className={`text-white font-medium text-[8px] md:text-[10px]`}>
+        <p
+          className={`text-white font-medium text-[8px] sm:text-[12px] sm:leading-[13px]`}
+        >
           {description}
         </p>
       </div>
@@ -43,7 +47,7 @@ export function GameSprint() {
     <GameCard
       gameType="Перевод на скорость"
       name="Sprint"
-      description="Как можно быстрее определи верный перевод слова перед тобой или нет"
+      description="Как можно быстрее определи верный перевод слова перед тобой или нет."
       picture={imgSprint}
     />
   );
