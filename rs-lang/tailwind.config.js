@@ -1,5 +1,3 @@
-// const defaultTheme = require("tailwindcss/defaultTheme");
-
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -7,11 +5,11 @@ module.exports = {
       sans: ["Roboto", "Arial", "sans-serif"],
     },
     screens: {
-      sm: "475px",
+      xs: "475px",
+      sm: "640px",
       md: "768px",
-      lg: "976px",
+      lg: "1024px",
       xl: "1440px",
-      // ...defaultTheme.screens,
     },
     extend: {},
   },

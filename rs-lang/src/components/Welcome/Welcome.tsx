@@ -19,7 +19,7 @@ export default function Welcome() {
       <div className="relative flex items-start justify-between">
         <LoaderButton
           type="button"
-          className="welcome__btn_begin relative top-5 w-18 h-7 sm:w-24 sm:h-9 bg-emerald-700 hover:bg-emerald-600 transition-colors text-white text-sm px-1"
+          className="welcome__btn_begin relative top-5 w-18 h-7 xs:w-24 xs:h-9 bg-emerald-700 hover:bg-emerald-600 transition-colors text-white text-sm px-1"
           isLoading={false}
           disabled={false}
         >
@@ -27,7 +27,7 @@ export default function Welcome() {
             Начать <MdKeyboardArrowRight className="text-lg" />
           </span>
         </LoaderButton>
-        <img className="sm:w-60" src={welcomeImage} alt="welcome" />
+        <img className="xs:w-60" src={welcomeImage} alt="welcome" />
       </div>
       <img
         className="relative bottom-10 left-[-10px]"

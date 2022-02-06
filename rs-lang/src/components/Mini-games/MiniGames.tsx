@@ -18,7 +18,7 @@ export default function MiniGames() {
       </p>
       <LoaderButton
         type="button"
-        className="minigames__btn_begin relative w-18 h-7 sm:w-24 sm:h-9 bg-emerald-700 hover:bg-emerald-600 transition-colors text-white text-sm px-1 mb-5"
+        className="minigames__btn_begin relative w-18 h-7 xs:w-24 xs:h-9 bg-emerald-700 hover:bg-emerald-600 transition-colors text-white text-sm px-1 mb-5"
         isLoading={false}
         disabled={false}
       >
