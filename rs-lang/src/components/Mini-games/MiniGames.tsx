@@ -8,7 +8,7 @@ export default function MiniGames() {
       <h3 className="text-xs leading-3 text-blue-400 tracking-widest mb-1">
         Каталог мини-игр
       </h3>
-      <h2 className="text-lg leading-5 text-white font-bold tracking-wider mb-5">
+      <h2 className="text-lg leading-5 text-emerald-600 font-bold tracking-wider mb-5">
         Разнообразные игры для обучения
       </h2>
       <p className="text-xs leading-5 text-white mb-2">
