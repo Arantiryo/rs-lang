@@ -18,7 +18,7 @@ export default function ResultsTracking() {
         alt="pseudo element"
       />
       <div className="relative flex items-start justify-start">
-        <GameSprint width="170px" fontMd="10px" fontSm="8px" />
+        <GameSprint />
       </div>
       <div className="relative ml-auto top-[-120px]">
         <ResultsTrackingCard />

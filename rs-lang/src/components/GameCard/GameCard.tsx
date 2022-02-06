@@ -9,41 +9,23 @@ type GameProps = {
   picture: string;
 };
 
-type CardProps = {
-  width: string;
-  fontMd: string;
-  fontSm: string;
-};
-
-type GameCardProps = GameProps & CardProps;
-
-export function GameCard({
-  width,
-  fontMd,
-  fontSm,
-  gameType,
-  name,
-  description,
-  picture,
-}: GameCardProps) {
+export function GameCard({ gameType, name, description, picture }: GameProps) {
   return (
     <div
       className={`relative flex items-center justify-between max-h-20 aspect-[5/2] 
-      bg-gray-700 rounded-md w-[${width}] gap-1 p-2 
+      bg-gray-700 rounded-md w-[170px] sm:w-[210px] gap-1 p-2 
       hover:scale-110 hover:translate-y-[-30px] transition duration-500 ease-in-out`}
     >
-      <div
-        className={`overflow-hidden grow-2`} //h-[${height}]
-      >
-        <p className={`text-yellow-500 font-medium text-[${fontSm}]`}>
+      <div className={`overflow-hidden grow-2`}>
+        <p className={`text-yellow-500 font-medium text-[8px] md:text-[10px]`}>
           {gameType}
         </p>
         <h4
-          className={`text-white font-semibold tracking-[1px] text-[${fontMd}]`}
+          className={`text-white font-semibold tracking-[1px] text-[10px] md:text-[12px]`}
         >
           {name}
         </h4>
-        <p className={`text-white font-medium text-[${fontSm}]`}>
+        <p className={`text-white font-medium text-[8px] md:text-[10px]`}>
           {description}
         </p>
       </div>
@@ -56,12 +38,9 @@ export function GameCard({
   );
 }
 
-export function GameSprint(props: CardProps) {
+export function GameSprint() {
   return (
     <GameCard
-      width={props.width}
-      fontMd={props.fontMd}
-      fontSm={props.fontSm}
       gameType="Перевод на скорость"
       name="Sprint"
       description="Как можно быстрее определи верный перевод слова перед тобой или нет"
@@ -69,12 +48,9 @@ export function GameSprint(props: CardProps) {
     />
   );
 }
-export function GameAudioCall(props: CardProps) {
+export function GameAudioCall() {
   return (
     <GameCard
-      width={props.width}
-      fontMd={props.fontMd}
-      fontSm={props.fontSm}
       gameType="Аудирование"
       name="Audio call"
       description="Улучшает восприятие английской речи на слух."
@@ -82,12 +58,9 @@ export function GameAudioCall(props: CardProps) {
     />
   );
 }
-export function GameWordle(props: CardProps) {
+export function GameWordle() {
   return (
     <GameCard
-      width={props.width}
-      fontMd={props.fontMd}
-      fontSm={props.fontSm}
       gameType="Угадай слово"
       name="Wordle"
       description="Угадай слово из пяти букв. Улучшает словарный запас."

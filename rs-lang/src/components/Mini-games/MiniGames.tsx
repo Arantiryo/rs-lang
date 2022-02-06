@@ -18,7 +18,7 @@ export default function MiniGames() {
       </p>
       <LoaderButton
         type="button"
-        className="minigames__btn_begin relative w-18 h-7 bg-emerald-700 hover:bg-emerald-600 transition-colors text-white text-sm px-1 mb-5"
+        className="minigames__btn_begin relative w-18 h-7 sm:w-24 sm:h-9 bg-emerald-700 hover:bg-emerald-600 transition-colors text-white text-sm px-1 mb-5"
         isLoading={false}
         disabled={false}
       >
@@ -28,13 +28,13 @@ export default function MiniGames() {
       </LoaderButton>
       <div className="pt-10 relative flex flex-col items-center">
         <div className="rotate-12 relative">
-          <GameSprint width="170px" fontMd="10px" fontSm="8px" />
+          <GameSprint />
         </div>
         <div className="rotate-12 relative top-[-30px]">
-          <GameAudioCall width="170px" fontMd="10px" fontSm="8px" />
+          <GameAudioCall />
         </div>
         <div className="rotate-12 relative top-[-60px]">
-          <GameWordle width="170px" fontMd="10px" fontSm="8px" />
+          <GameWordle />
         </div>
       </div>
     </div>
