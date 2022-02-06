@@ -7,10 +7,10 @@ export default function ResultsTracking() {
   return (
     <div className="promo-section relative w-full">
       <div className="sm:w-2/3">
-        <h2 className="text-lg sm:text-2xl leading-5 text-emerald-600 font-bold tracking-wider mb-5">
+        <h2 className="text-lg sm:text-2xl lg:text-6xl leading-5 text-emerald-600 font-bold tracking-wider mb-5">
           Отслеживание результатов
         </h2>
-        <p className="text-xs sm:text-sm leading-5 text-white tracking-wider">
+        <p className="text-xs sm:text-sm lg:text-xl leading-5 text-white tracking-wider">
           Вне зависимости от того, играете ли вы или тренируете слова -
           статистика по изученным словам обновляется и всегда доступна в
           настройках.
@@ -22,10 +22,10 @@ export default function ResultsTracking() {
         alt="pseudo element"
       />
       <div className="relative ml-auto w-3/4 max-w-[520px] flex items-baseline justify-end mb-10 sm:top-[-50px] md:right-[50px]">
-        <div className="relative top-[40px] left-[80px] z-10 xs:top-[60px]">
+        <div className="relative top-[40px] left-[80px] z-10 xs:top-[60px] lg:top-[80px]">
           <GameSprint />
         </div>
-        <div className="relative z-10">
+        <div className="relative z-10 lg:bottom-[10px] lg:left-[20px] ">
           <ResultsTrackingCard />
         </div>
         <img

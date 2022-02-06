@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <div className="home bg-gray-800">
-      <div className="px-5">
+      <div className="px-5 max-w-7xl mx-auto xl:px-0">
         <Header />
         <Welcome />
         <Benefits />

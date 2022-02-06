@@ -2,9 +2,9 @@ import headerLogo from "../../assets/svg/header__logo.svg";
 
 export default function Header() {
   return (
-    <div className="header w-full h-20 flex items-center justify-between">
+    <div className="header w-full h-20 lg:h-[120px] flex items-center justify-between">
       <img
-        className="block w-24 sm:w-[140px]"
+        className="block w-24 sm:w-[140px] lg:w-[200px]"
         src={headerLogo}
         alt="header logo"
       />

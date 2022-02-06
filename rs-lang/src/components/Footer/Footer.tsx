@@ -12,7 +12,7 @@ export default function Footer() {
           rel="noopener noreferrer"
         >
           <img
-            className="sm:w-[100px]"
+            className="sm:w-[100px] lg:w-[140px]"
             src={footerRsschool}
             alt="rsschool logo"
           />
