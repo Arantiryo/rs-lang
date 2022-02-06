@@ -18,7 +18,7 @@ export default function Welcome() {
           повторения для запоминания слов
         </p>
       </div>
-      <div className="relative flex items-start justify-between">
+      <div className="relative flex items-start justify-between md:mb-10">
         <LoaderButton
           type="button"
           className="welcome__btn_begin relative top-5 w-18 h-7 xs:w-24 xs:h-9 bg-emerald-700 hover:bg-emerald-600 transition-colors text-white text-sm px-1"
@@ -30,13 +30,13 @@ export default function Welcome() {
           </span>
         </LoaderButton>
         <img
-          className="relative xs:w-60 sm:w-72 sm:bottom-[100px]"
+          className="relative xs:w-60 sm:w-72 sm:bottom-[100px] md:w-80"
           src={welcomeImage}
           alt="welcome"
         />
       </div>
       <img
-        className="relative  bottom-10 left-[-10px] sm:absolute sm:w-[200px] sm:bottom-[50px] sm:left-[100px]"
+        className="relative  bottom-10 left-[-10px] sm:absolute sm:w-[200px] sm:bottom-[50px] sm:left-[100px] md:sm:left-[210px]"
         src={welcomePseudoElem2}
         alt="pseudo element"
       />

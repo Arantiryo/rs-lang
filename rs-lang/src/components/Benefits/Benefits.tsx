@@ -4,7 +4,7 @@ import education from "../../assets/svg/benefits__education.svg";
 
 export default function Benefits() {
   return (
-    <div className="benefits-section relative w-full sm:flex sm:items-baseline sm:justify-between sm:gap-8">
+    <div className="benefits-section relative w-full sm:flex sm:items-baseline sm:justify-between sm:gap-8 md:mb-6">
       <BenefitsCard
         className="benefits-section sm:w-1/3"
         icon={onlineAccessIcon}
@@ -13,13 +13,13 @@ export default function Benefits() {
           Занимайтесь в удобное для вас время"
       />
       <BenefitsCard
-        className="card__spaced-repetition  sm:w-1/3"
+        className="card__spaced-repetition sm:w-1/3"
         icon={spaceRepetition}
         heading="Интервальные повторения"
         text="В приложении используется метод интервальных повторений, который является эффективным в изучении новых языков."
       />
       <BenefitsCard
-        className="card__education  sm:w-1/3"
+        className="card__education sm:w-1/3"
         icon={education}
         heading="Обучение"
         text="Изучение английского языка без платных подписок и ограничений"

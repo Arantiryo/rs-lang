@@ -4,8 +4,8 @@ import footerGithub from "../../assets/svg/github.svg";
 
 export default function Footer() {
   return (
-    <footer className="footer relative w-full flex items-center justify-between py-2">
-      <div className="rs-logo">
+    <footer className="footer relative w-full flex items-center justify-between py-2 md:min-h-[100px]">
+      <div className="rs-logo md:min-w-[220px]">
         <Link
           to={{ pathname: "https://rs.school/" }}
           target="_blank"
@@ -18,10 +18,12 @@ export default function Footer() {
           />
         </Link>
       </div>
-      <div className="year">
-        <span className="text-white text-xs leading-3">2022</span>
+      <div className="year md:min-w-[220px] text-center">
+        <span className="text-white text-xs leading-3 md:text-base md:leading-5">
+          2022
+        </span>
       </div>
-      <div className="gh-profiles">
+      <div className="gh-profiles md:flex md:gap-3">
         <Link
           to={{ pathname: "https://github.com/multeng" }}
           target="_blank"

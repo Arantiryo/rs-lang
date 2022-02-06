@@ -17,11 +17,11 @@ export default function ResultsTracking() {
         </p>
       </div>
       <img
-        className="ml-auto relative top-[-10px] pb-2 mb-10 sm:right-[250px] sm:top-[40px] sm:w-1/6 "
+        className="ml-auto relative top-[-10px] pb-2 mb-10 sm:right-[250px] sm:top-[40px] sm:w-1/6 md:right-[350px]"
         src={resultsPseudoElem1}
         alt="pseudo element"
       />
-      <div className="relative ml-auto w-3/4 max-w-[520px] flex items-baseline justify-end mb-10 sm:top-[-50px]">
+      <div className="relative ml-auto w-3/4 max-w-[520px] flex items-baseline justify-end mb-10 sm:top-[-50px] md:right-[50px]">
         <div className="relative top-[40px] left-[80px] z-10 xs:top-[60px]">
           <GameSprint />
         </div>
