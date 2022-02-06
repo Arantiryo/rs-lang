@@ -5,7 +5,7 @@ import LoaderButton from "../../LoaderButton/LoaderButton";
 
 export default function ResultsTrackingCard() {
   return (
-    <div className="results-card ml-auto w-1/2 bg-gray-700 max-w-[280px] max-h-[330px] p-4">
+    <div className="results-card ml-auto w-full bg-gray-700 max-w-[280px] max-h-[330px] p-4">
       <ul className="list-none flex items-center justify-evenly xs:mb-4">
         <li className="text-yellow-500 font-medium text-[8px] leading-[10px] xs:text-sm underline underline-offset-4 mr-2">
           Результаты

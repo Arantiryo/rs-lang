@@ -16,19 +16,19 @@ export function GameCard({ gameType, name, description, picture }: GameProps) {
       bg-gray-700 rounded-md w-[170px] xs:w-[210px] sm:w-[300px] gap-1 p-2 sm:gap-2
       hover:scale-110 hover:translate-y-[-30px] transition duration-500 ease-in-out`}
     >
-      <div className={`overflow-hidden grow-2`}>
+      <div className={`overflow-hidden grow-2 sm:h-full`}>
         <p
-          className={`text-yellow-500 font-medium text-[8px] sm:text-[12px] sm:leading-[13px] sm:mb-2`}
+          className={`text-yellow-500 font-medium text-[8px] leading-[10px] sm:text-[12px] sm:leading-[15px] sm:mb-2`}
         >
           {gameType}
         </p>
         <h4
-          className={`text-white font-semibold tracking-[1px] text-[10px] sm:text-[16px] sm:leading-[18px] sm:mb-2`}
+          className={`text-white font-semibold tracking-[1px] text-[10px] leading-[11px] sm:text-[16px] sm:leading-[19px] sm:mb-2`}
         >
           {name}
         </h4>
         <p
-          className={`text-white font-medium text-[8px] sm:text-[12px] sm:leading-[13px]`}
+          className={`text-white font-medium text-[8px] leading-[10px] sm:text-[11px] sm:leading-[13px]`}
         >
           {description}
         </p>
