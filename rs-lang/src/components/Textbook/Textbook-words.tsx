@@ -27,7 +27,7 @@ export default function TextbookWords({ categoryIndex, wordIndex, onClickWord, s
       {status === 'Loading' && <div>Loading...</div>}
       {status === 'Success' && list.map((obj, index) =>
         <div
-          className={`cursor-pointer border w-40 rounded p-2 ${index === wordIndex ? `${colors[categoryIndex].bg} text-white` : ''}`}
+          className={`cursor-pointer bg-gray-700 border border-gray-700 w-40 rounded p-2 ${index === wordIndex ? `${colors[categoryIndex].bg} text-white` : ''}`}
           key={index}
           onClick={() => onClickWord(index)}
         >

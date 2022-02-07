@@ -50,7 +50,7 @@ export default function TextbookCategories({ categoryIndex, onClickCategory }: P
         {caterogriesList.map((obj, index) => {
           const categoryNode =
             <li
-              className={`flex rounded items-center justify-between gap-3 w-32 p-2 border cursor-pointer ${index === categoryIndex ? `${colors[categoryIndex].bg} text-white` : ''}`}
+              className={`flex rounded bg-gray-700 border-gray-700 items-center justify-between gap-3 w-32 p-2 border cursor-pointer ${index === categoryIndex ? `${colors[categoryIndex].bg} text-white` : ''}`}
               key={index}
               onClick={() => onClickCategory(index)}
             >

@@ -31,6 +31,12 @@ export default function TextbookDetails({ wordIndex, list }: Params) {
         <div>
           <div>
             <img src={img} alt="word" />
+            <div>
+
+            </div>
+          </div>
+          <div>
+            <div>Значение</div>
           </div>
         </div>}
     </div>
