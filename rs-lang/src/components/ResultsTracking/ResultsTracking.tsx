@@ -21,7 +21,7 @@ export default function ResultsTracking() {
         src={resultsPseudoElem1}
         alt="pseudo element"
       />
-      <div className="relative ml-auto w-3/4 max-w-[520px] flex items-baseline justify-end mb-10 sm:top-[-50px] md:right-[50px]">
+      <div className="relative ml-auto w-3/4 max-w-[520px] flex items-baseline justify-end pb-10 sm:top-[-50px] md:right-[50px]">
         <div className="relative top-[40px] left-[80px] z-10 xs:top-[60px] lg:top-[80px]">
           <GameSprint />
         </div>
@@ -29,7 +29,7 @@ export default function ResultsTracking() {
           <ResultsTrackingCard />
         </div>
         <img
-          className="absolute w-5/6 h-5/6 bottom-[-30px] left-[20px] sm:bottom-[-80px] sm:left-[90px]"
+          className="absolute w-5/6 h-5/6 bottom-[-10px] left-[20px] sm:bottom-[-50px] sm:left-[90px]"
           src={resultsPseudoCircle}
           alt="pseudo element"
         />

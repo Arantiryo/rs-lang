@@ -11,15 +11,21 @@ export default function Home() {
   console.log(userInfo);
 
   return (
-    <div className="home bg-gray-800">
-      <div className="px-5 max-w-7xl mx-auto xl:px-0">
+    <>
+      <div className="bg-gray-800 w-full">
         <Header />
-        <Welcome />
-        <Benefits />
-        <MiniGames />
-        <ResultsTracking />
+      </div>
+      <main className="home bg-gray-800">
+        <div className="px-5 max-w-7xl mx-auto xxl:px-0">
+          <Welcome />
+          <Benefits />
+          <MiniGames />
+          <ResultsTracking />
+        </div>
+      </main>
+      <div className="bg-gray-900 w-full">
         <Footer />
       </div>
-    </div>
+    </>
   );
 }

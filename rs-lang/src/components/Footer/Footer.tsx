@@ -4,7 +4,7 @@ import footerGithub from "../../assets/svg/github.svg";
 
 export default function Footer() {
   return (
-    <footer className="footer relative w-full flex items-center justify-between py-2 md:min-h-[100px]">
+    <footer className="footer px-5 max-w-7xl mx-auto xxl:px-0 relative w-full flex items-center justify-between py-2 md:min-h-[100px]">
       <div className="rs-logo md:min-w-[220px]">
         <Link
           to={{ pathname: "https://rs.school/" }}
