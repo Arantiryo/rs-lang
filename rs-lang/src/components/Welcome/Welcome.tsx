@@ -32,8 +32,6 @@ export default function Welcome() {
           type="button"
           className="welcome__btn_begin relative top-5 w-18 h-7 xs:w-24 xs:h-9 lg:w-32 lg:h-14 
           bg-emerald-700 hover:bg-emerald-600 transition-colors text-white text-sm lg:text-lg px-1"
-          isLoading={false}
-          disabled={false}
         >
           <span className="flex items-center justify-around">
             Начать <MdKeyboardArrowRight className="text-lg lg:text-3xl" />
