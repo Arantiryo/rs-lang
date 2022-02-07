@@ -15,7 +15,7 @@ export default function Home() {
       <div className="bg-gray-800 w-full">
         <Header />
       </div>
-      <main className="home bg-gray-800">
+      <main className="home bg-gray-800 overflow-hidden">
         <div className="px-5 max-w-7xl mx-auto xxl:px-0">
           <Welcome />
           <Benefits />

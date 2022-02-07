@@ -1,4 +1,5 @@
 import resultsPseudoElem1 from "../../../assets/svg/results-tracking__presudo-elem-1.svg";
+import resultsPseudoElem2 from "../../../assets/svg/results-tracking__presudo-elem-2.svg";
 import resultsPseudoCircle from "../../../assets/svg/results-tracking__pseudo.svg";
 import { GameSprint } from "../../../components/GameCard/GameCard";
 import ResultsTrackingCard from "./ResultsCard/ResultsCard";
@@ -6,6 +7,11 @@ import ResultsTrackingCard from "./ResultsCard/ResultsCard";
 export default function ResultsTracking() {
   return (
     <div className="promo-section relative w-full">
+      <img
+        className="absolute hidden xxl:block xxl:top-[-10px] xxl:right-[-60px]"
+        src={resultsPseudoElem2}
+        alt="pseudo element"
+      />
       <div className="sm:w-2/3">
         <h2 className="text-lg sm:text-2xl lg:text-6xl leading-5 text-emerald-600 font-bold tracking-wider mb-5">
           Отслеживание результатов

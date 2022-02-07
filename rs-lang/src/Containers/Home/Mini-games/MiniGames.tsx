@@ -5,10 +5,17 @@ import {
   GameSprint,
   GameWordle,
 } from "../../../components/GameCard/GameCard";
+import pseudoElem1 from "../../../assets/svg/minigames__pseudo-1.svg";
+import pseudoZip from "../../../assets/svg/minigames__pseudo-zip.svg";
 
 export default function MiniGames() {
   return (
     <div className="minigames-section relative w-full sm:w-2/3">
+      <img
+        className="absolute hidden xxl:block xxl:top-[-120px] xxl:left-[-160px]"
+        src={pseudoElem1}
+        alt="pseudo element"
+      />
       <h3 className="text-xs sm:text-sm lg:text-xl leading-3 text-blue-400 tracking-widest mb-1">
         Каталог мини-игр
       </h3>
@@ -32,6 +39,11 @@ export default function MiniGames() {
         </span>
       </LoaderButton>
       <div className="pt-10 relative flex flex-col items-center sm:bottom-[50px] sm:left-[200px] md:left-[250px] lg:left-[320px] xl:left-[420px]">
+        <img
+          className="absolute hidden xs:block xs:top-[80px] xs:left-[20px] sm:top-[120px] sm:left-[-20px] lg:top-[120px] lg:left-[120px]"
+          src={pseudoZip}
+          alt="pseudo element"
+        />
         <div className="rotate-12 relative">
           <GameSprint />
         </div>

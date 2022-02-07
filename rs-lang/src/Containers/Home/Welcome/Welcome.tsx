@@ -1,7 +1,10 @@
 import { MdKeyboardArrowRight } from "react-icons/md";
 import LoaderButton from "../../../components/LoaderButton/LoaderButton";
 import welcomeImage from "../../../assets/svg/welcome__img.svg";
+import welcomePseudoElem1 from "../../../assets/svg/welcome__pseudo-elem-1.svg";
 import welcomePseudoElem2 from "../../../assets/svg/welcome__pseudo-elem-2.svg";
+import welcomePseudoElem4 from "../../../assets/svg/welcome__pseudo-elem-4.svg";
+import welcomePseudoElem5 from "../../../assets/svg/welcome__pseudo-elem-5.svg";
 import welcomePseudoElem6 from "../../../assets/svg/welcome__pseudo-elem-6.svg";
 
 export default function Welcome() {
@@ -10,6 +13,21 @@ export default function Welcome() {
       <img
         className="relative hidden lg:block lg:left-[400px]"
         src={welcomePseudoElem6}
+        alt="pseudo element"
+      />
+      <img
+        className="absolute hidden xxl:block xxl:top-[10px] xxl:right-[-120px]"
+        src={welcomePseudoElem1}
+        alt="pseudo element"
+      />
+      <img
+        className="absolute hidden xxl:block xxl:top-[-10px] xxl:left-[-80px]"
+        src={welcomePseudoElem4}
+        alt="pseudo element"
+      />
+      <img
+        className="absolute hidden xxl:block xxl:bottom-[120px] xxl:right-[220px]"
+        src={welcomePseudoElem5}
         alt="pseudo element"
       />
       <div className="sm:w-2/3 lg:w-[60%]">
