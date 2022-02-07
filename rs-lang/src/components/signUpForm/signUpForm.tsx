@@ -84,7 +84,7 @@ export default function SignUpForm() {
         />
         <LoaderButton
           type="submit"
-          className="btn_signup w-full mt-4 bg-green-700 hover:bg-green-600 transition-colors text-white leading-6 font-bold py-2 px-4"
+          className="btn_signup w-full mt-4 bg-emerald-700 hover:bg-emerald-600 transition-colors text-white leading-6 font-bold py-2 px-4"
           isLoading={false}
           disabled={false}
         >
@@ -93,7 +93,7 @@ export default function SignUpForm() {
       </form>
       <Link
         to="/login"
-        className="text-green-500 hover:text-green-400 transition-colors block text-center text-xs tracking-wide mx-auto mt-6"
+        className="text-emerald-500 hover:text-emerald-400 transition-colors block text-center text-xs tracking-wide mx-auto mt-6"
       >
         Уже есть аккаунт? Войти
       </Link>
