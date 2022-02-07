@@ -1,4 +1,5 @@
 import React from "react";
+
 const caterogriesList = [
   {
     name: 'Beginner',
@@ -32,12 +33,12 @@ const caterogriesList = [
   }
 ];
 
-type InputParams = {
+type Params = {
   category: Number,
-  onClickCategory: (e: React.MouseEvent<HTMLElement>) => void
+  onClickCategory: (index: number) => void
 }
 
-export default function TextbookCategories({ category, onClickCategory }: InputParams) {
+export default function TextbookCategories({ category, onClickCategory }: Params) {
   return (
     <div className="flex items-center gap-3">
       <div>
@@ -48,10 +49,9 @@ export default function TextbookCategories({ category, onClickCategory }: InputP
         {caterogriesList.map((obj, index) => {
           const categoryNode =
             <li
-              className={`flex rounded items-center justify-between gap-3 w-32 p-2 border border cursor-pointer ${index === category && 'text-red-600'}`}
+              className={`flex rounded items-center justify-between gap-3 w-32 p-2 border cursor-pointer ${index === category ? 'text-red-600' : ''}`}
               key={index}
-              id={index.toString()}
-              onClick={onClickCategory}>
+              onClick={() => onClickCategory(index)}>
               <div>
                 <div>{obj.name}</div>
                 <div>{obj.title}</div>
