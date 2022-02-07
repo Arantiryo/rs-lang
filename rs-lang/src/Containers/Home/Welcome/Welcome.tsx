@@ -1,8 +1,8 @@
 import { MdKeyboardArrowRight } from "react-icons/md";
-import LoaderButton from "../LoaderButton/LoaderButton";
-import welcomeImage from "../../assets/svg/welcome__img.svg";
-import welcomePseudoElem2 from "../../assets/svg/welcome__pseudo-elem-2.svg";
-import welcomePseudoElem6 from "../../assets/svg/welcome__pseudo-elem-6.svg";
+import LoaderButton from "../../../components/LoaderButton/LoaderButton";
+import welcomeImage from "../../../assets/svg/welcome__img.svg";
+import welcomePseudoElem2 from "../../../assets/svg/welcome__pseudo-elem-2.svg";
+import welcomePseudoElem6 from "../../../assets/svg/welcome__pseudo-elem-6.svg";
 
 export default function Welcome() {
   return (

@@ -1,6 +1,6 @@
-import resultsPseudoElem1 from "../../assets/svg/results-tracking__presudo-elem-1.svg";
-import resultsPseudoCircle from "../../assets/svg/results-tracking__pseudo.svg";
-import { GameSprint } from "../GameCard/GameCard";
+import resultsPseudoElem1 from "../../../assets/svg/results-tracking__presudo-elem-1.svg";
+import resultsPseudoCircle from "../../../assets/svg/results-tracking__pseudo.svg";
+import { GameSprint } from "../../../components/GameCard/GameCard";
 import ResultsTrackingCard from "./ResultsCard/ResultsCard";
 
 export default function ResultsTracking() {

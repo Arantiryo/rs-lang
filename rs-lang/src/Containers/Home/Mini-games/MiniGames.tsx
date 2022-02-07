@@ -1,6 +1,10 @@
 import { MdKeyboardArrowRight } from "react-icons/md";
-import LoaderButton from "../LoaderButton/LoaderButton";
-import { GameAudioCall, GameSprint, GameWordle } from "../GameCard/GameCard";
+import LoaderButton from "../../../components/LoaderButton/LoaderButton";
+import {
+  GameAudioCall,
+  GameSprint,
+  GameWordle,
+} from "../../../components/GameCard/GameCard";
 
 export default function MiniGames() {
   return (

@@ -1,7 +1,7 @@
 import { MdRepeat } from "react-icons/md";
 import { IoReturnUpBackOutline } from "react-icons/io5";
-import tempResultsCircle from "../../../assets/svg/results-tacking__temp-stats-circle.svg";
-import LoaderButton from "../../LoaderButton/LoaderButton";
+import tempResultsCircle from "../../../../assets/svg/results-tacking__temp-stats-circle.svg";
+import LoaderButton from "../../../../components/LoaderButton/LoaderButton";
 
 export default function ResultsTrackingCard() {
   return (

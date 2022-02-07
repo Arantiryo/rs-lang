@@ -1,6 +1,6 @@
-import onlineAccessIcon from "../../assets/svg/benefits__online-access.svg";
-import spaceRepetition from "../../assets/svg/benefits__space-repetition.svg";
-import education from "../../assets/svg/benefits__education.svg";
+import onlineAccessIcon from "../../../assets/svg/benefits__online-access.svg";
+import spaceRepetition from "../../../assets/svg/benefits__space-repetition.svg";
+import education from "../../../assets/svg/benefits__education.svg";
 
 export default function Benefits() {
   return (
