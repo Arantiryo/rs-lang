@@ -5,15 +5,17 @@ import TextbookWords from "./Textbook-words";
 
 export default function Textbook() {
   const [category, setCategory] = useState(0);
-  const chooseCategory = (e: React.MouseEvent<HTMLElement>) => setCategory(Number((e.target as HTMLElement).id));
+  const chooseCategory = (e: React.MouseEvent<HTMLElement>) => setCategory(Number((e.currentTarget as HTMLElement).id));
 
   return (
-    <main className="max-w-md">
-      <TextbookCategories category={category} onClickCategory={chooseCategory} />
-      <div>
-        <TextbookWords category={category} />
-        <TextbookDetails />
-      </div>
-    </main>
+    <div className="container mx-auto max-w-screen-xl p-2">
+      <main className="flex flex-col gap-2">
+        <TextbookCategories category={category} onClickCategory={chooseCategory} />
+        <div>
+          <TextbookWords category={category} />
+          <TextbookDetails />
+        </div>
+      </main>
+    </div>
   );
 }

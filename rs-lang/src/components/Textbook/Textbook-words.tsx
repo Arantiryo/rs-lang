@@ -20,10 +20,10 @@ export default function TextbookWords({ category }: Params) {
   }, [category])
 
   return (
-    <div>
+    <div className="flex flex-wrap w-3/4 gap-1">
       {status === 'Loading' && <div>Loading...</div>}
       {status === 'Success' && list.map((obj, index) =>
-        <div key={index}>
+        <div className="border w-40 rounded p-2" key={index}>
           <div>{obj.word}</div>
           <div>{obj.wordTranslate}</div>
         </div>
