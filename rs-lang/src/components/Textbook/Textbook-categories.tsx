@@ -1,4 +1,5 @@
 import React from "react";
+import { colors } from './Textbook';
 
 const caterogriesList = [
   {
@@ -34,24 +35,25 @@ const caterogriesList = [
 ];
 
 type Params = {
-  category: Number,
-  onClickCategory: (index: number) => void
+  categoryIndex: number,
+  onClickCategory: (index: number) => void,
 }
 
-export default function TextbookCategories({ category, onClickCategory }: Params) {
+export default function TextbookCategories({ categoryIndex, onClickCategory }: Params) {
   return (
     <div className="flex items-center gap-3">
       <div>
         <div>Учебник</div>
         <div>Уровень сложности</div>
       </div>
-      <ul className="flex gap-2">
+      <ul className="flex flex-wrap gap-2">
         {caterogriesList.map((obj, index) => {
           const categoryNode =
             <li
-              className={`flex rounded items-center justify-between gap-3 w-32 p-2 border cursor-pointer ${index === category ? 'text-red-600' : ''}`}
+              className={`flex rounded items-center justify-between gap-3 w-32 p-2 border cursor-pointer ${index === categoryIndex ? `${colors[categoryIndex].bg} text-white` : ''}`}
               key={index}
-              onClick={() => onClickCategory(index)}>
+              onClick={() => onClickCategory(index)}
+            >
               <div>
                 <div>{obj.name}</div>
                 <div>{obj.title}</div>

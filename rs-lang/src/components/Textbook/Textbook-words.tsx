@@ -1,37 +1,33 @@
 import { useEffect, useState } from "react";
 import IWord from "../../interfaces/IWord";
 import { getWords } from "../../utils/WebClients";
+import { colors } from './Textbook';
 
 type Params = {
-  category: number
+  categoryIndex: number,
+  wordIndex: number,
+  onClickWord: (index: number) => void,
+  saveList: (data: IWord[]) => void,
+  list: IWord[],
 }
 
-export default function TextbookWords({ category }: Params) {
-  const words: IWord[] = [];
+export default function TextbookWords({ categoryIndex, wordIndex, onClickWord, saveList, list }: Params) {
   const [status, setStatus] = useState('');
-  const [list, setList] = useState(words);
-  const [word, setWord] = useState(0);
-
-  const onClickWord = (index: number) => {
-    console.log(index);
-    setWord(index)
-  };
 
   useEffect(() => {
     setStatus('Loading');
-    getWords(0, category).then((list: IWord[]) => {
+    getWords(0, categoryIndex).then((list: IWord[]) => {
       setStatus('Success');
-      setList(list);
-      setWord(0);
+      saveList(list);
     });
-  }, [category])
+  }, [categoryIndex, saveList])
 
   return (
     <div className="flex flex-wrap w-3/4 gap-1">
       {status === 'Loading' && <div>Loading...</div>}
       {status === 'Success' && list.map((obj, index) =>
         <div
-          className={`cursor-pointer border w-40 rounded p-2 ${index === word ? 'text-red-600' : ''}`}
+          className={`cursor-pointer border w-40 rounded p-2 ${index === wordIndex ? `${colors[categoryIndex].bg} text-white` : ''}`}
           key={index}
           onClick={() => onClickWord(index)}
         >
