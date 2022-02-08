@@ -11,7 +11,7 @@ export default function Team() {
       </div>
       <div className="bg-gray-800 grow-[2]">
         <Main className="h-full">
-          <TeamCards className="pt-20" />
+          <TeamCards className="pt-2 pb-5" />
         </Main>
       </div>
       <div className="bg-gray-900 w-full">

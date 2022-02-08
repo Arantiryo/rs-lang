@@ -1,14 +1,15 @@
-import {
-  GameAudioCall,
-  GameSprint,
-  GameWordle,
-} from "../../../components/GameCard/GameCard";
 import pseudo1 from "../../../assets/svg/team__pseudo-elem-1.svg";
+import {
+  CardArantiryo,
+  CardKondratio,
+  CardMulteng,
+} from "../../../components/TeamMemberCard/TeamMemberCard";
 
 export default function GameCards({ className }: { className: string }) {
   return (
     <div
-      className={`${className} relative h-full flex items-center gap-3 flex-wrap`}
+      className={`${className} relative h-full flex items-center justify-center gap-4 flex-wrap
+        lg:justify-start`}
     >
       <img
         className="absolute hidden md:block md:top-[-70px] md:right-[20px]"
@@ -17,13 +18,13 @@ export default function GameCards({ className }: { className: string }) {
       />
 
       <div className="relative">
-        <GameSprint />
+        <CardMulteng />
       </div>
       <div className="relative">
-        <GameAudioCall />
+        <CardKondratio />
       </div>
       <div className="relative">
-        <GameWordle />
+        <CardArantiryo />
       </div>
     </div>
   );
