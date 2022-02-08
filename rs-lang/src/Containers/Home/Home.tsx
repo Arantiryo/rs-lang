@@ -5,6 +5,7 @@ import Header from "../../components/Header/Header";
 import MiniGames from "./Mini-games/MiniGames";
 import ResultsTracking from "./ResultsTracking/ResultsTracking";
 import Welcome from "./Welcome/Welcome";
+import Main from "../../components/Main/Main";
 
 export default function Home() {
   const userInfo = useAppSelector((state) => state.userLoginInfo);
@@ -15,14 +16,12 @@ export default function Home() {
       <div className="bg-gray-800 w-full">
         <Header />
       </div>
-      <main className="home bg-gray-800 overflow-hidden">
-        <div className="px-5 max-w-7xl mx-auto xxl:px-0">
-          <Welcome />
-          <Benefits />
-          <MiniGames />
-          <ResultsTracking />
-        </div>
-      </main>
+      <Main>
+        <Welcome />
+        <Benefits />
+        <MiniGames />
+        <ResultsTracking />
+      </Main>
       <div className="bg-gray-900 w-full">
         <Footer />
       </div>
