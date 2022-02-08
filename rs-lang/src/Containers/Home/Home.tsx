@@ -1,11 +1,11 @@
 import { useAppSelector } from "../../app/hooks";
-import Benefits from "./Benefits/Benefits";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
+import Main from "../../components/Main/Main";
+import Benefits from "./Benefits/Benefits";
 import MiniGames from "./Mini-games/MiniGames";
 import ResultsTracking from "./ResultsTracking/ResultsTracking";
 import Welcome from "./Welcome/Welcome";
-import Main from "../../components/Main/Main";
 
 export default function Home() {
   const userInfo = useAppSelector((state) => state.userLoginInfo);

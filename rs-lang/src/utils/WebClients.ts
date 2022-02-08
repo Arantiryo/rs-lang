@@ -49,3 +49,10 @@ const postRequest = async <T>(url: string, body: T, token?: string) => {
 
   return res.json();
 };
+
+export const getImage = async (path: string) => {
+  const res = await fetch(`${base}/${path}`);
+  const imgBlob = await res.blob();
+  const imgObjURL = URL.createObjectURL(imgBlob);
+  return imgObjURL;
+};
