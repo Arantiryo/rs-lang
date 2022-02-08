@@ -38,8 +38,8 @@ export default function Textbook() {
   const saveList = useCallback((data: IWord[]) => setList(data), []);
 
   return (
-    <div className="flex items-center textbook bg-gray-800 text-white h-200">
-      <div className="container h-96 mx-auto max-w-screen-xl p-2">
+    <div className="flex grow items-center textbook bg-gray-800 text-white">
+      <div className="container mx-auto max-w-screen-xl p-2">
         <main className="flex flex-col gap-2">
           <TextbookCategories
             categoryIndex={categoryIndex}
