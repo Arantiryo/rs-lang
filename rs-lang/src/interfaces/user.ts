@@ -14,8 +14,8 @@ export interface CreateUserWordDto {
   token: string;
 }
 
-export interface SuccessfulLogin {
-  message: string;
+export interface UserLoginInfo {
+  message?: string;
   token: string;
   refreshToken: string;
   userId: string;
@@ -24,5 +24,5 @@ export interface SuccessfulLogin {
 
 export type UserLoginAction = {
   type: string;
-  value: SuccessfulLogin;
+  value: UserLoginInfo;
 };

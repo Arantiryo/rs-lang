@@ -5,7 +5,7 @@ import Main from "../../components/Main/Main";
 import Textbook from "../../components/Textbook/Textbook";
 
 export default function TextbookPage() {
-  const userInfo = useAppSelector((state) => state.userLoginInfo);
+  const userInfo = useAppSelector((state) => state.loginReducer);
   console.log(userInfo);
 
   return (
