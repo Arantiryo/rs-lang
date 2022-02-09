@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { State } from "../../interfaces/app";
-import { SuccessfulLogin } from "../../interfaces/user";
+import { UserLoginInfo } from "../../interfaces/user";
 
-const initialState: State = {
+export const initialState: State = {
   userId: "",
   name: "",
   token: "",
@@ -13,7 +13,7 @@ export const loginSlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
-    updateUserInfo: (state, action: PayloadAction<SuccessfulLogin>) => {
+    updateUserInfo: (state, action: PayloadAction<UserLoginInfo>) => {
       const { name, userId, token, refreshToken } = action.payload;
       state.name = name;
       state.userId = userId;

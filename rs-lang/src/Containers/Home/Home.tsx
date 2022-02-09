@@ -8,8 +8,8 @@ import ResultsTracking from "./ResultsTracking/ResultsTracking";
 import Welcome from "./Welcome/Welcome";
 
 export default function Home() {
-  const userInfo = useAppSelector((state) => state.loginReducer);
-  console.log(userInfo);
+  // const userInfo = useAppSelector((state) => state.loginReducer);
+  // console.log(userInfo);
 
   return (
     <>

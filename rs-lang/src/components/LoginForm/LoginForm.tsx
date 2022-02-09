@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import closeIcon from "../../assets/svg/close.svg";
-import { SuccessfulLogin, UserDto } from "../../interfaces/user";
+import { UserLoginInfo, UserDto } from "../../interfaces/user";
 import { loginUser } from "../../utils/WebClients";
 import CustomInput from "../CustomInput/CustomInput";
 import LoaderButton from "../LoaderButton/LoaderButton";
@@ -15,13 +15,12 @@ export default function LoginForm() {
 
   const history = useHistory();
 
-  // TODO: figure out where to store JWT token
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user: UserDto = { email, password };
 
     loginUser(user)
-      .then((res: SuccessfulLogin) => {
+      .then((res: UserLoginInfo) => {
         alert("Успех! Вы будете перенаправлены на главную страницу!");
         // console.log(res);
         dispatch(updateUserInfo(res));
