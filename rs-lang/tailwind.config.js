@@ -17,6 +17,9 @@ module.exports = {
       backgroundImage: {
         audiocall: "url('./assets/images/bg_main_audiocall.png')",
       },
+      colors: {
+        "black-rgba": "rgba(17, 24, 39, 0.7)",
+      },
     },
   },
   plugins: [],
