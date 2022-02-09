@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import headerLogo from "../../assets/svg/header__logo.svg";
+import closeIcon from "../../assets/svg/close.svg";
 import Nav from "./Navbar/Burger";
 
 export default function Header({ isGameHeader = false }) {
@@ -12,7 +13,13 @@ export default function Header({ isGameHeader = false }) {
           alt="header logo"
         />
       </Link>
-      <Nav></Nav>
+      {isGameHeader ? (
+        <Link to="/games" className="text-gray-200">
+          <img src={closeIcon} alt="close" />
+        </Link>
+      ) : (
+        <Nav></Nav>
+      )}
     </header>
   );
 }
