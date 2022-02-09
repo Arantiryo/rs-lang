@@ -13,7 +13,11 @@ module.exports = {
       xxl: "1440px",
       mw: { max: "767px" },
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        audiocall: "url('./assets/images/bg_main_audiocall.png')",
+      },
+    },
   },
   plugins: [],
 };
