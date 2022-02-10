@@ -13,7 +13,11 @@ module.exports = {
       xxl: "1440px",
       mw: { max: "767px" },
     },
-    extend: {},
+    extend: {
+      boxShadow: {
+        '3xl': '0px -60px 24px 0px rgba(34, 60, 80, 0.1) inset',
+      }
+    },
   },
   plugins: [],
 };
