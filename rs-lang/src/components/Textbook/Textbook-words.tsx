@@ -9,30 +9,62 @@ type Params = {
   onClickWord: (index: number) => void,
   saveList: (data: IWord[]) => void,
   list: IWord[],
+  page: number,
 }
 
-export default function TextbookWords({ categoryIndex, wordIndex, onClickWord, saveList, list }: Params) {
-  const [status, setStatus] = useState('');
+export default function TextbookWords({ categoryIndex, wordIndex, onClickWord, saveList, list, page }: Params) {
+  const [status, setStatus] = useState('Loading');
 
   useEffect(() => {
-    setStatus('Loading');
-    getWords(0, categoryIndex).then((list: IWord[]) => {
+    getWords(page, categoryIndex).then((list: IWord[]) => {
       setStatus('Success');
       saveList(list);
     });
-  }, [categoryIndex, saveList])
+  }, [categoryIndex, saveList, page])
 
   return (
-    <div className="flex flex-wrap w-3/4 gap-1">
-      {status === 'Loading' && <div>Loading...</div>}
+    <div className="
+      flex grow flex-wrap items-center h-52 gap-1 overflow-y-auto scroll-behavior
+      md:h-full
+      lg:w-4/6 lg:h-min
+    ">
+      {status === 'Loading' && <div className="flex grow">
+        <div className="grow shadow rounded-md w-full mx-auto">
+          <div className="
+          animate-pulse
+          flex grow flex-wrap items-center h-52 gap-1 overflow-y-auto scroll-behavior
+          md:h-full
+          lg:lg:h-min"
+          >
+            {
+              [...Array(20)].map(() => {
+                return (<div className="
+                  bg-gray-700 border border-gray-700 w-24 max-w-xs rounded p-6
+                  xs:w-32
+                  md:grow
+                  lg:basis-2/12 lg:min-w-0"
+                >
+                </div>)
+              })
+            }
+          </div>
+        </div>
+      </div>}
       {status === 'Success' && list.map((obj, index) =>
         <div
-          className={`cursor-pointer bg-gray-700 border border-gray-700 w-40 rounded p-2 ${index === wordIndex ? `${colors[categoryIndex].bg} text-white` : ''}`}
+          className={
+            `${index === wordIndex ? `${colors[categoryIndex].bg} text-white` : ''}
+              cursor-pointer bg-gray-700 border border-gray-700 w-24 max-w-xs rounded p-2
+              xs:w-32
+              md:grow
+              lg:basis-2/12 lg:min-w-0
+            `
+          }
           key={index}
           onClick={() => onClickWord(index)}
         >
           <div>{obj.word}</div>
-          <div>{obj.wordTranslate}</div>
+          <div className="truncate">{obj.wordTranslate}</div>
         </div>
       )}
     </div>

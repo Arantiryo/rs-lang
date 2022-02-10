@@ -20,6 +20,9 @@ module.exports = {
       colors: {
         "black-rgba": "rgba(17, 24, 39, 0.7)",
       },
+      boxShadow: {
+        "3xl": "0px -60px 24px 0px rgba(34, 60, 80, 0.1) inset",
+      },
     },
   },
   plugins: [],

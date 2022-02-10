@@ -41,16 +41,22 @@ type Params = {
 
 export default function TextbookCategories({ categoryIndex, onClickCategory }: Params) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="
+      flex flex-col gap-3
+      lg:flex-row"
+    >
       <div>
-        <div>Учебник</div>
-        <div>Уровень сложности</div>
+        <div className="text-base font-bold tracking-wider text-green-700">Учебник</div>
+        <div className="text-sm text-indigo-400">Уровень сложности</div>
       </div>
-      <ul className="flex flex-wrap gap-2">
+      <ul className="flex gap-2 overflow-x-auto text-xs">
         {caterogriesList.map((obj, index) => {
           const categoryNode =
             <li
-              className={`flex rounded bg-gray-700 border-gray-700 items-center justify-between gap-3 w-32 p-2 border cursor-pointer ${index === categoryIndex ? `${colors[categoryIndex].bg} text-white` : ''}`}
+              className={`flex relative min-w-max rounded bg-gray-700 border-gray-700 items-center 
+                justify-between gap-3 p-2 border cursor-pointer h-12 overflow-hidden
+                ${index === categoryIndex ? `${colors[categoryIndex].bg} text-white ` : 'opacity-40'}`
+              }
               key={index}
               onClick={() => onClickCategory(index)}
             >
@@ -58,9 +64,9 @@ export default function TextbookCategories({ categoryIndex, onClickCategory }: P
                 <div>{obj.name}</div>
                 <div>{obj.title}</div>
               </div>
-              <div>{obj.level}</div>
+              <div className="relative z-10">{obj.level}</div>
+              <div className={`absolute rounded-full -right-6 -bottom-1 w-14 h-14 z-0 ${`${index === categoryIndex ? 'bg-gray-700 bg-gray-900' : `${colors[index].bg} `}`}`}></div>
             </li>
-
           return categoryNode;
         })}
       </ul>
