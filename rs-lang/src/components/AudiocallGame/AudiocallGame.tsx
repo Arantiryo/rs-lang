@@ -34,6 +34,7 @@ type GamePageProps = {
 function shuffle<T>(arr: Array<T>) {
   return [...arr]
     .sort(() => 0.5 - Math.random())
+    .reverse()
     .sort(() => 0.5 - Math.random());
 }
 
@@ -56,7 +57,7 @@ const generateRandomIndexes = (
   return randomIndexes;
 };
 
-type Question = {
+type QuestionType = {
   word: IWord;
   options: IWord[];
 };
@@ -65,7 +66,7 @@ const createQuestions = (words: IWord[]) => {
   const numberOfQuestions = words.length;
   const shuffled = shuffle(words);
 
-  const questions: Question[] = shuffled.map((word, idx) => {
+  const questions: QuestionType[] = shuffled.map((word, idx) => {
     const options = [
       word,
       ...generateRandomIndexes(numberOfQuestions, idx).map(
@@ -80,7 +81,11 @@ const createQuestions = (words: IWord[]) => {
 function GamePage({ categoryIndex }: GamePageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
+
+  // TODO: handle last question and show results
+  const loadNextQuestion = () => setQuestionIndex(questionIndex + 1);
+  const answers: AnswerType[] = [];
 
   setTimeout(() => setIsLoading(false), 4000);
   console.log("GamePage rendered");
@@ -100,19 +105,108 @@ function GamePage({ categoryIndex }: GamePageProps) {
 
   return (
     <div className="h-full flex flex-col items-center justify-center">
-      {isLoading ? <Countdown /> : <Question />}
+      {isLoading ? (
+        <Countdown />
+      ) : (
+        <Question
+          questionData={questions[questionIndex]}
+          answers={answers}
+          loadNextQuestion={loadNextQuestion}
+        />
+      )}
     </div>
   );
 }
 
-function Question() {
+type AnswerType = {
+  correctAnswer: IWord;
+  givenAnswer: IWord;
+  isCorrect: boolean;
+};
+
+type QuestionProps = {
+  questionData: QuestionType;
+  answers: AnswerType[];
+  loadNextQuestion: () => void;
+};
+
+const optionStyles = `w-[180px] h-[50px] bg-black-rgba 
+  flex items-center justify-center cursor-pointer
+  border border-white rounded-[56px]
+  hover:border-yellow-500 transition-colors`;
+const optionTextStyles =
+  "text-white uppercase text-[14px] leading-[16px] tracking-wider";
+
+function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
+  // TODO: implement game logic
+  const [answer, setAnswer] = useState<AnswerType>();
+  const [shuffledOptions, setShuffledOptions] = useState<IWord[]>([]);
+
+  useEffect(() => {
+    setShuffledOptions(shuffle(questionData.options));
+  }, [questionData.options]);
+
+  const handleAnswer = (givenAnswer: IWord) => {
+    if (answer) return;
+
+    const newAnswer: AnswerType = {
+      correctAnswer: questionData.word,
+      givenAnswer: givenAnswer,
+      isCorrect: questionData.word.id === givenAnswer.id,
+    };
+
+    answers.push(newAnswer);
+    setAnswer(newAnswer);
+  };
+
   const handlePlayAudio = () => {
     console.log("Playing audio!");
   };
 
   return (
-    <div className="">
+    <div className="flex flex-col items-center justify-center">
       <AudioButton onClick={handlePlayAudio} />
+      <ul className="flex flex-wrap items-center justify-center gap-3 mt-10 mb-8">
+        {shuffledOptions.map((word, idx) => {
+          return (
+            <li key={idx}>
+              <Option
+                word={word}
+                answer={answer}
+                onClick={() => handleAnswer(word)}
+              />
+            </li>
+          );
+        })}
+      </ul>
+      <div className={`${optionStyles} bg-yellow-600 hover:bg-yellow-500`}>
+        <span className={`${optionTextStyles} `}>Пропустить</span>
+      </div>
+    </div>
+  );
+}
+
+type OptionProps = {
+  word: IWord;
+  answer: AnswerType | undefined;
+  onClick: () => void;
+};
+
+function Option({ word, answer, onClick }: OptionProps) {
+  const isCorrect = answer && answer.correctAnswer.id === word.id;
+  const isWrong =
+    answer?.isCorrect === false && answer.givenAnswer.id === word.id;
+
+  return (
+    <div
+      className={`${optionStyles} ${isCorrect && "bg-emerald-400"} ${
+        isWrong && "bg-red-400"
+      }`}
+      onClick={onClick}
+    >
+      <span className={`${optionTextStyles} text-center`}>
+        {word.wordTranslate}
+      </span>
     </div>
   );
 }
