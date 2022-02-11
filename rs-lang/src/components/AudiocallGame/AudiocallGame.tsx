@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import IWord from "../../interfaces/IWord";
-import { getWords } from "../../utils/WebClients";
+import { getObjURL, getWords } from "../../utils/WebClients";
 import StartPage from "./StartPage";
 import audioSvg from "../../assets/svg/audio.svg";
 
@@ -140,11 +140,18 @@ const optionTextStyles =
 function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
   // TODO: implement game logic
   const [answer, setAnswer] = useState<AnswerType | null>(null);
+  const [audio, setAudio] = useState("");
   const [shuffledOptions, setShuffledOptions] = useState<IWord[]>([]);
 
   useEffect(() => {
     setShuffledOptions(shuffle(questionData.options));
   }, [questionData.options]);
+
+  useEffect(() => {
+    getObjURL(questionData.word.audio).then((objUrl) => {
+      setAudio(objUrl);
+    });
+  }, [questionData.word.audio]);
 
   const handleAnswer = (givenAnswer: IWord) => {
     if (answer) return;
@@ -163,6 +170,7 @@ function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
 
   const handlePlayAudio = () => {
     console.log("Playing audio!");
+    console.log(audio);
   };
 
   return (
