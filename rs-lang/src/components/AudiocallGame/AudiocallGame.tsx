@@ -140,7 +140,7 @@ const optionTextStyles =
 function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
   // TODO: implement game logic
   const [answer, setAnswer] = useState<AnswerType | null>(null);
-  const [audio, setAudio] = useState("");
+  const [audioURL, setAudioURL] = useState("");
   const [shuffledOptions, setShuffledOptions] = useState<IWord[]>([]);
 
   useEffect(() => {
@@ -149,7 +149,7 @@ function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
 
   useEffect(() => {
     getObjURL(questionData.word.audio).then((objUrl) => {
-      setAudio(objUrl);
+      setAudioURL(objUrl);
     });
   }, [questionData.word.audio]);
 
@@ -169,8 +169,8 @@ function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
   const resetAnswer = () => setAnswer(null);
 
   const handlePlayAudio = () => {
-    console.log("Playing audio!");
-    console.log(audio);
+    const audio = new Audio(audioURL);
+    audio.play();
   };
 
   return (
@@ -194,9 +194,6 @@ function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
         loadNextQuestion={loadNextQuestion}
         resetAnswer={resetAnswer}
       />
-      {/* <div className={`${optionStyles} bg-yellow-600 hover:bg-yellow-500`}>
-        <span className={`${optionTextStyles} `}>Пропустить</span>
-      </div> */}
     </div>
   );
 }
