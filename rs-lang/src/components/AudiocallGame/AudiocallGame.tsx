@@ -82,10 +82,14 @@ function GamePage({ categoryIndex }: GamePageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [questions, setQuestions] = useState<QuestionType[]>([]);
+  const [answers, setAnswers] = useState<AnswerType[]>([]);
+  console.log(answers);
+
+  const saveAnswer = (newAnswer: AnswerType) =>
+    setAnswers([...answers, newAnswer]);
 
   // TODO: handle last question and show results
   const loadNextQuestion = () => setQuestionIndex(questionIndex + 1);
-  const answers: AnswerType[] = [];
 
   setTimeout(() => setIsLoading(false), 4000);
   console.log("GamePage rendered");
@@ -110,7 +114,8 @@ function GamePage({ categoryIndex }: GamePageProps) {
       ) : (
         <Question
           questionData={questions[questionIndex]}
-          answers={answers}
+          // answers={answers}
+          saveAnswer={saveAnswer}
           loadNextQuestion={loadNextQuestion}
         />
       )}
@@ -126,8 +131,9 @@ type AnswerType = {
 
 type QuestionProps = {
   questionData: QuestionType;
-  answers: AnswerType[];
+  // answers: AnswerType[];
   loadNextQuestion: () => void;
+  saveAnswer: (answer: AnswerType) => void;
 };
 
 const optionStyles = `w-[180px] h-[50px] bg-black-rgba 
@@ -137,7 +143,12 @@ const optionStyles = `w-[180px] h-[50px] bg-black-rgba
 const optionTextStyles =
   "text-white uppercase text-[14px] leading-[16px] tracking-wider";
 
-function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
+function Question({
+  questionData,
+  // answers,
+  loadNextQuestion,
+  saveAnswer,
+}: QuestionProps) {
   // TODO: implement game logic
   const [answer, setAnswer] = useState<AnswerType | null>(null);
   const [audioURL, setAudioURL] = useState("");
@@ -162,7 +173,9 @@ function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
       isCorrect: questionData.word.id === givenAnswer.id,
     };
 
-    answers.push(newAnswer);
+    // answers.push(newAnswer);
+    saveAnswer(newAnswer);
+    // console.log(answers);
     setAnswer(newAnswer);
   };
 
