@@ -139,7 +139,7 @@ const optionTextStyles =
 
 function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
   // TODO: implement game logic
-  const [answer, setAnswer] = useState<AnswerType>();
+  const [answer, setAnswer] = useState<AnswerType | null>(null);
   const [shuffledOptions, setShuffledOptions] = useState<IWord[]>([]);
 
   useEffect(() => {
@@ -158,6 +158,8 @@ function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
     answers.push(newAnswer);
     setAnswer(newAnswer);
   };
+
+  const resetAnswer = () => setAnswer(null);
 
   const handlePlayAudio = () => {
     console.log("Playing audio!");
@@ -179,16 +181,53 @@ function Question({ questionData, answers, loadNextQuestion }: QuestionProps) {
           );
         })}
       </ul>
-      <div className={`${optionStyles} bg-yellow-600 hover:bg-yellow-500`}>
+      <NextQuestion
+        answer={answer}
+        loadNextQuestion={loadNextQuestion}
+        resetAnswer={resetAnswer}
+      />
+      {/* <div className={`${optionStyles} bg-yellow-600 hover:bg-yellow-500`}>
         <span className={`${optionTextStyles} `}>Пропустить</span>
-      </div>
+      </div> */}
+    </div>
+  );
+}
+
+type NextQuestionProps = {
+  answer: AnswerType | null;
+  resetAnswer: () => void;
+  loadNextQuestion: () => void;
+};
+
+function NextQuestion({
+  answer,
+  resetAnswer,
+  loadNextQuestion,
+}: NextQuestionProps) {
+  const handleClick = () => {
+    resetAnswer();
+    loadNextQuestion();
+  };
+
+  return (
+    <div
+      className={`${optionStyles} ${
+        answer
+          ? "bg-blue-400 hover:bg-blue-300"
+          : "bg-yellow-600 hover:bg-yellow-500"
+      }`}
+      onClick={handleClick}
+    >
+      <span className={`${optionTextStyles} `}>
+        {`${answer ? "Дальше" : "Пропустить"}`}
+      </span>
     </div>
   );
 }
 
 type OptionProps = {
   word: IWord;
-  answer: AnswerType | undefined;
+  answer: AnswerType | null;
   onClick: () => void;
 };
 
