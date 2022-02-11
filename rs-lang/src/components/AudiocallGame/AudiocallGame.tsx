@@ -114,7 +114,6 @@ function GamePage({ categoryIndex }: GamePageProps) {
       ) : (
         <Question
           questionData={questions[questionIndex]}
-          // answers={answers}
           saveAnswer={saveAnswer}
           loadNextQuestion={loadNextQuestion}
         />
@@ -131,7 +130,6 @@ type AnswerType = {
 
 type QuestionProps = {
   questionData: QuestionType;
-  // answers: AnswerType[];
   loadNextQuestion: () => void;
   saveAnswer: (answer: AnswerType) => void;
 };
@@ -145,13 +143,13 @@ const optionTextStyles =
 
 function Question({
   questionData,
-  // answers,
   loadNextQuestion,
   saveAnswer,
 }: QuestionProps) {
   // TODO: implement game logic
   const [answer, setAnswer] = useState<AnswerType | null>(null);
   const [audioURL, setAudioURL] = useState("");
+  const [imgURL, setImgURL] = useState("");
   const [shuffledOptions, setShuffledOptions] = useState<IWord[]>([]);
 
   useEffect(() => {
@@ -159,10 +157,13 @@ function Question({
   }, [questionData.options]);
 
   useEffect(() => {
-    getObjURL(questionData.word.audio).then((objUrl) => {
-      setAudioURL(objUrl);
+    getObjURL(questionData.word.audio).then((audioUrl) => {
+      setAudioURL(audioUrl);
     });
-  }, [questionData.word.audio]);
+    getObjURL(questionData.word.image).then((imgUrl) => {
+      setImgURL(imgUrl);
+    });
+  }, [questionData.word]);
 
   const handleAnswer = (givenAnswer: IWord) => {
     if (answer) return;
@@ -173,9 +174,7 @@ function Question({
       isCorrect: questionData.word.id === givenAnswer.id,
     };
 
-    // answers.push(newAnswer);
     saveAnswer(newAnswer);
-    // console.log(answers);
     setAnswer(newAnswer);
   };
 
@@ -188,7 +187,15 @@ function Question({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <AudioButton onClick={handlePlayAudio} />
+      {answer ? (
+        <AnswerCard
+          word={questionData.word}
+          img={imgURL}
+          onClick={handlePlayAudio}
+        />
+      ) : (
+        <AudioButton onClick={handlePlayAudio} />
+      )}
       <ul className="flex flex-wrap items-center justify-center gap-3 mt-10 mb-8">
         {shuffledOptions.map((word, idx) => {
           return (
@@ -207,6 +214,36 @@ function Question({
         loadNextQuestion={loadNextQuestion}
         resetAnswer={resetAnswer}
       />
+    </div>
+  );
+}
+
+type AnswerCardProps = {
+  word: IWord;
+  img: string;
+  onClick: () => void;
+};
+
+function AnswerCard({ word, img, onClick }: AnswerCardProps) {
+  return (
+    <div
+      className="w-[360px] h-[280px] flex items-center justify-center
+      bg-black-rgba border-2 border-dashed border-white"
+    >
+      <figure>
+        <img className="w-[280px] h-[190px] mb-3" src={img} alt="answer" />
+        <figcaption className="flex items-center justify-center">
+          <span className="text-white uppercase text-[24px] leading-7 tracking-wider">
+            {word.word}
+          </span>
+          <img
+            className="inline-block w-[22px] h-[18px] cursor-pointer ml-2"
+            onClick={onClick}
+            src={audioSvg}
+            alt="play audio"
+          />
+        </figcaption>
+      </figure>
     </div>
   );
 }
@@ -274,12 +311,14 @@ type AudioButtonProps = {
 
 function AudioButton({ onClick }: AudioButtonProps) {
   return (
-    <div
-      className="w-[150px] h-[150px] flex items-center justify-center border-2 border-red-500 border-dashed bg-black-rgba 
+    <div className="w-[360px] h-[280px] flex items-center justify-center">
+      <div
+        className="w-[150px] h-[150px] flex items-center justify-center border-2 border-red-500 border-dashed bg-black-rgba 
         rounded-full cursor-pointer"
-      onClick={onClick}
-    >
-      <img className="w-[70px] h-[58px]" src={audioSvg} alt="play audio" />
+        onClick={onClick}
+      >
+        <img className="w-[70px] h-[58px]" src={audioSvg} alt="play audio" />
+      </div>
     </div>
   );
 }
