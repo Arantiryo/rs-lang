@@ -42,11 +42,11 @@ export default function ResultsTrackingCard({
 
   return (
     <div className={`results-card w-full bg-gray-700 p-4 lg:p-5 ${size}`}>
-      <ul className="list-none flex items-center justify-evenly xs:mb-4">
+      <ul className="list-none flex items-center justify-evenly gap-2 xs:mb-4">
         <li
           className={`${
             tab === "results" && "text-yellow-500 underline"
-          } text-white font-medium ${font} underline-offset-4 mr-2 cursor-pointer`}
+          } text-white font-medium ${font} underline-offset-4 cursor-pointer`}
           onClick={showResultsTab}
         >
           Результаты

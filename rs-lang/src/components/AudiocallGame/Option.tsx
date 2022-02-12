@@ -7,12 +7,12 @@ type OptionProps = {
   onClick: () => void;
 };
 
-export const optionStyles = `w-[180px] h-[50px] bg-black-rgba 
+export const optionStyles = `w-[120px] h-[40px] xs:w-[180px] xs:h-[50px] bg-black-rgba 
   flex items-center justify-center cursor-pointer
   border border-white rounded-[56px]
   hover:border-yellow-500 transition-colors`;
 export const optionTextStyles =
-  "text-white uppercase text-[14px] leading-[16px] tracking-wider";
+  "text-white uppercase text-[12px] leading-[14px] xs:text-[14px] xs:leading-[16px] tracking-wider";
 
 export default function Option({ word, answer, onClick }: OptionProps) {
   const isCorrect = answer && answer.correctAnswer.id === word.id;
