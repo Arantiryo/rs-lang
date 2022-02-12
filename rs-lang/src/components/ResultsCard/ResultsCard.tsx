@@ -1,13 +1,14 @@
 import { MdRepeat } from "react-icons/md";
 import { IoReturnUpBackOutline } from "react-icons/io5";
 import LoaderButton from "../LoaderButton/LoaderButton";
-import { PieChart } from "react-minimal-pie-chart";
 import { useAppSelector } from "../../app/hooks";
 import { useState } from "react";
-import { AnswerType } from "../AudiocallGame/Question";
-import audioSvg from "../../assets/svg/audio.svg";
+import IWord from "../../interfaces/IWord";
+import { getObjURL } from "../../utils/WebClients";
+import Extra from "./Extra";
+import Results from "./Results";
 
-type DataType = {
+export type ResultDataType = {
   title: string;
   value: number;
   color: string;
@@ -30,15 +31,26 @@ export default function ResultsTrackingCard({
   const [tab, setTab] = useState<MenuTabsType>("results");
   const showResultsTab = () => setTab("results");
   const showExtraTab = () => setTab("extra");
+
   const gameResults = useAppSelector((state) => state.latestResultReducer);
+  const { questions, answers } = gameResults;
+  const numCorrect = answers.filter((a) => a.isCorrect).length;
+  const numIncorrect = questions.length - numCorrect;
 
-  console.log(gameResults);
+  const playAudio = (answer: IWord) => {
+    getObjURL(answer.audio).then((audioURL) => {
+      const audio = new Audio(audioURL);
+      audio.play();
+    });
+  };
 
-  const data: DataType[] = [
-    { title: "One", value: 11, color: colors.correct },
-    { title: "Two", value: 16, color: colors.incorrect },
+  const data: ResultDataType[] = [
+    { title: "Correct", value: numCorrect, color: colors.correct },
+    { title: "Incorrect", value: numIncorrect, color: colors.incorrect },
   ];
-  const resultLabel = Math.floor((data[0].value / data[1].value) * 100);
+  const resultLabel = Math.floor(
+    (data[0].value / (data[0].value + data[1].value)) * 100
+  );
 
   return (
     <div className={`results-card w-full bg-gray-700 p-4 lg:p-5 ${size}`}>
@@ -70,12 +82,12 @@ export default function ResultsTrackingCard({
         />
       )}
       {tab === "extra" && (
-        <Extra contentSize={contentSize} answers={gameResults.answers} />
+        <Extra onClick={playAudio} answers={gameResults.answers} />
       )}
       <div className="flex items-center justify-evenly">
         <LoaderButton
           type="button"
-          className={`results__btn_retry ${buttonSize} md:w-[110px] md:h-9 
+          className={`results__btn_retry ${buttonSize} md:w-[110px] md:h-[36px] 
             bg-emerald-700 hover:bg-emerald-600 transition-colors text-white px-1 mr-2`}
         >
           <span
@@ -86,7 +98,7 @@ export default function ResultsTrackingCard({
         </LoaderButton>
         <LoaderButton
           type="button"
-          className={`results__btn_retry ${buttonSize} md:w-[110px] md:h-9 
+          className={`results__btn_retry ${buttonSize} md:w-[110px] md:h-[36px]
             bg-emerald-700 hover:bg-emerald-600 transition-colors text-white px-1`}
         >
           <span
@@ -97,72 +109,6 @@ export default function ResultsTrackingCard({
           </span>
         </LoaderButton>
       </div>
-    </div>
-  );
-}
-
-type ResultsProps = {
-  data: DataType[];
-  resultLabel: number;
-  contentSize: string;
-};
-
-function Results({ data, resultLabel, contentSize }: ResultsProps) {
-  return (
-    <div className="max-h-[310px]">
-      <PieChart
-        className={`py-2 mx-auto w-full h-full ${contentSize} xs:py-1 xs:mb-4`}
-        lineWidth={35}
-        paddingAngle={1}
-        label={() => `${resultLabel}%`}
-        labelStyle={{
-          fontSize: "16px",
-          fontWeight: "500",
-          fontFamily: "sans-serif",
-          fill: "#ffffff",
-        }}
-        labelPosition={0}
-        data={data}
-      />
-    </div>
-  );
-}
-
-type ExtraProps = {
-  contentSize: string;
-  answers: AnswerType[];
-};
-
-function Extra({ answers }: ExtraProps) {
-  return (
-    <div className={`flex items-center justify-center text-center py-2`}>
-      <ul className={`max-w-[800px] w-full`}>
-        {answers.map((answer, idx) => {
-          const li = (
-            <li key={idx} className="flex items-center justify-evenly">
-              <img
-                className="inline-block w-[22px] h-[18px] cursor-pointer mx-1"
-                // onClick={onClick}
-                src={audioSvg}
-                alt="play audio"
-              />
-              <span className="text-white w-full text-[12px] hidden xs:text-[16px] xs:inline-block">
-                {answer.givenAnswer.word}
-              </span>
-              {/* <span className="text-white w-full">
-                {answer.givenAnswer.transcription}
-              </span> */}
-              <span className="text-white w-full">
-                {answer.givenAnswer.wordTranslate}
-              </span>
-              <span className="text-white w-full shrink-[2]">
-                {answer.isCorrect ? "✔️" : "❌"}
-              </span>
-            </li>
-          );
-          return li;
-        })}
-      </ul>
     </div>
   );
 }
