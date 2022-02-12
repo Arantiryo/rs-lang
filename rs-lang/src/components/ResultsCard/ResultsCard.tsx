@@ -7,6 +7,7 @@ import IWord from "../../interfaces/IWord";
 import { getObjURL } from "../../utils/WebClients";
 import Extra from "./Extra";
 import Results from "./Results";
+import { useHistory, useLocation } from "react-router-dom";
 
 export type ResultDataType = {
   title: string;
@@ -31,6 +32,8 @@ export default function ResultsTrackingCard({
   const [tab, setTab] = useState<MenuTabsType>("results");
   const showResultsTab = () => setTab("results");
   const showExtraTab = () => setTab("extra");
+  const history = useHistory();
+  const location = useLocation();
 
   const gameResults = useAppSelector((state) => state.latestResultReducer);
   const { questions, answers } = gameResults;
@@ -42,6 +45,18 @@ export default function ResultsTrackingCard({
       const audio = new Audio(audioURL);
       audio.play();
     });
+  };
+
+  const handleToTextbook = () => {
+    history.push("/textbook");
+  };
+
+  const handleReplayGame = () => {
+    if (location.pathname === `/games/${gameResults.gameName}`) {
+      history.go(0);
+    } else {
+      history.push(`/games/${gameResults.gameName}`);
+    }
   };
 
   const data: ResultDataType[] = [
@@ -87,6 +102,7 @@ export default function ResultsTrackingCard({
       <div className="flex items-center justify-evenly">
         <LoaderButton
           type="button"
+          onClick={handleReplayGame}
           className={`results__btn_retry ${buttonSize} md:w-[110px] md:h-[36px] 
             bg-emerald-700 hover:bg-emerald-600 transition-colors text-white px-1 mr-2`}
         >
@@ -98,6 +114,7 @@ export default function ResultsTrackingCard({
         </LoaderButton>
         <LoaderButton
           type="button"
+          onClick={handleToTextbook}
           className={`results__btn_retry ${buttonSize} md:w-[110px] md:h-[36px]
             bg-emerald-700 hover:bg-emerald-600 transition-colors text-white px-1`}
         >
