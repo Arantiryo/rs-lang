@@ -37,8 +37,8 @@ export default function TextbookWords({ categoryIndex, wordIndex, onClickWord, s
           lg:lg:h-min"
           >
             {
-              [...Array(20)].map(() => {
-                return (<div className="
+              [...Array(20)].map((_, i) => {
+                return (<div key={i} className="
                   bg-gray-700 border border-gray-700 w-24 max-w-xs rounded p-6
                   xs:w-32
                   md:grow

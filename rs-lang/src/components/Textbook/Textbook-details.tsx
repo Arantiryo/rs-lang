@@ -29,8 +29,8 @@ export default function TextbookDetails({ wordIndex, list }: Params) {
             <div className="w-60 flex-1 space-y-6 py-1">
               <div className="h-48 bg-slate-700 rounded"></div>
               <div className="space-y-3">
-                {[...Array(7)].map(() => (
-                  <div className="h-2 bg-slate-700 rounded"></div>
+                {[...Array(7)].map((_, i) => (
+                  <div key={i} className="h-2 bg-slate-700 rounded"></div>
                 ))}
               </div>
             </div>
