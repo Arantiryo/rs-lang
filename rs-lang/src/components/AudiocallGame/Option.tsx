@@ -26,7 +26,7 @@ export default function Option({ word, answer, onClick }: OptionProps) {
       }`}
       onClick={onClick}
     >
-      <span className={`${optionTextStyles} text-center`}>
+      <span className={`${optionTextStyles} text-center select-none`}>
         {word.wordTranslate}
       </span>
     </div>

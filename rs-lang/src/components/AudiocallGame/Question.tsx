@@ -127,7 +127,7 @@ function NextQuestion({
       }`}
       onClick={handleClick}
     >
-      <span className={`${optionTextStyles} `}>
+      <span className={`${optionTextStyles}  select-none`}>
         {`${answer ? "Дальше" : "Пропустить"}`}
       </span>
     </div>
