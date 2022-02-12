@@ -1,18 +1,15 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import ResultsTrackingCard from "../ResultsCard/ResultsCard";
 
 export default function ResultPage() {
-  const userInfo = useAppSelector((state) => state.latestResultReducer);
-
-  console.log(userInfo);
-
-  // const handleLogout = () => {
-  //   dispatch();
-  // };
-
   return (
-    <div className="flex items-center justify-center h-full">
-      <ResultsTrackingCard size="max-w-[300px] max-h-[400px]" />
+    <div className="flex h-full items-center justify-center">
+      <ResultsTrackingCard
+        size="max-w-[500px] "
+        font="text-sm md:text-[16px]"
+        buttonSize="w-20 h-6"
+        contentSize="max-w-[160px] max-h-[160px] md:max-w-[260px] md:max-h-[260px]"
+        showExtra={true}
+      />
     </div>
   );
 }
