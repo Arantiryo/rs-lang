@@ -4,6 +4,7 @@ import { LatestResult } from "../../interfaces/app";
 export const initialState: LatestResult = {
   questions: [],
   answers: [],
+  gameName: "",
 };
 
 export const latestResultSlice = createSlice({
@@ -11,9 +12,10 @@ export const latestResultSlice = createSlice({
   initialState,
   reducers: {
     updateResult: (state, action: PayloadAction<LatestResult>) => {
-      const { questions, answers } = action.payload;
+      const { questions, answers, gameName } = action.payload;
       state.questions = questions;
       state.answers = answers;
+      state.gameName = gameName;
     },
   },
 });

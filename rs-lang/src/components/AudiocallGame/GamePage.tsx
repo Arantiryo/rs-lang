@@ -27,7 +27,7 @@ export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
     if (questionIndex < questions.length - 1) {
       setQuestionIndex(questionIndex + 1);
     } else {
-      dispatch(updateResult({ questions, answers }));
+      dispatch(updateResult({ questions, answers, gameName: "audiocall" }));
       onGameEnd();
     }
   };

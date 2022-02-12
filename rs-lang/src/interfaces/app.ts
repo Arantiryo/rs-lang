@@ -17,4 +17,5 @@ export interface action<T> {
 export interface LatestResult {
   questions: QuestionType[];
   answers: AnswerType[];
+  gameName: string;
 }
