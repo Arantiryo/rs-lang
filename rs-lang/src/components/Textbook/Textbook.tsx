@@ -25,6 +25,9 @@ export const colors = [
   {
     bg: 'bg-rose-500'
   },
+  {
+    bg: 'bg-red-500'
+  }
 ]
 
 export enum CountActionKind {

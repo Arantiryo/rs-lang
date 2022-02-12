@@ -6,6 +6,14 @@ export const getWords = async (page: number, group: number) => {
   return getRequest(`${base}/words?page=${page}&group=${group}`);
 };
 
+export const getUserWords = async (
+  userId: string,
+  page: number,
+  group: number
+) => {
+  return getRequest(`${base}/users/`);
+};
+
 export const getWord = async (wordId: string) => {
   return getRequest(`${base}/words/${wordId}`);
 };

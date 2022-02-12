@@ -16,10 +16,14 @@ export default function TextbookWords({ categoryIndex, wordIndex, onClickWord, s
   const [status, setStatus] = useState('Loading');
 
   useEffect(() => {
-    getWords(page, categoryIndex).then((list: IWord[]) => {
-      setStatus('Success');
-      saveList(list);
-    });
+    if (categoryIndex < colors.length - 1) {
+      getWords(page, categoryIndex).then((list: IWord[]) => {
+        setStatus('Success');
+        saveList(list);
+      });
+    } else {
+      //TODO: запрос на получение категорий пользователя!
+    }
   }, [categoryIndex, saveList, page])
 
   return (
