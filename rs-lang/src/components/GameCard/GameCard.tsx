@@ -1,6 +1,7 @@
 import imgSprint from "../../assets/images/card__sprint.png";
 import imgAudioCall from "../../assets/images/card__audio-call.png";
 import imgWordle from "../../assets/images/card__wordle.png";
+import { Link } from "react-router-dom";
 
 type GameProps = {
   gameType: string;
@@ -44,31 +45,37 @@ export function GameCard({ gameType, name, description, picture }: GameProps) {
 
 export function GameSprint() {
   return (
-    <GameCard
-      gameType="Перевод на скорость"
-      name="Sprint"
-      description="Как можно быстрее определи верный перевод слова перед тобой или нет."
-      picture={imgSprint}
-    />
+    <Link to="/games/spirit">
+      <GameCard
+        gameType="Перевод на скорость"
+        name="Sprint"
+        description="Как можно быстрее определи верный перевод слова перед тобой или нет."
+        picture={imgSprint}
+      />
+    </Link>
   );
 }
 export function GameAudioCall() {
   return (
-    <GameCard
-      gameType="Аудирование"
-      name="Audio call"
-      description="Улучшает восприятие английской речи на слух."
-      picture={imgAudioCall}
-    />
+    <Link to="/games/audiocall">
+      <GameCard
+        gameType="Аудирование"
+        name="Audio call"
+        description="Улучшает восприятие английской речи на слух."
+        picture={imgAudioCall}
+      />
+    </Link>
   );
 }
 export function GameWordle() {
   return (
-    <GameCard
-      gameType="Угадай слово"
-      name="Wordle"
-      description="Угадай слово из пяти букв. Улучшает словарный запас."
-      picture={imgWordle}
-    />
+    <Link to="/games/wordle">
+      <GameCard
+        gameType="Угадай слово"
+        name="Wordle"
+        description="Угадай слово из пяти букв. Улучшает словарный запас."
+        picture={imgWordle}
+      />
+    </Link>
   );
 }

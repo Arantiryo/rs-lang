@@ -15,9 +15,11 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import loginReducer from "../components/LoginForm/loginSlice";
+import latestResultReducer from "../components/AudiocallGame/latestResultSlice";
 
 const reducers = combineReducers({
   loginReducer,
+  latestResultReducer,
 });
 
 const persistConfig = {

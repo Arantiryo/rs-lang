@@ -8,7 +8,7 @@ import {
 export default function GameCards({ className }: { className: string }) {
   return (
     <div
-      className={`${className} relative h-full flex items-center justify-center gap-4 flex-wrap
+      className={`${className} relative flex justify-center gap-4 flex-wrap
         lg:justify-start`}
     >
       <img

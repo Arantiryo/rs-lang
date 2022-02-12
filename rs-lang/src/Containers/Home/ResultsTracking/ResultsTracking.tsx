@@ -2,12 +2,12 @@ import resultsPseudoElem1 from "../../../assets/svg/results-tracking__presudo-el
 import resultsPseudoElem2 from "../../../assets/svg/results-tracking__presudo-elem-2.svg";
 import resultsPseudoCircle from "../../../assets/svg/results-tracking__pseudo.svg";
 import { GameSprint } from "../../../components/GameCard/GameCard";
-import ResultsTrackingCard from "./ResultsCard/ResultsCard";
+import ResultsTrackingCard from "../../../components/ResultsCard/ResultsCard";
 
 export default function ResultsTracking() {
   return (
     <div className="promo-section relative w-full xxl:flex xxl:flex-row-reverse xxl:justify-evenly xxl:py-20">
-      <div className="pl-40">
+      <div className="pl-20 md:pl-40">
         <img
           className="absolute hidden xxl:block xxl:top-[-10px] xxl:right-[-60px]"
           src={resultsPseudoElem2}

@@ -14,9 +14,15 @@ module.exports = {
       mw: { max: "767px" },
     },
     extend: {
+      backgroundImage: {
+        audiocall: "url('./assets/images/bg_main_audiocall.png')",
+      },
+      colors: {
+        "black-rgba": "rgba(17, 24, 39, 0.7)",
+      },
       boxShadow: {
-        '3xl': '0px -60px 24px 0px rgba(34, 60, 80, 0.1) inset',
-      }
+        "3xl": "0px -60px 24px 0px rgba(34, 60, 80, 0.1) inset",
+      },
     },
   },
   plugins: [],

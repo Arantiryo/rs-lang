@@ -8,9 +8,7 @@ import pseudo2 from "../../../assets/svg/games__pseudo2.svg";
 
 export default function GameCards({ className }: { className: string }) {
   return (
-    <div
-      className={`${className} relative h-full flex items-center gap-3 flex-wrap`}
-    >
+    <div className={`${className} relative flex gap-3 flex-wrap`}>
       <img
         className="absolute hidden md:block md:top-[220px] md:right-[220px]"
         src={pseudo1}
