@@ -3,7 +3,6 @@ import ResultsTrackingCard from "../ResultsCard/ResultsCard";
 
 export default function ResultPage() {
   const userInfo = useAppSelector((state) => state.latestResultReducer);
-  // const dispatch = useAppDispatch();
 
   console.log(userInfo);
 
