@@ -1,11 +1,13 @@
 import { MdRepeat } from "react-icons/md";
 import { IoReturnUpBackOutline } from "react-icons/io5";
-import tempResultsCircle from "../../../../assets/svg/results-tacking__temp-stats-circle.svg";
-import LoaderButton from "../../../../components/LoaderButton/LoaderButton";
+import tempResultsCircle from "../../assets/svg/results-tacking__temp-stats-circle.svg";
+import LoaderButton from "../LoaderButton/LoaderButton";
 
-export default function ResultsTrackingCard() {
+export default function ResultsTrackingCard({
+  size = "ml-auto max-w-[280px] max-h-[330px]",
+}) {
   return (
-    <div className="results-card ml-auto w-full bg-gray-700 max-w-[280px] max-h-[330px] p-4 lg:p-7">
+    <div className={`results-card w-full bg-gray-700 p-4 lg:p-7 ${size}`}>
       <ul className="list-none flex items-center justify-evenly xs:mb-4">
         <li className="text-yellow-500 font-medium text-[8px] leading-[10px] xs:text-sm underline underline-offset-4 mr-2">
           Результаты

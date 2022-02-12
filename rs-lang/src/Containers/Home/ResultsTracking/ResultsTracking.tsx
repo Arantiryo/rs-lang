@@ -2,7 +2,7 @@ import resultsPseudoElem1 from "../../../assets/svg/results-tracking__presudo-el
 import resultsPseudoElem2 from "../../../assets/svg/results-tracking__presudo-elem-2.svg";
 import resultsPseudoCircle from "../../../assets/svg/results-tracking__pseudo.svg";
 import { GameSprint } from "../../../components/GameCard/GameCard";
-import ResultsTrackingCard from "./ResultsCard/ResultsCard";
+import ResultsTrackingCard from "../../../components/ResultsCard/ResultsCard";
 
 export default function ResultsTracking() {
   return (

@@ -1,3 +1,4 @@
+import { AnswerType, QuestionType } from "../components/AudiocallGame/Question";
 import { ACTION_TYPES } from "./actionTypes";
 
 export interface State {
@@ -11,4 +12,9 @@ export interface State {
 export interface action<T> {
   type: ACTION_TYPES;
   value: T;
+}
+
+export interface LatestResult {
+  questions: QuestionType[];
+  answers: AnswerType[];
 }

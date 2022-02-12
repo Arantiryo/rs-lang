@@ -1,6 +1,7 @@
 import { useState } from "react";
 import StartPage from "./StartPage";
 import GamePage from "./GamePage";
+import ResultPage from "./ResultPage";
 
 type GameStatusType = "prep" | "running" | "result";
 
@@ -10,6 +11,7 @@ export default function AudiocallGame() {
 
   const chooseCategory = (index: number) => setCategoryIndex(index);
   const startGame = () => setGameStatus("running");
+  const finishGame = () => setGameStatus("result");
 
   return (
     <>
@@ -20,7 +22,10 @@ export default function AudiocallGame() {
           onGameBegin={startGame}
         />
       )}
-      {gameStatus === "running" && <GamePage categoryIndex={categoryIndex} />}
+      {gameStatus === "running" && (
+        <GamePage categoryIndex={categoryIndex} onGameEnd={finishGame} />
+      )}
+      {gameStatus === "result" && <ResultPage />}
     </>
   );
 }
