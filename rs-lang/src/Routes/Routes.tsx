@@ -5,6 +5,7 @@ import Games from "../Containers/Games/Games";
 import Home from "../Containers/Home/Home";
 import Login from "../Containers/Login/Login";
 import Signup from "../Containers/Signup/Signup";
+import Statistics from "../Containers/Statistics/Statistics";
 import Team from "../Containers/Team/Team";
 import TextbookPage from "../Containers/TextbookPage/TextbookPage";
 
@@ -31,6 +32,9 @@ export default function Routes() {
       </Route>
       <Route exact path="/team">
         <Team />
+      </Route>
+      <Route exact path="/statistics">
+        <Statistics />
       </Route>
     </Switch>
   );
