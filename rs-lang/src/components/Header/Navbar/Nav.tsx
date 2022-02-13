@@ -26,29 +26,39 @@ const RightNav = ({ open }: NavProps) => {
     >
       <li>
         <NavLink
-          className={"py-2 px-3 xl:px-8 text-white cursor-pointer text-center hover:text-yellow-500 transition-colors"}
-          to="/textbook" activeClassName="text-yellow-500">
+          className={
+            "py-2 px-3 xl:px-8 text-white cursor-pointer text-center hover:text-yellow-500 transition-colors"
+          }
+          to="/textbook"
+          activeClassName="text-yellow-500"
+        >
           Учебник
         </NavLink>
       </li>
       <li>
         <NavLink
           className="py-2 px-3 xl:px-8 text-white cursor-pointer text-center hover:text-yellow-500 transition-colors"
-          to="/games" activeClassName="text-yellow-500">
+          to="/games"
+          activeClassName="text-yellow-500"
+        >
           Игры
         </NavLink>
       </li>
       <li>
         <NavLink
           className="py-2 px-3 xl:px-8 text-white cursor-pointer text-center hover:text-yellow-500 transition-colors"
-          to="/team" activeClassName="text-yellow-500">
+          to="/team"
+          activeClassName="text-yellow-500"
+        >
           О команде
         </NavLink>
       </li>
       <li>
         <NavLink
           className="py-2 px-3 xl:px-8 text-white cursor-pointer text-center hover:text-yellow-500 transition-colors"
-          to="/statistics" activeClassName="text-yellow-500">
+          to="/statistics"
+          activeClassName="text-yellow-500"
+        >
           Статистика
         </NavLink>
       </li>
@@ -57,15 +67,19 @@ const RightNav = ({ open }: NavProps) => {
           <li>
             <NavLink
               className="py-2 px-3 xl:px-8 text-white cursor-pointer text-center hover:text-yellow-500 transition-colors"
-              to="/signup" activeClassName="text-yellow-500">
+              to="/signup"
+              activeClassName="text-yellow-500"
+            >
               Регистрация
             </NavLink>
           </li>
           <li>
             <NavLink
-              className="text-white cursor-pointer text-center transition-colors bg-emerald-700 hover:bg-emerald-600"
-              to="/login" activeClassName="text-yellow-500">
-              <div className="py-2 px-6 xl:px-8 w-full mx-auto h-full ">
+              className="text-white cursor-pointer text-center"
+              to="/login"
+              activeClassName="text-yellow-500"
+            >
+              <div className="py-2 px-6 xl:px-8 w-full mx-auto h-full transition-colors bg-emerald-700 hover:bg-emerald-600">
                 Войти
               </div>
             </NavLink>
