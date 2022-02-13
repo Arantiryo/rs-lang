@@ -11,7 +11,12 @@ export default function Games() {
       </div>
       <div className="bg-gray-800 grow-[2]">
         <Main className="h-full">
-          <GameCards className="pt-20" />
+          <div>
+            <h2 className="text-2xl font-bold tracking-wider text-emerald-700 mb-6">
+              Игры
+            </h2>
+          </div>
+          <GameCards className="pt-15" />
         </Main>
       </div>
       <div className="bg-gray-900 w-full">

@@ -11,6 +11,12 @@ export default function Statistics() {
       </div>
       <div className="bg-gray-800 grow-[2]">
         <Main className="h-full">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold tracking-wider text-emerald-700">
+              Статистика
+            </h2>
+            <p className="text-base text-indigo-400">Статистика за сегодня</p>
+          </div>
           <GeneralStats />
         </Main>
       </div>

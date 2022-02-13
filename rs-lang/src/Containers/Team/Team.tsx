@@ -11,7 +11,12 @@ export default function Team() {
       </div>
       <div className="bg-gray-800 grow-[2]">
         <Main className="h-full">
-          <TeamCards className="pt-2 pb-5" />
+          <div>
+            <h2 className="text-2xl font-bold tracking-wider text-emerald-700 mb-6">
+              Команда разработчиков
+            </h2>
+          </div>
+          <TeamCards className="pb-5" />
         </Main>
       </div>
       <div className="bg-gray-900 w-full">
