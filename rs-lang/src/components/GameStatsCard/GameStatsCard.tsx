@@ -30,7 +30,7 @@ export function GameStatsCard({
     >
       <div className={`overflow-hidden min-w-[170px] sm:h-full`}>
         <h4
-          className={`text-white font-semibold tracking-[1px] text-[18px] leading-[21px] sm:mb-2`}
+          className={`text-white font-semibold tracking-[1px] text-[18px] leading-[21px] mb-2`}
         >
           {name}
         </h4>

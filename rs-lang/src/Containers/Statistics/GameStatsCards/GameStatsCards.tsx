@@ -6,7 +6,9 @@ import {
 
 export default function GameStatsCards({ className }: { className: string }) {
   return (
-    <div className={`${className} relative flex gap-3 flex-wrap`}>
+    <div
+      className={`${className} relative flex justify-center md:justify-start gap-3 flex-wrap`}
+    >
       <div className="relative">
         <GameStatsSprint />
       </div>
