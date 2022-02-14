@@ -42,28 +42,17 @@ export default function WordleGame() {
 
   return (
     <div className="h-full flex justify-center">
-      <Board currentGuess={guess} submittedGuesses={submittedGuesses} />
-    </div>
-  );
-}
-
-type BoardProps = {
-  currentGuess: GuessType;
-  submittedGuesses: GuessType[];
-};
-
-function Board({ currentGuess, submittedGuesses }: BoardProps) {
-  return (
-    <div className="max-w-[350px] max-h-[420px] flex flex-col gap-1">
-      {submittedGuesses.map((guess, i) => (
-        <PreviousGuess key={i} guess={guess} />
-      ))}
-      <CurrentGuess currentGuess={currentGuess} />
-      {Array.from({ length: maxGuesses - submittedGuesses.length - 1 }).map(
-        (_, i) => (
-          <EmptyGuess key={i} />
-        )
-      )}
+      <div className="max-w-[350px] max-h-[420px] flex flex-col gap-1">
+        {submittedGuesses.map((guess, i) => (
+          <PreviousGuess key={i} guess={guess} />
+        ))}
+        <CurrentGuess currentGuess={guess} />
+        {Array.from({ length: maxGuesses - submittedGuesses.length - 1 }).map(
+          (_, i) => (
+            <EmptyGuess key={i} />
+          )
+        )}
+      </div>
     </div>
   );
 }
