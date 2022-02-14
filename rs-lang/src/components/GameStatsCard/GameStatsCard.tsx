@@ -46,7 +46,9 @@ export function GameStatsCard({
         </p>
         <p className={`text-white font-medium text-[12px] leading-[14px] mb-2`}>
           <span className="flex gap-1">
-            <BsFillBarChartFill />{" "}
+            <span className="text-[14px]">
+              <BsFillBarChartFill />
+            </span>{" "}
             {`Самая длинная серия правильных ответов: ${longestStreak}`}
           </span>
         </p>

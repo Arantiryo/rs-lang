@@ -11,7 +11,7 @@ export default function GeneralStats() {
         src={pseudo1}
         alt="pseudo element"
       />
-      <div className="flex justify-end gap-[75px] w-[70%] pt-10">
+      <div className="flex justify-end gap-[75px] w-[70%] pt-5">
         <div className="flex flex-col items-center">
           <span className="text-white font-extrabold text-[72px] leading-[84px]">
             10
