@@ -1,54 +1,15 @@
-import React from "react";
 import { useAppSelector } from "../../app/hooks";
-import { colors } from "./Textbook";
-
-const caterogriesList = [
-  {
-    name: 'Beginner',
-    title: '1-600',
-    level: 'A1'
-  },
-  {
-    name: 'Easy',
-    title: '601-1200',
-    level: 'A2'
-  },
-  {
-    name: 'Normal',
-    title: '1201-1800',
-    level: 'B1'
-  },
-  {
-    name: 'Medium',
-    title: '1801-2400',
-    level: 'B2'
-  },
-  {
-    name: 'Hard',
-    title: '2401-3000',
-    level: 'C1'
-  },
-  {
-    name: 'Monstrous',
-    title: '3001-3600',
-    level: 'C2'
-  },
-  {
-    name: 'Сложные',
-    title: 'слова',
-    level: 'C'
-  }
-];
+import { CountActionKind } from "./Textbook";
+import { caterogriesList, colors } from "./Textbook-data";
 
 type Params = {
   categoryIndex: number,
   onClickCategory: (index: number) => void,
+  resetPageIndex: (index: { type: CountActionKind; jump?: number }) => void,
 }
 
-export default function TextbookCategories({ categoryIndex, onClickCategory }: Params) {
+export default function TextbookCategories({ categoryIndex, onClickCategory, resetPageIndex }: Params) {
   const userInfo = useAppSelector((state) => state.loginReducer);
-  console.log(userInfo.userId)
-  console.log(userInfo.token)
 
   return (
     <div className="
@@ -68,7 +29,10 @@ export default function TextbookCategories({ categoryIndex, onClickCategory }: P
                 ${index === categoryIndex ? `${colors[categoryIndex].bg} text-white ` : 'opacity-40'}`
               }
               key={index}
-              onClick={() => onClickCategory(index)}
+              onClick={() => {
+                resetPageIndex({ type: CountActionKind.RESET, jump: 0 })
+                onClickCategory(index);
+              }}
             >
               <div>
                 <div>{obj.name}</div>
@@ -85,7 +49,10 @@ export default function TextbookCategories({ categoryIndex, onClickCategory }: P
                 ${index === categoryIndex ? `${colors[categoryIndex].bg} text-white ` : 'opacity-40'}`
               }
               key={index}
-              onClick={() => onClickCategory(index)}
+              onClick={() => {
+                resetPageIndex({ type: CountActionKind.RESET, jump: 0 })
+                onClickCategory(index)
+              }}
             >
               <div>
                 <div>{obj.name}</div>
@@ -100,5 +67,3 @@ export default function TextbookCategories({ categoryIndex, onClickCategory }: P
     </div>
   );
 }
-
-

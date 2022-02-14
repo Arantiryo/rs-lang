@@ -1,25 +1,110 @@
 import { useEffect, useState } from "react";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { useAppSelector } from "../../app/hooks";
 import IWord from "../../interfaces/IWord";
-import { getObjURL } from "../../utils/WebClients";
+import { createUserWord, deleteUserWord, getObjURL } from "../../utils/WebClients";
 
 type Params = {
   wordIndex: number;
   list: IWord[];
+  forceUpdate: () => void;
+  resetWordId: (index: number) => void;
 };
 
-export default function TextbookDetails({ wordIndex, list }: Params) {
+export default function TextbookDetails({ wordIndex, list, forceUpdate, resetWordId }: Params) {
+  const userInfo = useAppSelector((state) => state.loginReducer);
   const [status, setStatus] = useState("Loading");
   const [img, setImg] = useState("");
 
   useEffect(() => {
-    if (list.length) {
-      const fileName = list[wordIndex].image;
-      getObjURL(fileName).then((imgObj) => {
-        setStatus("Success");
-        setImg(imgObj);
-      });
+    if (list.length !== 0) {
+      const fileName = list[wordIndex] ? list[wordIndex].image : '';
+      if (fileName) {
+        getObjURL(fileName).then((imgObj) => {
+          setStatus("Success");
+          setImg(imgObj);
+        });
+      }
     }
   }, [wordIndex, list]);
+
+  const setWordStatus = (type: string) => {
+    const userId = userInfo.userId;
+    const token = userInfo.token;
+    const wordId = list[wordIndex]._id || '';
+    const word = { difficulty: type, optional: {} };
+
+    createUserWord({ userId, wordId, word, token });
+    forceUpdate();
+  }
+
+  const removeWordStatus = () => {
+    const userId = userInfo.userId;
+    const wordId = list[wordIndex]._id || '';
+    const token = userInfo.token;
+    deleteUserWord({ userId, wordId, token });
+    resetWordId(0);
+    forceUpdate();
+  }
+
+  const renderButtons = () => {
+    switch (list[wordIndex] ? list[wordIndex].userWord?.difficulty : '') {
+      case 'learned': return (
+        <button
+          className="
+          flex items-center relative border 
+          rounded-full h-7 p-2 mt-4 border-green-400 bg-green-900
+          hover:opacity-80
+          "
+          onClick={() => removeWordStatus()}>
+          <span className="flex gap-1 items-center justify-between">
+            <AiOutlineMinus />убрать из изуч.
+          </span>
+        </button>
+      )
+      case 'hard': return (
+        <button
+          className="
+          flex items-center relative border 
+          border-pink-400 bg-pink-900 rounded-full h-7 p-2 mt-4
+          hover:opacity-80
+          "
+          onClick={() => removeWordStatus()}>
+          <span className="flex gap-1 items-center justify-between">
+            <AiOutlineMinus />убрать из сложн.
+          </span>
+        </button>
+      )
+      default:
+        return (
+          <div className="flex items-center gap-1 mt-4">
+            <button
+              className="
+              flex items-center relative border 
+              rounded-full h-7 p-2 border-pink-400 bg-pink-900
+              hover:opacity-80
+              "
+              onClick={() => setWordStatus('hard')}>
+              <span className="flex gap-1 items-center justify-between">
+                <AiOutlinePlus />сложн. слова
+              </span>
+
+            </button>
+            <button
+              className="
+              flex items-center relative 
+              border rounded-full h-7 p-2 border-green-400 bg-green-900
+              hover:opacity-80
+              "
+              onClick={() => setWordStatus('learned')}>
+              <span className="flex gap-1 items-center justify-between">
+                <AiOutlinePlus />изучено
+              </span>
+            </button>
+          </div>
+        );
+    }
+  }
 
   return (
     <div>
@@ -37,7 +122,7 @@ export default function TextbookDetails({ wordIndex, list }: Params) {
           </div>
         </div>
       )}
-      {status === "Success" && (
+      {status === "Success" && list.length !== 0 && (
         <div
           className="max-w-xs border rounded border-gray-700 bg-gray-700 p-3
           md:w-72
@@ -51,11 +136,11 @@ export default function TextbookDetails({ wordIndex, list }: Params) {
                 alt="word"
               />
               <div className="flex gap-2 absolute bottom-5 right-2">
-                <span>{list[wordIndex].transcription}</span>
-                <span>{list[wordIndex].word}</span>
+                <span>{(list[wordIndex]) ? list[wordIndex].transcription : ''}</span>
+                <span>{list[wordIndex] ? list[wordIndex].word : ''}</span>
               </div>
               <div className="relative text-right bottom-6 right-2 truncate pl-4">
-                {list[wordIndex].wordTranslate}
+                {(list[wordIndex]) ? list[wordIndex].wordTranslate : ''}
               </div>
             </div>
             <div></div>
@@ -64,22 +149,24 @@ export default function TextbookDetails({ wordIndex, list }: Params) {
             <div className="my-2">Значение</div>
             <div
               className="my-1 text-slate-300"
-              dangerouslySetInnerHTML={{ __html: list[wordIndex].textMeaning }}
+              dangerouslySetInnerHTML={{ __html: list[wordIndex] ? list[wordIndex].textMeaning : '' }}
             ></div>
             <div className="my-1 text-sky-300">
-              {list[wordIndex].textMeaningTranslate}
+              {(list[wordIndex]) ? list[wordIndex].textMeaningTranslate : ''}
             </div>
           </div>
           <div>
             <div className="my-2">Пример</div>
             <div
               className="my-1 text-slate-300"
-              dangerouslySetInnerHTML={{ __html: list[wordIndex].textExample }}
+              dangerouslySetInnerHTML={{ __html: list[wordIndex] ? list[wordIndex].textExample : '' }}
             ></div>
             <div className="my-1 text-sky-300">
-              {list[wordIndex].textExampleTranslate}
+              {(list[wordIndex]) ? list[wordIndex].textExampleTranslate : ''}
             </div>
           </div>
+
+          {userInfo.userId !== '' && renderButtons()}
         </div>
       )}
     </div>

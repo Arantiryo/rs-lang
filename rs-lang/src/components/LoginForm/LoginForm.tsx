@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import closeIcon from "../../assets/svg/close.svg";
-import { UserLoginInfo, UserDto } from "../../interfaces/user";
+import { UserDto, UserLoginInfo } from "../../interfaces/user";
 import { loginUser } from "../../utils/WebClients";
 import CustomInput from "../CustomInput/CustomInput";
 import LoaderButton from "../LoaderButton/LoaderButton";
@@ -22,8 +22,8 @@ export default function LoginForm() {
     loginUser(user)
       .then((res: UserLoginInfo) => {
         alert("Успех! Вы будете перенаправлены на главную страницу!");
-        // console.log(res);
         dispatch(updateUserInfo(res));
+        //createUserStat(res.userId, res.token);
         setTimeout(() => history.push("/"), 3000);
       })
       .catch((err) => {
