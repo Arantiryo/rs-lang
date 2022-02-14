@@ -2,6 +2,7 @@ import Header from "../../components/Header/Header";
 import Main from "../../components/Main/Main";
 import Footer from "../../components/Footer/Footer";
 import GeneralStats from "./GeneralStats/GeneralStats";
+import GameStatsCards from "./GameStatsCards/GameStatsCards";
 
 export default function Statistics() {
   return (
@@ -18,6 +19,7 @@ export default function Statistics() {
             <p className="text-base text-indigo-400">Статистика за сегодня</p>
           </div>
           <GeneralStats />
+          <GameStatsCards className="pt-[70px] pb-5" />
         </Main>
       </div>
       <div className="bg-gray-900 w-full">
