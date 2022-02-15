@@ -8,6 +8,8 @@ export default function WordleGame() {
   const [guess, setGuess] = useState<GuessType>([]);
   const [submittedGuesses, setSubmittedGuesses] = useState<GuessType[]>([]);
 
+  const word = "hello";
+
   useEffect(() => {
     const handleKeyDown = ({ key }: { key: string }) => {
       const isChar = /^[a-z]$/.test(key);
@@ -23,7 +25,7 @@ export default function WordleGame() {
         });
       } else if (isChar && guess.length < 5) {
         setGuess((prev) => [...prev, key]);
-      } else if (isGuessFinished && isSubmit) {
+      } else if (isGuessFinished && isSubmit && submittedGuesses.length < 6) {
         setSubmittedGuesses((prev) => [...prev, guess]);
         setGuess([]);
       }
@@ -44,9 +46,9 @@ export default function WordleGame() {
     <div className="h-full flex justify-center">
       <div className="max-w-[350px] max-h-[420px] flex flex-col gap-1">
         {submittedGuesses.map((guess, i) => (
-          <PreviousGuess key={i} guess={guess} />
+          <SubmittedGuess key={i} guess={guess} />
         ))}
-        <CurrentGuess currentGuess={guess} />
+        {submittedGuesses.length < 6 && <CurrentGuess currentGuess={guess} />}
         {Array.from({ length: maxGuesses - submittedGuesses.length - 1 }).map(
           (_, i) => (
             <EmptyGuess key={i} />
@@ -74,7 +76,7 @@ function CurrentGuess({ currentGuess }: { currentGuess: GuessType }) {
 const cellStyle =
   "w-[60px] h-[60px] flex items-center justify-center text-white text-[32px] uppercase select-none border border-gray-400";
 
-function PreviousGuess({ guess }: { guess: GuessType }) {
+function SubmittedGuess({ guess }: { guess: GuessType }) {
   return (
     <div className="flex items-start gap-1">
       {guess.map((char, i) => {
