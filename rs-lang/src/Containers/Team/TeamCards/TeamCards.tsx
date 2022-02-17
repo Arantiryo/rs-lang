@@ -16,7 +16,6 @@ export default function GameCards({ className }: { className: string }) {
         src={pseudo1}
         alt="pseudo element"
       />
-
       <div className="relative">
         <CardMulteng />
       </div>
