@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import Delayed from "../Delayed/Delayed";
+import LoaderButton from "../LoaderButton/LoaderButton";
 
 type GuessType = string[];
 
@@ -16,11 +19,13 @@ const getWordCharCount = (word: string) =>
   }, {});
 
 export default function WordleGame({ word = "hello" }) {
+  const history = useHistory();
   const [guess, setGuess] = useState<GuessType>([]);
   const [submittedGuesses, setSubmittedGuesses] = useState<GuessType[]>([]);
   const [isCorrect, setIsCorrect] = useState(false);
 
   const wordCharMap = getWordCharCount(word);
+  const isFinished = submittedGuesses.length === maxGuesses && !isCorrect;
 
   useEffect(() => {
     const handleKeyDown = ({ key }: { key: string }) => {
@@ -57,9 +62,13 @@ export default function WordleGame({ word = "hello" }) {
     };
   }, [guess, submittedGuesses, word, isCorrect]);
 
+  const handleReplayGame = () => {
+    history.go(0);
+  };
+
   return (
-    <div className="h-full flex justify-center pt-2">
-      <div className="max-w-[350px] max-h-[420px] flex flex-col gap-1">
+    <div className="h-full flex flex-col items-center pt-2">
+      <div className="max-w-[350px] max-h-[420px] flex flex-col gap-1 pb-5">
         {submittedGuesses.map((guess, i) => (
           <SubmittedGuess
             key={i}
@@ -77,6 +86,29 @@ export default function WordleGame({ word = "hello" }) {
           <EmptyGuess key={i} />
         ))}
       </div>
+      {isFinished && (
+        <Delayed>
+          <span className="text-white text-[16px]">
+            Ваши попытки закончились. Удачи в следующий раз!
+          </span>
+        </Delayed>
+      )}
+      {isCorrect && (
+        <Delayed>
+          <span className="text-white text-[16px]">Успех!</span>
+        </Delayed>
+      )}
+      {(isFinished || isCorrect) && (
+        <Delayed>
+          <LoaderButton
+            className="mt-2 w-[92px] h-[40px] text-base
+              bg-emerald-600 hover:bg-emerald-500 transition-colors text-white"
+            onClick={handleReplayGame}
+          >
+            Повторить
+          </LoaderButton>
+        </Delayed>
+      )}
     </div>
   );
 }
