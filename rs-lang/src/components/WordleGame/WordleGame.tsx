@@ -39,12 +39,16 @@ export default function WordleGame({ word = "hello" }) {
     ({ key }: { key: string }) => {
       if (isCorrect) return;
 
-      console.log(key);
-
       const isChar = /^[a-z]$/.test(key);
       const isBackspace = key === "Backspace";
       const isSubmit = key === "Enter";
       const isGuessFinished = guess.length === wordLength;
+
+      const submitGuess = () => {
+        setSubmittedGuesses((prev) => [...prev, guess]);
+        setGuess([]);
+        if (guess.join("") === word) setIsCorrect(true);
+      };
 
       if (isBackspace) {
         setGuess((prev) => {
@@ -64,12 +68,14 @@ export default function WordleGame({ word = "hello" }) {
             if (res?.title === "No Definitions Found") {
               showNoSuchWordWarning();
             } else {
-              setSubmittedGuesses((prev) => [...prev, guess]);
-              setGuess([]);
-              if (guess.join("") === word) setIsCorrect(true);
+              submitGuess();
             }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            // skip the word check if there's a problem w/ the dictionary API or the network
+            submitGuess();
+          });
       }
     },
     [guess, submittedGuesses, word, isCorrect]
