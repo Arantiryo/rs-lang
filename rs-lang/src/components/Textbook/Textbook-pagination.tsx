@@ -1,5 +1,7 @@
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { colors, CountActionKind } from './Textbook';
+import IWord from "../../interfaces/IWord";
+import { CountActionKind } from './Textbook';
+import { colors } from "./Textbook-data";
 
 function getPageIndexes(pageIndex: number) {
   switch (true) {
@@ -14,21 +16,30 @@ function getPageIndexes(pageIndex: number) {
   }
 }
 
+function getPageIndexesForHard(pageIndex: number, MAX: number) {
+  return pageIndex + 1;
+}
+
 export default function TextbookPagination(props: {
+  list: IWord[],
   page: number,
   categoryIndex: number,
   onClickPage: (index: { type: CountActionKind; jump?: number }) => void,
+  resetWordId: (index: number) => void,
+  totalCounts: number
 }) {
-
   return (
     <>
-      <button onClick={() => props.onClickPage({ type: CountActionKind.DECREASE })}>
+      <button onClick={() => {
+        props.onClickPage({ type: CountActionKind.DECREASE })
+        props.resetWordId(0);
+      }}>
         <span>
           <MdKeyboardArrowLeft className="text-lg lg:text-3xl" />
         </span>
       </button>
       <div className="flex">
-        {getPageIndexes(props.page).map((p, i) => {
+        {props.categoryIndex < 6 && getPageIndexes(props.page).map((p, i) => {
           if (p === '...') {
             return (<div
               key={i}
@@ -50,8 +61,14 @@ export default function TextbookPagination(props: {
               </button>)
           }
         })}
+        {props.categoryIndex === 6 &&
+          getPageIndexesForHard(props.page, props.totalCounts)
+        }
       </div>
-      <button onClick={() => props.onClickPage({ type: CountActionKind.INCREACE })}>
+      <button onClick={() => {
+        props.onClickPage({ type: CountActionKind.INCREACE })
+        props.resetWordId(0);
+      }}>
         <span>
           <MdKeyboardArrowRight className="text-lg lg:text-3xl" />
         </span>

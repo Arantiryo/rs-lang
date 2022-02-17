@@ -1,8 +1,8 @@
 import {
-  configureStore,
-  ThunkAction,
   Action,
   combineReducers,
+  configureStore,
+  ThunkAction,
 } from "@reduxjs/toolkit";
 import {
   FLUSH,
@@ -14,12 +14,14 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import loginReducer from "../components/LoginForm/loginSlice";
 import latestResultReducer from "../components/AudiocallGame/latestResultSlice";
+import loginReducer from "../components/LoginForm/loginSlice";
+import textbookReducer from "../components/Textbook/TextbookSlice";
 
 const reducers = combineReducers({
   loginReducer,
   latestResultReducer,
+  textbookReducer,
 });
 
 const persistConfig = {

@@ -1,4 +1,3 @@
-import { useAppSelector } from "../../app/hooks";
 import Footer from "../../components/Footer/Footer";
 import { GameAudioCall, GameSprint, GameWordle } from "../../components/GameCard/GameCard";
 import Header from "../../components/Header/Header";
@@ -6,8 +5,6 @@ import Main from "../../components/Main/Main";
 import Textbook from "../../components/Textbook/Textbook";
 
 export default function TextbookPage() {
-  const userInfo = useAppSelector((state) => state.loginReducer);
-  console.log(userInfo);
 
   return (
     <>
