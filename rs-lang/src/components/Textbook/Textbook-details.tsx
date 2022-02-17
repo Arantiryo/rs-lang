@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { BsFillVolumeUpFill } from "react-icons/bs";
 import { useAppSelector } from "../../app/hooks";
 import IWord from "../../interfaces/IWord";
 import { createUserWord, deleteUserWord, getObjURL } from "../../utils/WebClients";
@@ -15,14 +16,19 @@ export default function TextbookDetails({ wordIndex, list, forceUpdate, resetWor
   const userInfo = useAppSelector((state) => state.loginReducer);
   const [status, setStatus] = useState("Loading");
   const [img, setImg] = useState("");
+  const [audioURL, setAudioURL] = useState("");
 
   useEffect(() => {
     if (list.length !== 0) {
-      const fileName = list[wordIndex] ? list[wordIndex].image : '';
-      if (fileName) {
-        getObjURL(fileName).then((imgObj) => {
+      const imgFileName = list[wordIndex] ? list[wordIndex].image : '';
+      const audioFileName = list[wordIndex] ? list[wordIndex].audio : '';
+      if (imgFileName) {
+        getObjURL(imgFileName).then((imgObj) => {
           setStatus("Success");
           setImg(imgObj);
+        });
+        getObjURL(audioFileName).then((audioURL) => {
+          setAudioURL(audioURL);
         });
       }
     }
@@ -36,6 +42,11 @@ export default function TextbookDetails({ wordIndex, list, forceUpdate, resetWor
 
     createUserWord({ userId, wordId, word, token });
     forceUpdate();
+  }
+
+  const handlePlayAudio = () => {
+    const audio = new Audio(audioURL);
+    audio.play();
   }
 
   const removeWordStatus = () => {
@@ -77,7 +88,7 @@ export default function TextbookDetails({ wordIndex, list, forceUpdate, resetWor
       )
       default:
         return (
-          <div className="flex items-center gap-1 mt-4">
+          <div className="flex flex-wrap items-center gap-1 mt-4">
             <button
               className="
               flex items-center relative border 
@@ -85,7 +96,7 @@ export default function TextbookDetails({ wordIndex, list, forceUpdate, resetWor
               hover:opacity-80
               "
               onClick={() => setWordStatus('hard')}>
-              <span className="flex gap-1 items-center justify-between">
+              <span className="flex truncate gap-1 items-center justify-between">
                 <AiOutlinePlus />сложн. слова
               </span>
 
@@ -135,12 +146,20 @@ export default function TextbookDetails({ wordIndex, list, forceUpdate, resetWor
                 src={img}
                 alt="word"
               />
-              <div className="flex gap-2 absolute bottom-5 right-2">
-                <span>{(list[wordIndex]) ? list[wordIndex].transcription : ''}</span>
-                <span>{list[wordIndex] ? list[wordIndex].word : ''}</span>
-              </div>
-              <div className="relative text-right bottom-6 right-2 truncate pl-4">
-                {(list[wordIndex]) ? list[wordIndex].wordTranslate : ''}
+
+              <div className="flex flex-col">
+                <div className="z-10 relative left-2 bottom-7">
+                  <BsFillVolumeUpFill className="cursor-pointer text-xl hover:opacity-80" onClick={handlePlayAudio} />
+                </div>
+                <div>
+                  <div className="flex truncate gap-2 absolute bottom-7 right-2">
+                    <span>{(list[wordIndex]) ? list[wordIndex].transcription : ''}</span>
+                    <span>{list[wordIndex] ? list[wordIndex].word : ''}</span>
+                  </div>
+                  <div className="relative text-right right-2 bottom-12 truncate pl-4">
+                    {(list[wordIndex]) ? list[wordIndex].wordTranslate : ''}
+                  </div>
+                </div>
               </div>
             </div>
             <div></div>

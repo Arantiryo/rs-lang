@@ -86,7 +86,7 @@ export default function TextbookWords({ categoryIndex, wordIndex, onClickWord, s
           key={index}
           onClick={() => onClickWord(index)}
         >
-          <div>{obj.word}</div>
+          <div className="truncate">{obj.word}</div>
           <div className="truncate">{obj.wordTranslate}</div>
         </div>
       )}
