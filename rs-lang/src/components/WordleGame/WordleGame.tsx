@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { getWordFromDictionary } from "../../utils/WebClients";
 import Delayed from "../Delayed/Delayed";
@@ -34,9 +34,11 @@ export default function WordleGame({ word = "hello" }) {
     setTimeout(() => setNoSuchWord(false), 3000);
   };
 
-  useEffect(() => {
-    const handleKeyDown = ({ key }: { key: string }) => {
+  const handleKeyDown = useCallback(
+    ({ key }: { key: string }) => {
       if (isCorrect) return;
+
+      console.log(key);
 
       const isChar = /^[a-z]$/.test(key);
       const isBackspace = key === "Backspace";
@@ -49,7 +51,7 @@ export default function WordleGame({ word = "hello" }) {
           temp.pop();
           return temp;
         });
-      } else if (isChar && guess.length < wordLength) {
+      } else if (isChar && !isGuessFinished) {
         setGuess((prev) => [...prev, key]);
       } else if (
         isGuessFinished &&
@@ -68,14 +70,17 @@ export default function WordleGame({ word = "hello" }) {
           })
           .catch((err) => console.log(err));
       }
-    };
+    },
+    [guess, submittedGuesses, word, isCorrect]
+  );
 
+  useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [guess, submittedGuesses, word, isCorrect]);
+  }, [handleKeyDown]);
 
   const handleReplayGame = () => {
     history.go(0);
