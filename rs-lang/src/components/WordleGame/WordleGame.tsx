@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 type GuessType = string[];
 
 const maxGuesses = 6;
+const wordLength = 5;
 
 const getWordCharCount = (word: string) =>
   word.split("").reduce<Record<string, number>>((acc, val) => {
@@ -28,7 +29,7 @@ export default function WordleGame({ word = "hello" }) {
       const isChar = /^[a-z]$/.test(key);
       const isBackspace = key === "Backspace";
       const isSubmit = key === "Enter";
-      const isGuessFinished = guess.length === 5;
+      const isGuessFinished = guess.length === wordLength;
 
       if (isBackspace) {
         setGuess((prev) => {
@@ -36,7 +37,7 @@ export default function WordleGame({ word = "hello" }) {
           temp.pop();
           return temp;
         });
-      } else if (isChar && guess.length < 5) {
+      } else if (isChar && guess.length < wordLength) {
         setGuess((prev) => [...prev, key]);
       } else if (
         isGuessFinished &&
@@ -57,7 +58,7 @@ export default function WordleGame({ word = "hello" }) {
   }, [guess, submittedGuesses, word, isCorrect]);
 
   return (
-    <div className="h-full flex justify-center">
+    <div className="h-full flex justify-center pt-2">
       <div className="max-w-[350px] max-h-[420px] flex flex-col gap-1">
         {submittedGuesses.map((guess, i) => (
           <SubmittedGuess
@@ -67,7 +68,7 @@ export default function WordleGame({ word = "hello" }) {
             wordCharMap={wordCharMap}
           />
         ))}
-        {!isCorrect && submittedGuesses.length < 6 && (
+        {!isCorrect && submittedGuesses.length < maxGuesses && (
           <CurrentGuess currentGuess={guess} />
         )}
         {Array.from({
@@ -81,11 +82,24 @@ export default function WordleGame({ word = "hello" }) {
 }
 
 function CurrentGuess({ currentGuess }: { currentGuess: GuessType }) {
+  const [scaleClass, setScaleClass] = useState("scale-110");
+
+  useEffect(() => {
+    setScaleClass("scale-110");
+    const t = setTimeout(() => setScaleClass("scale-100"), 100);
+    return () => clearTimeout(t);
+  }, [currentGuess]);
+
   return (
     <div className="flex items-start gap-1">
-      {Array.from({ length: 5 }).map((__, i) => {
+      {Array.from({ length: wordLength }).map((__, i) => {
         return (
-          <div key={i} className={cellStyle}>
+          <div
+            key={i}
+            className={`${cellStyle} ${
+              i === currentGuess.length - 1 ? scaleClass : ""
+            }`}
+          >
             {currentGuess[i] || ""}
           </div>
         );
@@ -142,7 +156,7 @@ function SubmittedGuess({ guess, word, wordCharMap }: SubmittedGuessType) {
 function EmptyGuess() {
   return (
     <div className="flex items-start gap-1">
-      {Array.from({ length: 5 }).map((__, i) => {
+      {Array.from({ length: wordLength }).map((__, i) => {
         return (
           <div key={i} className={cellStyle}>
             {""}
