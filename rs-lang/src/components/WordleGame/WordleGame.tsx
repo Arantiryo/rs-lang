@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { getWordFromDictionary } from "../../utils/WebClients";
 import Delayed from "../Delayed/Delayed";
 import LoaderButton from "../LoaderButton/LoaderButton";
 
@@ -23,9 +24,15 @@ export default function WordleGame({ word = "hello" }) {
   const [guess, setGuess] = useState<GuessType>([]);
   const [submittedGuesses, setSubmittedGuesses] = useState<GuessType[]>([]);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [noSuchWord, setNoSuchWord] = useState(false);
 
   const wordCharMap = getWordCharCount(word);
   const isFinished = submittedGuesses.length === maxGuesses && !isCorrect;
+
+  const showNoSuchWordWarning = () => {
+    setNoSuchWord(true);
+    setTimeout(() => setNoSuchWord(false), 3000);
+  };
 
   useEffect(() => {
     const handleKeyDown = ({ key }: { key: string }) => {
@@ -49,9 +56,17 @@ export default function WordleGame({ word = "hello" }) {
         isSubmit &&
         submittedGuesses.length < maxGuesses
       ) {
-        setSubmittedGuesses((prev) => [...prev, guess]);
-        setGuess([]);
-        if (guess.join("") === word) setIsCorrect(true);
+        getWordFromDictionary(guess.join(""))
+          .then((res) => {
+            if (res?.title === "No Definitions Found") {
+              showNoSuchWordWarning();
+            } else {
+              setSubmittedGuesses((prev) => [...prev, guess]);
+              setGuess([]);
+              if (guess.join("") === word) setIsCorrect(true);
+            }
+          })
+          .catch((err) => console.log(err));
       }
     };
 
@@ -67,7 +82,12 @@ export default function WordleGame({ word = "hello" }) {
   };
 
   return (
-    <div className="h-full flex flex-col items-center pt-2">
+    <div className="relative h-full flex flex-col items-center pt-6">
+      {noSuchWord && (
+        <span className="absolute top-[-5px] text-white text-[16px]">
+          Слова нет в словаре
+        </span>
+      )}
       <div className="max-w-[350px] max-h-[420px] flex flex-col gap-1 pb-5">
         {submittedGuesses.map((guess, i) => (
           <SubmittedGuess

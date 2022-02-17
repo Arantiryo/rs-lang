@@ -57,6 +57,10 @@ export const getWord = async (wordId: string) => {
   return getRequest(`${base}/words/${wordId}`);
 };
 
+export const getWordFromDictionary = async (word: string) => {
+  return getRequest(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+};
+
 export const createUser = async (user: CreateUserDto) => {
   return postRequest(`${base}/users`, user);
 };
