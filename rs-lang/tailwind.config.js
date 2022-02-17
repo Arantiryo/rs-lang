@@ -24,6 +24,15 @@ module.exports = {
       boxShadow: {
         "3xl": "0px -60px 24px 0px rgba(34, 60, 80, 0.1) inset",
       },
+      animation: {
+        flip: "flip 0.5s linear",
+      },
+      keyframes: {
+        flip: {
+          "0%, 100%": { transform: "rotateX(0deg)" },
+          "50%": { transform: "rotateX(90deg)" },
+        },
+      },
     },
   },
   plugins: [],
