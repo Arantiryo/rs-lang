@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { getWordFromDictionary } from "../../utils/WebClients";
 import Delayed from "../Delayed/Delayed";
 import LoaderButton from "../LoaderButton/LoaderButton";
+import { IoBackspaceOutline } from "react-icons/io5";
 
 type GuessType = string[];
 
@@ -134,7 +135,60 @@ export default function WordleGame({ word = "hello" }) {
           </LoaderButton>
         </Delayed>
       )}
+      <Keyboard onClick={handleKeyDown} />
     </div>
+  );
+}
+
+type KeyboardProps = {
+  onClick: ({ key }: { key: string }) => void;
+};
+
+function Keyboard({ onClick }: KeyboardProps) {
+  const keys = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+  return (
+    <div className="mt-auto">
+      {keys.map((row, i) => {
+        return (
+          <div key={i} className="mb-[5px] flex gap-[5px] justify-center">
+            {i === 2 && (
+              <KeyboardButton letter={"Enter"} key={-1} onClick={onClick} />
+            )}
+            {row.split("").map((key, idx) => {
+              return (
+                <KeyboardButton letter={key} key={idx} onClick={onClick} />
+              );
+            })}
+            {i === 2 && (
+              <KeyboardButton letter={"Backspace"} key={8} onClick={onClick} />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+type KeyboardButtonProps = {
+  letter: string;
+  onClick: ({ key }: { key: string }) => void;
+};
+
+function KeyboardButton({ letter, onClick }: KeyboardButtonProps) {
+  const key = letter;
+  return (
+    <button
+      onClick={() => onClick({ key })}
+      className="h-[60px] min-w-[43px] p-[14px] text-white text-[16px] rounded-sm cursor-pointer bg-gray-500 hover:bg-gray-400 uppercase select-none"
+    >
+      {letter !== "Backspace" ? (
+        letter
+      ) : (
+        <span className="text-[24px]">
+          <IoBackspaceOutline />
+        </span>
+      )}
+    </button>
   );
 }
 
