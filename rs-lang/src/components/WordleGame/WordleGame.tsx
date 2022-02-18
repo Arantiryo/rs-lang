@@ -175,10 +175,13 @@ type KeyboardProps = {
 function Keyboard({ onClick, usedChars }: KeyboardProps) {
   const keys = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
   return (
-    <div className="mt-auto">
+    <div className="mt-auto mb-2 w-full xs:w-auto">
       {keys.map((row, i) => {
         return (
-          <div key={i} className="mb-[5px] flex gap-[5px] justify-center">
+          <div
+            key={i}
+            className="mb-[2px] xs:mb-[5px] flex gap-[2px] xs:gap-[5px] justify-center w-full"
+          >
             {i === 2 && (
               <KeyboardButton letter={"Enter"} key={-1} onClick={onClick} />
             )}
@@ -225,14 +228,14 @@ function KeyboardButton({
   return (
     <button
       onClick={() => onClick({ key })}
-      className={`h-[60px] min-w-[43px] p-[14px] text-white text-[16px] font-medium rounded-md cursor-pointer 
-        bg-gray-500 hover:bg-gray-400 uppercase select-none 
+      className={`xs:h-[60px] xs:min-w-[43px] p-[8px] xs:p-[14px] text-white text-[12px] xs:text-[16px] font-medium rounded-md cursor-pointer 
+        bg-gray-500 hover:bg-gray-400 uppercase select-none flex items-center justify-center grow xs:grow-0
         transition-colors duration-0 delay-500 ${bgColor}`}
     >
       {letter !== "Backspace" ? (
         letter
       ) : (
-        <span className="text-[24px]">
+        <span className="text-[16px] xs:text-[24px]">
           <IoBackspaceOutline />
         </span>
       )}
@@ -268,7 +271,7 @@ function CurrentGuess({ currentGuess }: { currentGuess: GuessType }) {
 }
 
 const cellStyle =
-  "w-[60px] h-[60px] flex items-center justify-center text-white text-[32px] uppercase select-none border border-gray-40";
+  "w-[50px] h-[50px] xs:w-[60px] xs:h-[60px] flex items-center justify-center text-white text-[32px] uppercase select-none border border-gray-40";
 
 const cellCorrect = "bg-emerald-500";
 const cellPresent = "bg-yellow-500";
