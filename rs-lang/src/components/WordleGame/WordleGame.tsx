@@ -225,7 +225,9 @@ function KeyboardButton({
   return (
     <button
       onClick={() => onClick({ key })}
-      className={`h-[60px] min-w-[43px] p-[14px] text-white text-[16px] font-medium rounded-md cursor-pointer bg-gray-500 hover:bg-gray-400 uppercase select-none ${bgColor}`}
+      className={`h-[60px] min-w-[43px] p-[14px] text-white text-[16px] font-medium rounded-md cursor-pointer 
+        bg-gray-500 hover:bg-gray-400 uppercase select-none 
+        transition-colors duration-0 delay-500 ${bgColor}`}
     >
       {letter !== "Backspace" ? (
         letter
