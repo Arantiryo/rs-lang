@@ -40,8 +40,10 @@ export default function TextbookDetails({ wordIndex, list, forceUpdate, resetWor
     const wordId = list[wordIndex]._id || '';
     const word = { difficulty: type, optional: {} };
 
-    createUserWord({ userId, wordId, word, token });
-    forceUpdate();
+    createUserWord({ userId, wordId, word, token }).then(() => {
+      forceUpdate();
+    });
+
   }
 
   const handlePlayAudio = () => {
@@ -53,9 +55,10 @@ export default function TextbookDetails({ wordIndex, list, forceUpdate, resetWor
     const userId = userInfo.userId;
     const wordId = list[wordIndex]._id || '';
     const token = userInfo.token;
-    deleteUserWord({ userId, wordId, token });
-    resetWordId(0);
-    forceUpdate();
+    deleteUserWord({ userId, wordId, token }).then(() => {
+      resetWordId(0);
+      forceUpdate();
+    });
   }
 
   const renderButtons = () => {

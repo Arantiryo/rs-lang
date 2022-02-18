@@ -7,7 +7,7 @@ export const initialState: TextbookInfo = {
   page: 0,
 };
 
-export const loginSlice = createSlice({
+export const textbookSlice = createSlice({
   name: "textbookInfo",
   initialState,
   reducers: {
@@ -20,5 +20,5 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { updateTextbookInfo } = loginSlice.actions;
-export default loginSlice.reducer;
+export const { updateTextbookInfo } = textbookSlice.actions;
+export default textbookSlice.reducer;
