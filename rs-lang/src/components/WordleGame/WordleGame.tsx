@@ -27,6 +27,11 @@ export default function WordleGame({ word = "hello" }) {
   const [isCorrect, setIsCorrect] = useState(false);
   const [noSuchWord, setNoSuchWord] = useState(false);
 
+  const [usedChars, setUsedChars] = useState({
+    correct: new Set<string>(),
+    present: new Set<string>(),
+  });
+
   const wordCharMap = getWordCharCount(word);
   const isFinished = submittedGuesses.length === maxGuesses && !isCorrect;
 
@@ -34,6 +39,21 @@ export default function WordleGame({ word = "hello" }) {
     setNoSuchWord(true);
     setTimeout(() => setNoSuchWord(false), 3000);
   };
+
+  const setChars = useCallback(
+    (guess: GuessType, word: string) => {
+      guess.forEach((char, i) => {
+        const isCorrect = char === word[i];
+        const isPresent = !isCorrect && word.includes(char);
+        const tempChars = { ...usedChars };
+
+        isCorrect && tempChars.correct.add(char);
+        isPresent && tempChars.present.add(char);
+        setUsedChars(tempChars);
+      });
+    },
+    [usedChars]
+  );
 
   const handleKeyDown = useCallback(
     ({ key }: { key: string }) => {
@@ -47,6 +67,7 @@ export default function WordleGame({ word = "hello" }) {
       const submitGuess = () => {
         setSubmittedGuesses((prev) => [...prev, guess]);
         setGuess([]);
+        setChars(guess, word);
         if (guess.join("") === word) setIsCorrect(true);
       };
 
@@ -78,7 +99,7 @@ export default function WordleGame({ word = "hello" }) {
           });
       }
     },
-    [guess, submittedGuesses, word, isCorrect]
+    [guess, submittedGuesses, word, isCorrect, setChars]
   );
 
   useEffect(() => {
@@ -141,16 +162,17 @@ export default function WordleGame({ word = "hello" }) {
           </LoaderButton>
         </Delayed>
       )}
-      <Keyboard onClick={handleKeyDown} />
+      <Keyboard onClick={handleKeyDown} usedChars={usedChars} />
     </div>
   );
 }
 
 type KeyboardProps = {
   onClick: ({ key }: { key: string }) => void;
+  usedChars: { correct: Set<string>; present: Set<string> };
 };
 
-function Keyboard({ onClick }: KeyboardProps) {
+function Keyboard({ onClick, usedChars }: KeyboardProps) {
   const keys = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
   return (
     <div className="mt-auto">
@@ -161,8 +183,21 @@ function Keyboard({ onClick }: KeyboardProps) {
               <KeyboardButton letter={"Enter"} key={-1} onClick={onClick} />
             )}
             {row.split("").map((key, idx) => {
+              const isCorrect = usedChars.correct.has(key);
+              const isPresent = usedChars.present.has(key);
+              const bgColor = isCorrect
+                ? "bg-emerald-600"
+                : isPresent
+                ? "bg-yellow-500"
+                : "";
+
               return (
-                <KeyboardButton letter={key} key={idx} onClick={onClick} />
+                <KeyboardButton
+                  bgColor={bgColor}
+                  letter={key}
+                  key={idx}
+                  onClick={onClick}
+                />
               );
             })}
             {i === 2 && (
@@ -178,14 +213,19 @@ function Keyboard({ onClick }: KeyboardProps) {
 type KeyboardButtonProps = {
   letter: string;
   onClick: ({ key }: { key: string }) => void;
+  bgColor?: string;
 };
 
-function KeyboardButton({ letter, onClick }: KeyboardButtonProps) {
+function KeyboardButton({
+  letter,
+  onClick,
+  bgColor = "",
+}: KeyboardButtonProps) {
   const key = letter;
   return (
     <button
       onClick={() => onClick({ key })}
-      className="h-[60px] min-w-[43px] p-[14px] text-white text-[16px] rounded-sm cursor-pointer bg-gray-500 hover:bg-gray-400 uppercase select-none"
+      className={`h-[60px] min-w-[43px] p-[14px] text-white text-[16px] font-medium rounded-md cursor-pointer bg-gray-500 hover:bg-gray-400 uppercase select-none ${bgColor}`}
     >
       {letter !== "Backspace" ? (
         letter
