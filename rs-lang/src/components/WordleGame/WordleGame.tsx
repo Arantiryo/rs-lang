@@ -3,12 +3,18 @@ import { useHistory } from "react-router-dom";
 import { getWordFromDictionary } from "../../utils/WebClients";
 import Delayed from "../Delayed/Delayed";
 import LoaderButton from "../LoaderButton/LoaderButton";
-import { IoBackspaceOutline } from "react-icons/io5";
+import { CurrentGuess } from "./CurrentGuess";
+import { EmptyGuess } from "./EmptyGuess";
+import { Keyboard } from "./Keyboard";
+import { SubmittedGuess } from "./SubmittedGuess";
 
-type GuessType = string[];
+export type GuessType = string[];
 
-const maxGuesses = 6;
-const wordLength = 5;
+export const maxGuesses = 6;
+export const wordLength = 5;
+
+export const cellStyle =
+  "w-[50px] h-[50px] xs:w-[60px] xs:h-[60px] flex items-center justify-center text-white text-[32px] uppercase select-none border border-gray-40";
 
 const getWordCharCount = (word: string) =>
   word.split("").reduce<Record<string, number>>((acc, val) => {
@@ -163,182 +169,6 @@ export default function WordleGame({ word = "hello" }) {
         </Delayed>
       )}
       <Keyboard onClick={handleKeyDown} usedChars={usedChars} />
-    </div>
-  );
-}
-
-type KeyboardProps = {
-  onClick: ({ key }: { key: string }) => void;
-  usedChars: { correct: Set<string>; present: Set<string> };
-};
-
-function Keyboard({ onClick, usedChars }: KeyboardProps) {
-  const keys = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
-  return (
-    <div className="mt-auto mb-2 w-full xs:w-auto">
-      {keys.map((row, i) => {
-        return (
-          <div
-            key={i}
-            className="mb-[2px] xs:mb-[5px] flex gap-[2px] xs:gap-[5px] justify-center w-full"
-          >
-            {i === 2 && (
-              <KeyboardButton letter={"Enter"} key={-1} onClick={onClick} />
-            )}
-            {row.split("").map((key, idx) => {
-              const isCorrect = usedChars.correct.has(key);
-              const isPresent = usedChars.present.has(key);
-              const bgColor = isCorrect
-                ? "bg-emerald-600"
-                : isPresent
-                ? "bg-yellow-500"
-                : "";
-
-              return (
-                <KeyboardButton
-                  bgColor={bgColor}
-                  letter={key}
-                  key={idx}
-                  onClick={onClick}
-                />
-              );
-            })}
-            {i === 2 && (
-              <KeyboardButton letter={"Backspace"} key={8} onClick={onClick} />
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-type KeyboardButtonProps = {
-  letter: string;
-  onClick: ({ key }: { key: string }) => void;
-  bgColor?: string;
-};
-
-function KeyboardButton({
-  letter,
-  onClick,
-  bgColor = "",
-}: KeyboardButtonProps) {
-  const key = letter;
-  return (
-    <button
-      onClick={() => onClick({ key })}
-      className={`xs:h-[60px] xs:min-w-[43px] p-[8px] xs:p-[14px] text-white text-[12px] xs:text-[16px] font-medium rounded-md cursor-pointer 
-        bg-gray-500 hover:bg-gray-400 uppercase select-none flex items-center justify-center grow xs:grow-0
-        transition-colors duration-0 delay-500 ${bgColor}`}
-    >
-      {letter !== "Backspace" ? (
-        letter
-      ) : (
-        <span className="text-[16px] xs:text-[24px]">
-          <IoBackspaceOutline />
-        </span>
-      )}
-    </button>
-  );
-}
-
-function CurrentGuess({ currentGuess }: { currentGuess: GuessType }) {
-  const [scaleClass, setScaleClass] = useState("scale-110");
-
-  useEffect(() => {
-    setScaleClass("scale-110");
-    const t = setTimeout(() => setScaleClass("scale-100"), 100);
-    return () => clearTimeout(t);
-  }, [currentGuess]);
-
-  return (
-    <div className="flex items-start gap-1">
-      {Array.from({ length: wordLength }).map((__, i) => {
-        return (
-          <div
-            key={i}
-            className={`${cellStyle} ${
-              i === currentGuess.length - 1 ? scaleClass : ""
-            } transition-all duration-100`}
-          >
-            {currentGuess[i] || ""}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-const cellStyle =
-  "w-[50px] h-[50px] xs:w-[60px] xs:h-[60px] flex items-center justify-center text-white text-[32px] uppercase select-none border border-gray-40";
-
-const cellCorrect = "bg-emerald-500";
-const cellPresent = "bg-yellow-500";
-
-type SubmittedGuessType = {
-  guess: GuessType;
-  word: string;
-  wordCharMap: Record<string, number>;
-};
-
-function SubmittedGuess({ guess, word, wordCharMap }: SubmittedGuessType) {
-  const [transitionValue, setTransitionValue] = useState("rotateX(0deg)");
-
-  useEffect(() => {
-    setTransitionValue("rotateX(90deg)");
-    const t = setTimeout(() => setTransitionValue("rotateX(0deg)"), 0);
-    return () => clearTimeout(t);
-  }, []);
-
-  const charMap = { ...wordCharMap };
-  word.split("").forEach((char, i) => {
-    if (word[i] === guess[i]) {
-      charMap[char] -= 1;
-    }
-  });
-
-  return (
-    <div className="flex items-start gap-1">
-      {guess.map((char, i) => {
-        const isCorrect = char === word[i];
-        const transitionDelay = `${i * 100}ms`;
-        let isPresent = false;
-
-        if (!isCorrect && charMap[char]) {
-          isPresent = true;
-          charMap[char] -= 1;
-        }
-
-        return (
-          <div
-            key={i}
-            style={{
-              transform: transitionValue,
-              transitionDelay: transitionDelay,
-              transitionDuration: "500ms",
-            }}
-            className={`${cellStyle} 
-              ${isCorrect ? cellCorrect : isPresent ? cellPresent : ""}`}
-          >
-            {char}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-function EmptyGuess() {
-  return (
-    <div className="flex items-start gap-1">
-      {Array.from({ length: wordLength }).map((__, i) => {
-        return (
-          <div key={i} className={cellStyle}>
-            {""}
-          </div>
-        );
-      })}
     </div>
   );
 }
