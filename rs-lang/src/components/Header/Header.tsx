@@ -24,7 +24,6 @@ export default function Header({
       </Link>
       {isGameHeader ? (
         <div className="flex gap-2 items-center justify-center">
-          {/* <Rules /> */}
           {!!GameControls && GameControls}
           <Link to="/games" className="text-gray-200">
             <img src={closeIcon} alt="close" />
