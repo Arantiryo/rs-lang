@@ -123,9 +123,9 @@ export default function WordleGame({ word = "hello" }) {
   return (
     <div className="relative h-full flex flex-col items-center pt-6">
       {noSuchWord && (
-        <span className="absolute top-[-5px] text-white text-[16px]">
+        <div className="absolute bg-black-rgba p-[2px] top-[-5px] text-white text-[16px]">
           Слова нет в словаре
-        </span>
+        </div>
       )}
       <div className="max-w-[350px] max-h-[420px] flex flex-col gap-1 pb-5">
         {submittedGuesses.map((guess, i) => (

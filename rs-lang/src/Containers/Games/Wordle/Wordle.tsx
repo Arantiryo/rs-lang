@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../../../components/Header/Header";
 import Main from "../../../components/Main/Main";
+import { backupWordOptions as wordOptions } from "../../../components/WordleGame/wordleData";
 import WordleGame from "../../../components/WordleGame/WordleGame";
 import IWord from "../../../interfaces/IWord";
 import { getWords } from "../../../utils/WebClients";
@@ -29,11 +30,22 @@ const getWord = async () => {
 
 export default function Wordle() {
   const [word, setWord] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     getWord()
       .then((res) => setWord(res.word))
-      .catch((err) => console.log(err));
+      .catch((err: Error) => {
+        console.log(err.message);
+
+        if (err.message === "Could not get the word from the server") {
+          const backupWord =
+            wordOptions[Math.floor(Math.random() * wordOptions.length)];
+          setWord(backupWord);
+        } else {
+          setError(`${err.message}. Please reload the page and try again.`);
+        }
+      });
   }, []);
 
   return (
@@ -43,7 +55,11 @@ export default function Wordle() {
       </div>
       <div className={`grow-[2]`}>
         <Main className="h-full" transparentBg={true}>
-          {!!word && <WordleGame word={word} />}
+          {error ? (
+            <span className="text-white text-[16px]">{error}</span>
+          ) : (
+            !!word && <WordleGame word={word} />
+          )}
         </Main>
       </div>
     </div>
