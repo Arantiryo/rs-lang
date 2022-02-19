@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import IWord from "../../interfaces/IWord";
 import { getObjURL } from "../../utils/WebClients";
 import AnswerCard from "./AnswerCard";
