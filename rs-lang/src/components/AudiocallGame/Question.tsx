@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import IWord from "../../interfaces/IWord";
 import { getObjURL } from "../../utils/WebClients";
 import AnswerCard from "./AnswerCard";
@@ -34,6 +34,11 @@ export default function Question({
   const [imgURL, setImgURL] = useState("");
   const [shuffledOptions, setShuffledOptions] = useState<IWord[]>([]);
 
+  const handlePlayAudio = () => {
+    const audio = new Audio(audioURL);
+    audio.play();
+  };
+
   // switch options around so the right answer isn't obvious
   useEffect(() => {
     setShuffledOptions(shuffle(questionData.options));
@@ -41,8 +46,9 @@ export default function Question({
 
   // audio and image URLs
   useEffect(() => {
-    getObjURL(questionData.word.audio).then((audioUrl) => {
-      setAudioURL(audioUrl);
+    getObjURL(questionData.word.audio).then((url) => {
+      setAudioURL(url);
+      new Audio(url).play();
     });
     getObjURL(questionData.word.image).then((imgUrl) => {
       setImgURL(imgUrl);
@@ -63,11 +69,6 @@ export default function Question({
   };
 
   const resetAnswer = () => setAnswer(null);
-
-  const handlePlayAudio = () => {
-    const audio = new Audio(audioURL);
-    audio.play();
-  };
 
   return (
     <div className="flex flex-col items-center justify-center">
