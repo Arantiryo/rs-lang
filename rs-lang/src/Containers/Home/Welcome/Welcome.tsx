@@ -6,8 +6,15 @@ import welcomePseudoElem2 from "../../../assets/svg/welcome__pseudo-elem-2.svg";
 import welcomePseudoElem4 from "../../../assets/svg/welcome__pseudo-elem-4.svg";
 import welcomePseudoElem5 from "../../../assets/svg/welcome__pseudo-elem-5.svg";
 import welcomePseudoElem6 from "../../../assets/svg/welcome__pseudo-elem-6.svg";
+import { useHistory } from "react-router-dom";
 
 export default function Welcome() {
+  const history = useHistory();
+
+  const handleToTextbook = () => {
+    history.push("/textbook");
+  };
+
   return (
     <div className="promo-section relative w-full">
       <img
@@ -41,13 +48,14 @@ export default function Welcome() {
           Учите новые слова каждый день
         </h1>
         <p className="text-xs sm:text-sm lg:text-xl leading-5 text-white tracking-wider">
-          Увлекательные игры для тренировки слов и метод интервального
-          повторения для запоминания слов
+          Увлекательные игры для тренировки слов и метод интервального повторения для запоминания
+          слов
         </p>
       </div>
       <div className="relative flex items-start justify-between md:mb-10 lg:mb-0">
         <LoaderButton
           type="button"
+          onClick={handleToTextbook}
           className="welcome__btn_begin relative top-5 w-18 h-7 xs:w-24 xs:h-9 lg:w-32 lg:h-14 
           bg-emerald-700 hover:bg-emerald-600 transition-colors text-white text-sm lg:text-lg px-1"
         >
