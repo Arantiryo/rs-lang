@@ -33,10 +33,8 @@ export default function WordleGame({ word = "hello" }) {
   const [isCorrect, setIsCorrect] = useState(false);
   const [noSuchWord, setNoSuchWord] = useState(false);
 
-  const [usedChars, setUsedChars] = useState({
-    correct: new Set<string>(),
-    present: new Set<string>(),
-  });
+  const [usedChars, setUsedChars] = useState<Record<string, string>>({});
+  console.log(usedChars);
 
   const wordCharMap = getWordCharCount(word);
   const isFinished = submittedGuesses.length === maxGuesses && !isCorrect;
@@ -48,15 +46,27 @@ export default function WordleGame({ word = "hello" }) {
 
   const setChars = useCallback(
     (guess: GuessType, word: string) => {
+      let tempChars = { ...usedChars };
+
       guess.forEach((char, i) => {
         const isCorrect = char === word[i];
         const isPresent = !isCorrect && word.includes(char);
-        const tempChars = { ...usedChars };
 
-        isCorrect && tempChars.correct.add(char);
-        isPresent && tempChars.present.add(char);
-        setUsedChars(tempChars);
+        const charStatus = isCorrect
+          ? "correct"
+          : isPresent
+          ? "present"
+          : "missing";
+
+        if (tempChars.hasOwnProperty(char)) {
+          if (isCorrect || (isPresent && tempChars[char] !== "correct"))
+            tempChars[char] = charStatus;
+        } else {
+          tempChars[char] = charStatus;
+        }
       });
+
+      setUsedChars(tempChars);
     },
     [usedChars]
   );

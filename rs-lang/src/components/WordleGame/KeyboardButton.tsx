@@ -16,8 +16,8 @@ export function KeyboardButton({
     <button
       onClick={() => onClick({ key })}
       className={`xs:h-[60px] xs:min-w-[43px] p-[8px] xs:p-[14px] text-white text-[12px] xs:text-[16px] font-medium rounded-md cursor-pointer 
-        bg-gray-500 hover:bg-gray-400 uppercase select-none flex items-center justify-center grow xs:grow-0
-        transition-colors duration-0 delay-500 ${bgColor}`}
+      hover:bg-gray-400 uppercase select-none flex items-center justify-center grow xs:grow-0
+        transition-colors duration-300 ${bgColor ? bgColor : "bg-gray-500"}`}
     >
       {letter !== "Backspace" ? (
         letter

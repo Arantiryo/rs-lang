@@ -2,7 +2,7 @@ import { KeyboardButton } from "./KeyboardButton";
 
 type KeyboardProps = {
   onClick: ({ key }: { key: string }) => void;
-  usedChars: { correct: Set<string>; present: Set<string> };
+  usedChars: Record<string, string>;
 };
 
 export function Keyboard({ onClick, usedChars }: KeyboardProps) {
@@ -19,12 +19,16 @@ export function Keyboard({ onClick, usedChars }: KeyboardProps) {
               <KeyboardButton letter={"Enter"} key={-1} onClick={onClick} />
             )}
             {row.split("").map((key, idx) => {
-              const isCorrect = usedChars.correct.has(key);
-              const isPresent = usedChars.present.has(key);
+              const isCorrect = usedChars[key] === "correct";
+              const isPresent = usedChars[key] === "present";
+              const isMissing = usedChars[key] === "missing";
+
               const bgColor = isCorrect
                 ? "bg-emerald-600"
                 : isPresent
                 ? "bg-yellow-500"
+                : isMissing
+                ? "bg-gray-800"
                 : "";
 
               return (

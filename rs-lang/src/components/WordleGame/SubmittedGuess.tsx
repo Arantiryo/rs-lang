@@ -51,7 +51,13 @@ export function SubmittedGuess({
               transitionDuration: "500ms",
             }}
             className={`${cellStyle} 
-              ${isCorrect ? cellCorrect : isPresent ? cellPresent : ""}`}
+              ${
+                isCorrect
+                  ? cellCorrect
+                  : isPresent
+                  ? cellPresent
+                  : "bg-gray-800"
+              }`}
           >
             {char}
           </div>
