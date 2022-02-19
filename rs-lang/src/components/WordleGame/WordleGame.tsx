@@ -34,7 +34,6 @@ export default function WordleGame({ word = "hello" }) {
   const [noSuchWord, setNoSuchWord] = useState(false);
 
   const [usedChars, setUsedChars] = useState<Record<string, string>>({});
-  console.log(usedChars);
 
   const wordCharMap = getWordCharCount(word);
   const isFinished = submittedGuesses.length === maxGuesses && !isCorrect;

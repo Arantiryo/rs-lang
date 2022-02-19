@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../../../components/Header/Header";
 import Main from "../../../components/Main/Main";
+import Rules from "../../../components/WordleGame/Rules";
 import { backupWordOptions as wordOptions } from "../../../components/WordleGame/wordleData";
 import WordleGame from "../../../components/WordleGame/WordleGame";
 import IWord from "../../../interfaces/IWord";
@@ -51,7 +52,7 @@ export default function Wordle() {
   return (
     <div className="h-screen flex flex-col bg-wordle bg-bottom bg-cover bg-no-repeat">
       <div className="w-full">
-        <Header isGameHeader={true} />
+        <Header isGameHeader={true} GameControls={<Rules />} />
       </div>
       <div className={`grow-[2]`}>
         <Main className="h-full" transparentBg={true}>
