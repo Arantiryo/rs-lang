@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { GameStat, OptionalStat, State, UserStats } from "../../interfaces/app";
 import IWord from "../../interfaces/IWord";
-import { getWords } from "../../utils/WebClients";
+import { getUserStat, getWords, updateUserStat } from "../../utils/WebClients";
 import { DangerAlert } from "../Alerts/Alerts";
 import { generateRandomIndexes, shuffle } from "./AudiocallGame";
 import Countdown from "./Countdown";
@@ -22,6 +23,8 @@ export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
   const [answers, setAnswers] = useState<AnswerType[]>([]);
   const dispatch = useAppDispatch();
 
+  const userInfo = useAppSelector((state) => state.loginReducer);
+
   const location = useLocation();
   const urlSearchParams = new URLSearchParams(location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
@@ -33,6 +36,7 @@ export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
       setQuestionIndex(questionIndex + 1);
     } else {
       dispatch(updateResult({ questions, answers, gameName: "audiocall" }));
+      updateStats({ userInfo, questions, answers });
       onGameEnd();
     }
   };
@@ -93,3 +97,129 @@ const createQuestions = (words: IWord[]) => {
   });
   return questions;
 };
+
+const getLongestStreak = (answers: AnswerType[]) => {
+  return answers.reduce<Record<string, number>>(
+    (acc, val) => {
+      if (val.isCorrect) {
+        acc.current += 1;
+      } else {
+        acc.longest = acc.longest >= acc.current ? acc.longest : acc.current;
+        acc.current = 0;
+      }
+
+      return acc;
+    },
+    { longest: 0, current: 0 }
+  );
+};
+
+const getEmptyGameStat = () => {
+  const emptyGameStat: GameStat = {
+    longestStreak: 0,
+    learnedWords: 0,
+    rightAnswers: 0,
+    wrongAnswers: 0,
+    correctAnswersPercent: 0,
+  };
+  return emptyGameStat;
+};
+
+const datesAreOnSameDay = (first: Date, second: Date) =>
+  first.getFullYear() === second.getFullYear() &&
+  first.getMonth() === second.getMonth() &&
+  first.getDate() === second.getDate();
+
+type UpdateStatsProps = {
+  userInfo: State;
+  questions: QuestionType[];
+  answers: AnswerType[];
+};
+
+const updateStats = async ({ userInfo, questions, answers }: UpdateStatsProps) => {
+  const rightAnswers = answers.filter((a) => a.isCorrect).length;
+  const wrongAnswers = questions.length - rightAnswers;
+  const correctAnswersPercent = Math.floor((rightAnswers / questions.length) * 100) || 0;
+  const learnedWords = answers.length;
+  const { longest } = getLongestStreak(answers);
+
+  // const currentStats: UserStats = JSON.parse(
+  //   await getUserStat(userInfo.userId, userInfo.token),
+  //   (key, value) => (key === "date" ? new Date(value) : value)
+  // );
+
+  const currentStats: UserStats = await getUserStat(userInfo.userId, userInfo.token);
+
+  // console.log(currentStats);
+  // console.log(userInfo.userId);
+
+  const audiocallStats = currentStats && currentStats.optional.games.audiocall;
+  console.log(audiocallStats);
+
+  const gameStat: GameStat = {
+    longestStreak: longest,
+    learnedWords: learnedWords,
+    rightAnswers: rightAnswers,
+    wrongAnswers: wrongAnswers,
+    correctAnswersPercent: correctAnswersPercent,
+  };
+
+  const sameDay = datesAreOnSameDay(new Date(), new Date(currentStats.optional.date));
+
+  const calcTotalCorrectAnswerPercent = () => {
+    return sameDay
+      ? Math.floor(
+          ((currentStats.optional.totalRightAnswers + rightAnswers) /
+            (currentStats.optional.totalWrongAnswers + wrongAnswers)) *
+            100
+        ) || 0
+      : correctAnswersPercent;
+  };
+
+  const optional: OptionalStat = {
+    totalRightAnswers: sameDay
+      ? currentStats.optional.totalRightAnswers + rightAnswers
+      : rightAnswers,
+    totalWrongAnswers: sameDay
+      ? currentStats.optional.totalWrongAnswers + wrongAnswers
+      : wrongAnswers,
+    totalCorrectAnswersPercent: calcTotalCorrectAnswerPercent(),
+    date: new Date(),
+    games: {
+      spirit: currentStats ? currentStats.optional.games.spirit : getEmptyGameStat(),
+      audiocall: gameStat,
+      wordle: currentStats ? currentStats.optional.games.wordle : getEmptyGameStat(),
+    },
+  };
+
+  const newStats: UserStats = {
+    learnedWords: currentStats ? currentStats.learnedWords + rightAnswers : rightAnswers,
+    optional,
+  };
+
+  const temp = await updateUserStat(userInfo.userId, userInfo.token, newStats);
+
+  console.log(answers);
+  console.log(newStats);
+  console.log(temp);
+};
+
+// export interface GameStat {
+//   longestStreak: number;
+//   learntWords: number;
+//   rightAnswers: number;
+//   wrongAnswers: number;
+//   correctAnswersPercent: number;
+// }
+// export interface OptionalStat {
+//   totalRightAnswers: number;
+//   totalWrongAnswers: number;
+//   totalCorrectAnswersPercent: number;
+//   wordList: IWord[];
+//   date: Date;
+//   games: {
+//     spirit: GameStat;
+//     audiocall: GameStat;
+//     wordle: GameStat;
+//   };
+// }

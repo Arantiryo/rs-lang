@@ -1,10 +1,10 @@
 import { AnswerType, QuestionType } from "../components/AudiocallGame/Question";
 import { ACTION_TYPES } from "./actionTypes";
+import IWord from "./IWord";
 
 export interface State {
   userId: string;
   name: string;
-  // email: string;
   token: string;
   refreshToken: string;
 }
@@ -22,13 +22,12 @@ export interface LatestResult {
 
 export interface GameStat {
   longestStreak: number;
-  learntWords: number;
+  learnedWords: number;
   rightAnswers: number;
   wrongAnswers: number;
   correctAnswersPercent: number;
 }
 export interface OptionalStat {
-  totalLearntWords: number;
   totalRightAnswers: number;
   totalWrongAnswers: number;
   totalCorrectAnswersPercent: number;
@@ -38,4 +37,9 @@ export interface OptionalStat {
     audiocall: GameStat;
     wordle: GameStat;
   };
+}
+
+export interface UserStats {
+  optional: OptionalStat;
+  learnedWords: number;
 }

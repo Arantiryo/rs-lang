@@ -74,13 +74,15 @@ export const getUserStat = async (userId: string, token: string) => {
   return res.json();
 };
 
-export const updateUserStat = async (userId: string, token: string) => {
+export const updateUserStat = async <T>(userId: string, token: string, body: T) => {
   const res = await fetch(`${base}/users/${userId}/statistics`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json",
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify(body),
   });
   if (!res.ok) {
     throw new Error("Bad request");

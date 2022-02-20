@@ -15,7 +15,6 @@ export default function Statistics() {
   useEffect(() => {
     const getStats = async () => {
       const stats = await getUserStat(userInfo.userId, userInfo.token);
-      console.log("test stats");
       console.log(stats);
     };
 
