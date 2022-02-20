@@ -19,3 +19,23 @@ export interface LatestResult {
   answers: AnswerType[];
   gameName: string;
 }
+
+export interface GameStat {
+  longestStreak: number;
+  learntWords: number;
+  rightAnswers: number;
+  wrongAnswers: number;
+  correctAnswersPercent: number;
+}
+export interface OptionalStat {
+  totalLearntWords: number;
+  totalRightAnswers: number;
+  totalWrongAnswers: number;
+  totalCorrectAnswersPercent: number;
+  date: Date;
+  games: {
+    spirit: GameStat;
+    audiocall: GameStat;
+    wordle: GameStat;
+  };
+}
