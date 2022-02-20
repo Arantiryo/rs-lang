@@ -1,7 +1,7 @@
-import imgSprint from "../../assets/images/card__sprint.png";
-import imgAudioCall from "../../assets/images/card__audio-call.png";
-import imgWordle from "../../assets/images/card__wordle.png";
 import { Link } from "react-router-dom";
+import imgAudioCall from "../../assets/images/card__audio-call.png";
+import imgSprint from "../../assets/images/card__sprint.png";
+import imgWordle from "../../assets/images/card__wordle.png";
 
 type GameProps = {
   gameType: string;
@@ -45,7 +45,7 @@ export function GameCard({ gameType, name, description, picture }: GameProps) {
 
 export function GameSprint() {
   return (
-    <Link to="/games/spirit">
+    <Link to="/games/sprint">
       <GameCard
         gameType="Перевод на скорость"
         name="Sprint"

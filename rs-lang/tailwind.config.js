@@ -16,6 +16,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         audiocall: "url('./assets/images/bg_main_audiocall.png')",
+        sprint: "url('./assets/images/bg_main_sprint.png')"
       },
       colors: {
         "black-rgba": "rgba(17, 24, 39, 0.7)",

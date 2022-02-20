@@ -1,7 +1,7 @@
 import { useState } from "react";
-import StartPage from "./StartPage";
 import GamePage from "./GamePage";
 import ResultPage from "./ResultPage";
+import StartPage from "./StartPage";
 
 type GameStatusType = "prep" | "running" | "result";
 
