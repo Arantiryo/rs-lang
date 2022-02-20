@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import closeIcon from "../../assets/svg/close.svg";
 import { CreateUserDto } from "../../interfaces/user";
 import { createUser } from "../../utils/WebClients";
+import { DangerAlert, SuccessAlert } from "../Alerts/Alerts";
 import CustomInput from "../CustomInput/CustomInput";
 import LoaderButton from "../LoaderButton/LoaderButton";
 
@@ -11,6 +12,16 @@ export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [alertActive, setAlertActive] = useState(false);
+  const [errorActive, setErrorActive] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(["", ""]);
+
+  const handleError = (text: string) => {
+    setErrorActive(true);
+    setAlertMessage(["Ошибка!", text]);
+    setTimeout(() => setErrorActive(false), 3000);
+  };
+
   const history = useHistory();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,23 +29,23 @@ export default function SignUpForm() {
     const user: CreateUserDto = { name, email, password };
 
     createUser(user)
-      .then((res) => {
-        alert("Успех! Вы будете перенаправлены на страницу входа!");
-        console.log(res);
+      .then(() => {
+        setAlertActive(true);
+        setAlertMessage(["Успех!", "Вы будете перенаправлены на страницу входа."]);
+        setTimeout(() => setAlertActive(false), 3000);
+
         setTimeout(() => history.push("/login"), 3000);
       })
       .catch((err) => {
         switch (err.message) {
           case "417":
-            console.log("Пользователь с таким имейлом уже существует!");
+            handleError("Пользователь с таким имейлом уже существует.");
             break;
           case "422":
-            console.log("Некорректные имя пользователя или пароль!");
+            handleError("Некорректный имейл или пароль.");
             break;
           default:
-            console.log(
-              "Произошла ошибка при регистрации! Пожалуйста, попробуй ещё раз."
-            );
+            handleError("Что-то пошло не так. Пожалуйста, попробуй ещё раз.");
             break;
         }
       });
@@ -42,6 +53,16 @@ export default function SignUpForm() {
 
   return (
     <div className="signup-container relative rounded bg-gray-700 w-96 h-96 px-11">
+      {alertActive && (
+        <div className="absolute top-0 right-0 z-10">
+          <SuccessAlert title={alertMessage[0]} text={alertMessage[1]} />
+        </div>
+      )}
+      {errorActive && (
+        <div className="absolute top-0 right-0 z-10">
+          <DangerAlert title={alertMessage[0]} text={alertMessage[1]} />
+        </div>
+      )}
       <Link to="/" className="absolute text-gray-200 top-4 right-4">
         <img src={closeIcon} alt="close" />
       </Link>
@@ -49,9 +70,7 @@ export default function SignUpForm() {
         className="signup flex flex-col items-center justify-center border-b-2 border-gray-400 pt-9 pb-6"
         onSubmit={handleSubmit}
       >
-        <h4 className="text-lg font-bold text-gray-200 tracking-wide mb-6">
-          Регистрация
-        </h4>
+        <h4 className="text-lg font-bold text-gray-200 tracking-wide mb-6">Регистрация</h4>
         <CustomInput
           autoFocus
           id="signupUserName"
@@ -66,9 +85,7 @@ export default function SignUpForm() {
           placeholder="Укажите адрес эл. почты"
           required
           value={email}
-          onChange={(e: Event) =>
-            setEmail((e.target as HTMLInputElement).value)
-          }
+          onChange={(e: Event) => setEmail((e.target as HTMLInputElement).value)}
         />
         <CustomInput
           id="signupPassword"
@@ -78,9 +95,7 @@ export default function SignUpForm() {
           required
           autoComplete="new-password"
           value={password}
-          onChange={(e: Event) =>
-            setPassword((e.target as HTMLInputElement).value)
-          }
+          onChange={(e: Event) => setPassword((e.target as HTMLInputElement).value)}
         />
         <LoaderButton
           type="submit"
