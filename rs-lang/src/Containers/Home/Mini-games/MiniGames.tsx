@@ -1,14 +1,17 @@
 import { MdKeyboardArrowRight } from "react-icons/md";
 import LoaderButton from "../../../components/LoaderButton/LoaderButton";
-import {
-  GameAudioCall,
-  GameSprint,
-  GameWordle,
-} from "../../../components/GameCard/GameCard";
+import { GameAudioCall, GameSprint, GameWordle } from "../../../components/GameCard/GameCard";
 import pseudoElem1 from "../../../assets/svg/minigames__pseudo-1.svg";
 import pseudoZip from "../../../assets/svg/minigames__pseudo-zip.svg";
+import { useHistory } from "react-router-dom";
 
 export default function MiniGames() {
+  const history = useHistory();
+
+  const handleToGames = () => {
+    history.push("/textbook");
+  };
+
   return (
     <div className="minigames-section relative w-full sm:w-2/3 xxl:w-full xxl:flex xxl:py-20">
       <div className="xxl:w-1/3">
@@ -24,12 +27,12 @@ export default function MiniGames() {
           Разнообразные игры для обучения
         </h2>
         <p className="text-xs sm:text-sm lg:text-xl leading-5 text-white mb-2">
-          Проведите время с пользой, закрепите и обновите ваши лингвистические
-          навыки с помощью игр, которые не дадут заскучать и сохранят мотивацию
-          к изучению английского языка.
+          Проведите время с пользой, закрепите и обновите ваши лингвистические навыки с помощью игр,
+          которые не дадут заскучать и сохранят мотивацию к изучению английского языка.
         </p>
         <LoaderButton
           type="button"
+          onClick={handleToGames}
           className="minigames__btn_begin relative w-18 h-7 xs:w-24 xs:h-9 text-sm lg:w-32 lg:h-14 lg:text-lg 
         bg-emerald-700 hover:bg-emerald-600 transition-colors text-white px-1 mb-5"
           isLoading={false}

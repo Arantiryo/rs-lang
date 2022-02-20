@@ -9,15 +9,15 @@ import TextbookWords from "./Textbook-words";
 import { updateTextbookInfo } from "./TextbookSlice";
 
 export enum CountActionKind {
-  INCREACE = 'INCREACE',
-  DECREASE = 'DECREASE',
-  SPECIFIC = 'SPECIFIC',
-  RESET = 'RESET'
+  INCREACE = "INCREACE",
+  DECREASE = "DECREASE",
+  SPECIFIC = "SPECIFIC",
+  RESET = "RESET",
 }
 
 interface ICountAction {
-  type: CountActionKind,
-  jump?: number,
+  type: CountActionKind;
+  jump?: number;
 }
 
 export default function Textbook() {
@@ -36,26 +36,52 @@ export default function Textbook() {
       case CountActionKind.INCREACE:
         if (categoryIndex < 6) {
           const curPage = Math.min(count + 1, 29);
-          dispatch(updateTextbookInfo({ group: categoryIndex, word: wordIndex, page: curPage }));
+          dispatch(
+            updateTextbookInfo({
+              group: categoryIndex,
+              word: wordIndex,
+              page: curPage,
+            })
+          );
           return curPage;
         } else {
           const curPage = Math.min(count + 1, Math.floor(totalCounts / 20));
-          dispatch(updateTextbookInfo({ group: categoryIndex, word: wordIndex, page: curPage }));
+          dispatch(
+            updateTextbookInfo({
+              group: categoryIndex,
+              word: wordIndex,
+              page: curPage,
+            })
+          );
           return curPage;
         }
       case CountActionKind.DECREASE:
-        dispatch(updateTextbookInfo({ group: categoryIndex, word: wordIndex, page: Math.max(count - 1, 0) }));
+        dispatch(
+          updateTextbookInfo({
+            group: categoryIndex,
+            word: wordIndex,
+            page: Math.max(count - 1, 0),
+          })
+        );
         return Math.max(count - 1, 0);
       case CountActionKind.SPECIFIC:
-        dispatch(updateTextbookInfo({ group: categoryIndex, word: wordIndex, page: (action.jump || 0) }));
+        dispatch(
+          updateTextbookInfo({
+            group: categoryIndex,
+            word: wordIndex,
+            page: action.jump || 0,
+          })
+        );
         return action.jump || 0;
       case CountActionKind.RESET:
-        dispatch(updateTextbookInfo({ group: categoryIndex, word: wordIndex, page: 0 }));
+        dispatch(
+          updateTextbookInfo({ group: categoryIndex, word: wordIndex, page: 0 })
+        );
         return 0;
       default:
         throw new Error();
     }
-  }
+  };
 
   const [page, dispatchPage] = useReducer(reducer, textbookInfo.page);
 
@@ -63,12 +89,17 @@ export default function Textbook() {
     dispatch(updateTextbookInfo({ group: index, word: wordIndex, page: page }));
     setWordIndex(0);
     setCategoryIndex(index);
-  }
+  };
   const chooseWord = (index: number) => {
-    dispatch(updateTextbookInfo({ group: categoryIndex, word: index, page: page }));
+    dispatch(
+      updateTextbookInfo({ group: categoryIndex, word: index, page: page })
+    );
     setWordIndex(index);
-  }
-  const updateTotalCounts = useCallback((index: number) => setTotalCounts(index), []);
+  };
+  const updateTotalCounts = useCallback(
+    (index: number) => setTotalCounts(index),
+    []
+  );
   const resetWordId = useCallback((index: number) => setWordIndex(index), []);
   const saveList = useCallback((data: IWord[]) => setList(data), []);
 
@@ -80,16 +111,18 @@ export default function Textbook() {
   return (
     <div className="flex grow items-center textbook bg-gray-800 text-white">
       <div className="container mx-auto max-w-screen-xl p-2">
-        <main className="flex flex-col gap-2">
+        <section className="flex flex-col gap-2">
           <TextbookCategories
             categoryIndex={categoryIndex}
             onClickCategory={chooseCategory}
             resetPageIndex={dispatchPage}
           />
-          <div className="flex flex-col gap-2 font-size: text-sm 
+          <div
+            className="flex flex-col gap-2 font-size: text-sm 
             md:flex-row
             lg:h-64 
-          ">
+          "
+          >
             <TextbookWords
               page={page}
               list={list}
@@ -107,8 +140,7 @@ export default function Textbook() {
               resetWordId={resetWordId}
             />
           </div>
-          <div className="flex items-center justify-center"
-          >
+          <div className="flex items-center justify-center">
             <TextbookPagination
               list={list}
               categoryIndex={categoryIndex}
@@ -118,7 +150,7 @@ export default function Textbook() {
               totalCounts={totalCounts}
             />
           </div>
-        </main>
+        </section>
       </div>
     </div>
   );

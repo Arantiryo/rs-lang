@@ -1,10 +1,16 @@
+import { useAppSelector } from "../../../app/hooks";
 import resultsPseudoElem1 from "../../../assets/svg/results-tracking__presudo-elem-1.svg";
 import resultsPseudoElem2 from "../../../assets/svg/results-tracking__presudo-elem-2.svg";
 import resultsPseudoCircle from "../../../assets/svg/results-tracking__pseudo.svg";
-import { GameSprint } from "../../../components/GameCard/GameCard";
+import {
+  GameAudioCall,
+  GameSprint,
+} from "../../../components/GameCard/GameCard";
 import ResultsTrackingCard from "../../../components/ResultsCard/ResultsCard";
 
 export default function ResultsTracking() {
+  const gameResults = useAppSelector((state) => state.latestResultReducer);
+
   return (
     <div className="promo-section relative w-full xxl:flex xxl:flex-row-reverse xxl:justify-evenly xxl:py-20">
       <div className="pl-20 md:pl-40">
@@ -31,7 +37,11 @@ export default function ResultsTracking() {
       </div>
       <div className="relative ml-auto w-3/4 max-w-[520px] flex items-baseline justify-end pb-10 sm:top-[-50px] md:right-[50px]">
         <div className="relative top-[40px] left-[80px] z-10 xs:top-[60px] lg:top-[80px]">
-          <GameSprint />
+          {gameResults.gameName === "audiocall" ? (
+            <GameAudioCall />
+          ) : (
+            <GameSprint />
+          )}
         </div>
         <div className="relative z-10 lg:bottom-[10px] lg:left-[20px] ">
           <ResultsTrackingCard />

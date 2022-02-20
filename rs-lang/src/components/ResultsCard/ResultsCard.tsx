@@ -63,9 +63,8 @@ export default function ResultsTrackingCard({
     { title: "Correct", value: numCorrect, color: colors.correct },
     { title: "Incorrect", value: numIncorrect, color: colors.incorrect },
   ];
-  const resultLabel = Math.floor(
-    (data[0].value / (data[0].value + data[1].value)) * 100
-  );
+  const resultLabel =
+    Math.floor((data[0].value / (data[0].value + data[1].value)) * 100) || 0;
 
   return (
     <div className={`results-card w-full bg-gray-700 p-4 lg:p-5 ${size}`}>
