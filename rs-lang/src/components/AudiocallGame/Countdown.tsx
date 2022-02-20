@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 export default function Countdown() {
   const time = 3;
   const [counter, setCounter] = useState(time);
+
   useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    const t = setTimeout(() => setCounter(counter - 1), 1000);
+    return () => clearTimeout(t);
   }, [counter]);
 
   return (

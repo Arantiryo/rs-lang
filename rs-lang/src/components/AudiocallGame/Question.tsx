@@ -24,11 +24,7 @@ type QuestionProps = {
   saveAnswer: (answer: AnswerType) => void;
 };
 
-export default function Question({
-  questionData,
-  loadNextQuestion,
-  saveAnswer,
-}: QuestionProps) {
+export default function Question({ questionData, loadNextQuestion, saveAnswer }: QuestionProps) {
   const [answer, setAnswer] = useState<AnswerType | null>(null);
   const [audioURL, setAudioURL] = useState("");
   const [imgURL, setImgURL] = useState("");
@@ -73,11 +69,7 @@ export default function Question({
   return (
     <div className="flex flex-col items-center justify-center">
       {answer ? (
-        <AnswerCard
-          word={questionData.word}
-          img={imgURL}
-          onClick={handlePlayAudio}
-        />
+        <AnswerCard word={questionData.word} img={imgURL} onClick={handlePlayAudio} />
       ) : (
         <AudioButton onClick={handlePlayAudio} />
       )}
@@ -85,20 +77,12 @@ export default function Question({
         {shuffledOptions.map((word, idx) => {
           return (
             <li key={idx}>
-              <Option
-                word={word}
-                answer={answer}
-                onClick={() => handleAnswer(word)}
-              />
+              <Option word={word} answer={answer} onClick={() => handleAnswer(word)} />
             </li>
           );
         })}
       </ul>
-      <NextQuestion
-        answer={answer}
-        loadNextQuestion={loadNextQuestion}
-        resetAnswer={resetAnswer}
-      />
+      <NextQuestion answer={answer} loadNextQuestion={loadNextQuestion} resetAnswer={resetAnswer} />
     </div>
   );
 }
@@ -109,11 +93,7 @@ type NextQuestionProps = {
   loadNextQuestion: () => void;
 };
 
-function NextQuestion({
-  answer,
-  resetAnswer,
-  loadNextQuestion,
-}: NextQuestionProps) {
+function NextQuestion({ answer, resetAnswer, loadNextQuestion }: NextQuestionProps) {
   const handleClick = () => {
     resetAnswer();
     loadNextQuestion();
@@ -122,9 +102,7 @@ function NextQuestion({
   return (
     <div
       className={`${optionStyles} ${
-        answer
-          ? "bg-blue-400 hover:bg-blue-300"
-          : "bg-yellow-600 hover:bg-yellow-500"
+        answer ? "bg-blue-400 hover:bg-blue-300" : "bg-yellow-600 hover:bg-yellow-500"
       }`}
       onClick={handleClick}
     >
