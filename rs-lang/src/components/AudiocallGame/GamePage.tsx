@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import IWord from "../../interfaces/IWord";
 import { getWords } from "../../utils/WebClients";
+import { DangerAlert } from "../Alerts/Alerts";
 import { generateRandomIndexes, shuffle } from "./AudiocallGame";
 import Countdown from "./Countdown";
 import { updateResult } from "./latestResultSlice";
@@ -14,15 +16,18 @@ type GamePageProps = {
 
 export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [answers, setAnswers] = useState<AnswerType[]>([]);
   const dispatch = useAppDispatch();
 
-  const saveAnswer = (newAnswer: AnswerType) =>
-    setAnswers([...answers, newAnswer]);
+  const location = useLocation();
+  const urlSearchParams = new URLSearchParams(location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
 
-  // TODO: handle last question and show results
+  const saveAnswer = (newAnswer: AnswerType) => setAnswers([...answers, newAnswer]);
+
   const loadNextQuestion = () => {
     if (questionIndex < questions.length - 1) {
       setQuestionIndex(questionIndex + 1);
@@ -32,24 +37,33 @@ export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
     }
   };
 
-  setTimeout(() => setIsLoading(false), 4000);
+  setTimeout(() => questions.length > 0 && setIsLoading(false), 3500);
 
   useEffect(() => {
-    // TODO: consider refactoring
-    // TODO: handle errors
-    const getData = async (group: number) => {
-      const page = Math.floor(Math.random() * 30);
-      const words = await getWords(page, group);
+    const getData = async (categoryIndex: number) => {
+      const page = parseInt(params?.page) || Math.floor(Math.random() * 30);
+      const category = parseInt(params?.category) || categoryIndex;
+      const words = await getWords(page, category);
 
-      setQuestions(createQuestions(words));
+      try {
+        setQuestions(createQuestions(words));
+      } catch (err) {
+        console.log(err);
+        setIsError(true);
+      }
     };
 
     getData(categoryIndex);
-  }, [categoryIndex]);
+  }, []);
 
   return (
     <div className="h-full flex flex-col items-center justify-center">
-      {isLoading ? (
+      {isError ? (
+        <DangerAlert
+          title="Упс!"
+          text="Что-то пошло не так. Пожалуйста, попробуйте перезайти в игру."
+        />
+      ) : isLoading ? (
         <Countdown />
       ) : (
         <Question
@@ -63,15 +77,17 @@ export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
 }
 
 const createQuestions = (words: IWord[]) => {
+  if (words.length === 0) {
+    throw new Error("No words to create questions from!");
+  }
+
   const numberOfQuestions = words.length;
   const shuffled = shuffle(words);
 
   const questions: QuestionType[] = shuffled.map((word, idx) => {
     const options = [
       word,
-      ...generateRandomIndexes(numberOfQuestions, idx).map(
-        (randomIndex) => shuffled[randomIndex]
-      ),
+      ...generateRandomIndexes(numberOfQuestions, idx).map((randomIndex) => shuffled[randomIndex]),
     ];
     return { word, options };
   });

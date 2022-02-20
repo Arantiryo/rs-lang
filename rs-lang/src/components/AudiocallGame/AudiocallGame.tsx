@@ -18,7 +18,7 @@ export default function AudiocallGame() {
       {gameStatus === "prep" && (
         <StartPage
           categoryIndex={categoryIndex}
-          onClickCategory={chooseCategory}
+          onSelectCategory={chooseCategory}
           onGameBegin={startGame}
         />
       )}
@@ -37,11 +37,7 @@ export const shuffle = <T,>(arr: Array<T>) => {
     .sort(() => 0.5 - Math.random());
 };
 
-export const generateRandomIndexes = (
-  maxIndex: number,
-  numberToExclude: number,
-  n = 4
-) => {
+export const generateRandomIndexes = (maxIndex: number, numberToExclude: number, n = 4) => {
   const randomIndexes: number[] = [];
   let numOfIndexes = n;
 
