@@ -106,7 +106,12 @@ export default function Question({ questionData, loadNextQuestion, saveAnswer }:
         {shuffledOptions.map((word, idx) => {
           return (
             <li key={idx}>
-              <Option word={word} answer={answer} onClick={() => handleAnswer(word)} />
+              <Option
+                word={word}
+                idx={idx + 1}
+                answer={answer}
+                onClick={() => handleAnswer(word)}
+              />
             </li>
           );
         })}
