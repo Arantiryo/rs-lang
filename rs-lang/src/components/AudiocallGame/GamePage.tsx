@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { GameStat, OptionalStat, State, UserStats } from "../../interfaces/app";
 import IWord from "../../interfaces/IWord";
 import { updateStatsIfNeeded } from "../../utils/Statistics";
+import { updateUserStats } from "../../utils/StatisticsSlice";
 import { getUserStat, getWords, updateUserStat } from "../../utils/WebClients";
 import { DangerAlert } from "../Alerts/Alerts";
 import { generateRandomIndexes, shuffle } from "./AudiocallGame";
@@ -25,6 +26,7 @@ export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
   const dispatch = useAppDispatch();
 
   const userInfo = useAppSelector((state) => state.loginReducer);
+  const userStats = useAppSelector((state) => state.statsReducer);
 
   const location = useLocation();
   const urlSearchParams = new URLSearchParams(location.search);
@@ -32,17 +34,19 @@ export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
 
   const saveAnswer = (newAnswer: AnswerType) => setAnswers([...answers, newAnswer]);
 
+  const updateLocalStats = (newStats: UserStats) => dispatch(updateUserStats(newStats));
+
   const loadNextQuestion = () => {
     if (questionIndex < questions.length - 1) {
       setQuestionIndex(questionIndex + 1);
     } else {
       dispatch(updateResult({ questions, answers, gameName: "audiocall" }));
-      updateStats({ userInfo, questions, answers });
+      updateStats({ userInfo, userStats, questions, answers, updateLocalStats });
       onGameEnd();
     }
   };
 
-  setTimeout(() => questions.length > 0 && setIsLoading(false), 3500);
+  setTimeout(() => questions.length > 0 && setIsLoading(false), 3000);
 
   useEffect(() => {
     const getData = async (categoryIndex: number) => {
@@ -117,19 +121,32 @@ export const getLongestStreak = (answers: AnswerType[]) => {
 
 type UpdateStatsProps = {
   userInfo: State;
+  userStats: UserStats;
   questions: QuestionType[];
   answers: AnswerType[];
+  updateLocalStats: (newStats: UserStats) => void;
 };
 
-const updateStats = async ({ userInfo, questions, answers }: UpdateStatsProps) => {
+const updateStats = async ({
+  userInfo,
+  userStats,
+  questions,
+  answers,
+  updateLocalStats,
+}: UpdateStatsProps) => {
   const rightAnswers = answers.filter((a) => a.isCorrect).length;
   const wrongAnswers = questions.length - rightAnswers;
   const learnedWords = answers.length;
   const { longest } = getLongestStreak(answers);
 
-  await updateStatsIfNeeded(userInfo.userId, userInfo.token);
+  console.log(userInfo);
+  const userIsLoggedIn = userInfo.userId !== "";
 
-  const currentStats: UserStats = await getUserStat(userInfo.userId, userInfo.token);
+  userIsLoggedIn && (await updateStatsIfNeeded(userInfo.userId, userInfo.token));
+
+  const currentStats: UserStats = userIsLoggedIn
+    ? await getUserStat(userInfo.userId, userInfo.token)
+    : userStats;
 
   const audiocallStats = currentStats && currentStats.optional.games.audiocall;
   const currentOptional = currentStats.optional;
@@ -162,7 +179,7 @@ const updateStats = async ({ userInfo, questions, answers }: UpdateStatsProps) =
       currentOptional.totalRightAnswers,
       currentOptional.totalWrongAnswers
     ),
-    date: new Date(),
+    date: JSON.stringify(new Date()),
     games: {
       spirit: currentOptional.games.spirit,
       audiocall: gameStat,
@@ -175,5 +192,7 @@ const updateStats = async ({ userInfo, questions, answers }: UpdateStatsProps) =
     optional,
   };
 
-  updateUserStat(userInfo.userId, userInfo.token, newStats);
+  userIsLoggedIn
+    ? updateUserStat(userInfo.userId, userInfo.token, newStats)
+    : updateLocalStats(newStats);
 };

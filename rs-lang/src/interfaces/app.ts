@@ -30,7 +30,7 @@ export interface OptionalStat {
   totalRightAnswers: number;
   totalWrongAnswers: number;
   totalCorrectAnswersPercent: number;
-  date: Date;
+  date: string;
   games: {
     spirit: GameStat;
     audiocall: GameStat;

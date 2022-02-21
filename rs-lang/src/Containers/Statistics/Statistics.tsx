@@ -7,7 +7,7 @@ import AllTimeStats from "./AllTimeStats/AllTimeStats";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { getUserStat } from "../../utils/WebClients";
-import { GameStat, UserStats } from "../../interfaces/app";
+import { UserStats } from "../../interfaces/app";
 import { defaultGameStat } from "../../utils/Statistics";
 
 export default function Statistics() {

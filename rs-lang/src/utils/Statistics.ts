@@ -13,7 +13,7 @@ export const defaultOptionalStats: OptionalStat = {
   totalRightAnswers: 0,
   totalWrongAnswers: 0,
   totalCorrectAnswersPercent: 0,
-  date: new Date(),
+  date: JSON.stringify(new Date()),
   games: {
     spirit: defaultGameStat,
     audiocall: defaultGameStat,
