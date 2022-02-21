@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import closeIcon from "../../assets/svg/close.svg";
+import { UserStats } from "../../interfaces/app";
 import { UserDto, UserLoginInfo } from "../../interfaces/user";
-import { loginUser } from "../../utils/WebClients";
+import { datesAreOnSameDay, setDefaultStats } from "../../utils/Statistics";
+import { getUserStat, loginUser } from "../../utils/WebClients";
 import { DangerAlert, SuccessAlert } from "../Alerts/Alerts";
 import CustomInput from "../CustomInput/CustomInput";
 import LoaderButton from "../LoaderButton/LoaderButton";
@@ -25,6 +27,21 @@ export default function LoginForm() {
     setTimeout(() => setErrorActive(false), 3000);
   };
 
+  const updateUserStats = async ({ userId, token }: UserLoginInfo) => {
+    try {
+      const currentStats: UserStats = await getUserStat(userId, token);
+      console.log(currentStats);
+
+      if (!datesAreOnSameDay(new Date(), new Date(currentStats.optional.date))) {
+        const res = await setDefaultStats(userId, token);
+        console.log(res);
+      }
+    } catch (err) {
+      const res = await setDefaultStats(userId, token);
+      console.log(res);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user: UserDto = { email, password };
@@ -36,6 +53,8 @@ export default function LoginForm() {
         setTimeout(() => setAlertActive(false), 3000);
 
         dispatch(updateUserInfo(res));
+        updateUserStats(res);
+
         setTimeout(() => history.push("/"), 3000);
       })
       .catch((err) => {

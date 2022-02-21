@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { GameStat, OptionalStat, State, UserStats } from "../../interfaces/app";
 import IWord from "../../interfaces/IWord";
+import { datesAreOnSameDay, getEmptyGameStat } from "../../utils/Statistics";
 import { getUserStat, getWords, updateUserStat } from "../../utils/WebClients";
 import { DangerAlert } from "../Alerts/Alerts";
 import { generateRandomIndexes, shuffle } from "./AudiocallGame";
@@ -98,7 +99,7 @@ const createQuestions = (words: IWord[]) => {
   return questions;
 };
 
-const getLongestStreak = (answers: AnswerType[]) => {
+export const getLongestStreak = (answers: AnswerType[]) => {
   return answers.reduce<Record<string, number>>(
     (acc, val) => {
       if (val.isCorrect) {
@@ -113,22 +114,6 @@ const getLongestStreak = (answers: AnswerType[]) => {
     { longest: 0, current: 0 }
   );
 };
-
-const getEmptyGameStat = () => {
-  const emptyGameStat: GameStat = {
-    longestStreak: 0,
-    learnedWords: 0,
-    rightAnswers: 0,
-    wrongAnswers: 0,
-    correctAnswersPercent: 0,
-  };
-  return emptyGameStat;
-};
-
-const datesAreOnSameDay = (first: Date, second: Date) =>
-  first.getFullYear() === second.getFullYear() &&
-  first.getMonth() === second.getMonth() &&
-  first.getDate() === second.getDate();
 
 type UpdateStatsProps = {
   userInfo: State;
@@ -152,6 +137,9 @@ const updateStats = async ({ userInfo, questions, answers }: UpdateStatsProps) =
 
   // console.log(currentStats);
   // console.log(userInfo.userId);
+
+  // TODO: implement updating stats w/ default values on first login
+  // TODO: rewrite this part
 
   const audiocallStats = currentStats && currentStats.optional.games.audiocall;
   console.log(audiocallStats);

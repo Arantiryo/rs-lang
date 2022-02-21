@@ -1,6 +1,5 @@
 import { AnswerType, QuestionType } from "../components/AudiocallGame/Question";
 import { ACTION_TYPES } from "./actionTypes";
-import IWord from "./IWord";
 
 export interface State {
   userId: string;
