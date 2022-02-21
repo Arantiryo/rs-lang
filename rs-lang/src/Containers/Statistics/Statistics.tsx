@@ -12,16 +12,18 @@ import { defaultGameStat } from "../../utils/Statistics";
 
 export default function Statistics() {
   const userInfo = useAppSelector((state) => state.loginReducer);
+  const userStats = useAppSelector((state) => state.statsReducer);
+  const userIsLoggedIn = userInfo.userId !== "";
   const [statistics, setStatistics] = useState<UserStats>();
 
   useEffect(() => {
     const getStats = async () => {
-      const stats = await getUserStat(userInfo.userId, userInfo.token);
+      const stats = userIsLoggedIn ? await getUserStat(userInfo.userId, userInfo.token) : userStats;
       setStatistics(stats);
     };
 
     getStats();
-  }, []);
+  }, [userInfo]);
 
   console.log(statistics);
 
