@@ -40,7 +40,7 @@ export default function GamePage(props: {
   }, [props.categoryIndex]);
 
   return (
-    <div className="h-full flex flex-col justify-center">
+    <div className="h-full flex flex-col justify-center gap-2">
       {isLoading ? (
         <Countdown onGameBegin={onGameBegin} />
       ) : (
