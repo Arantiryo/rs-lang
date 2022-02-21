@@ -11,7 +11,7 @@ export default function Question(props: {
   onGameEnd: () => void,
   questions: QuestionType[],
 }) {
-  const { time, pause } = useTimer({
+  const { time } = useTimer({
     initialTime: 30,
     endTime: 0,
     timerType: 'DECREMENTAL',
@@ -44,16 +44,15 @@ export default function Question(props: {
     ? new Audio(correctSound).play()
     : new Audio(wrongSound).play();
 
-  const loadNextQuestion = useCallback((status: boolean) => {
+  const loadNextQuestion = useCallback((status: boolean, lastAnswerObj: AnswerType) => {
     const restTries = (status === true) ? tries : tries - 1;
     if (questionIndex < props.questions.length - 1 && restTries > 0) {
       setQuestionIndex(questionIndex + 1)
     } else {
-      pause();
       props.onGameEnd();
-      dispatch(updateResult({ questions: props.questions, answers, gameName: "sprint" }));
+      dispatch(updateResult({ questions: props.questions, answers: [...answers, lastAnswerObj], gameName: "sprint" }));
     }
-  }, [pause, props, questionIndex, tries, answers, dispatch]);
+  }, [props, questionIndex, tries, answers, dispatch]);
 
   const updatePanel = useCallback((status: boolean) => {
     switch (status) {
@@ -87,7 +86,7 @@ export default function Question(props: {
 
     if (sound) playAudio(status);
     updatePanel(status);
-    loadNextQuestion(status);
+    loadNextQuestion(status, answerObj);
   }, [loadNextQuestion, props.questions, questionIndex, sound, updatePanel, saveAnswer]);
 
   const handleKeyPress = useCallback(event => {
