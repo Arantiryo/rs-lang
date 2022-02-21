@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { MdAccessTimeFilled, MdArrowLeft, MdArrowRight, MdCheck, MdClear, MdFavoriteBorder, MdVolumeOff, MdVolumeUp } from "react-icons/md";
 import { useTimer } from 'use-timer';
+import { useAppDispatch } from '../../app/hooks';
 import correctSound from '../../assets/sound/correct.mp3';
 import wrongSound from '../../assets/sound/wrong.mp3';
-import { QuestionType } from '../AudiocallGame/Question';
+import { updateResult } from '../AudiocallGame/latestResultSlice';
+import { AnswerType, QuestionType } from '../AudiocallGame/Question';
 
 export default function Question(props: {
   onGameEnd: () => void,
@@ -14,7 +16,10 @@ export default function Question(props: {
     endTime: 0,
     timerType: 'DECREMENTAL',
     autostart: true,
-    onTimeOver: () => props.onGameEnd(),
+    onTimeOver: () => {
+      dispatch(updateResult({ questions: props.questions, answers, gameName: "sprint" }));
+      props.onGameEnd()
+    },
   })
 
   useEffect(() => {
@@ -24,6 +29,8 @@ export default function Question(props: {
     };
   });
 
+  const dispatch = useAppDispatch();
+  const [answers, setAnswers] = useState<AnswerType[]>([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [sound, setSound] = useState(true);
   const [tries, setTries] = useState(4);
@@ -44,8 +51,9 @@ export default function Question(props: {
     } else {
       pause();
       props.onGameEnd();
+      dispatch(updateResult({ questions: props.questions, answers, gameName: "sprint" }));
     }
-  }, [pause, props, questionIndex, tries]);
+  }, [pause, props, questionIndex, tries, answers, dispatch]);
 
   const updatePanel = useCallback((status: boolean) => {
     switch (status) {
@@ -63,13 +71,24 @@ export default function Question(props: {
     }
   }, [boost, combo, score, setTries, tries]);
 
+  const saveAnswer = useCallback((newAnswer: AnswerType) => setAnswers([...answers, newAnswer]), [answers]);
+
   const checkAnswer = useCallback((optIndex: number) => {
     const wordObj = props.questions[questionIndex];
     const status = (wordObj.word.wordTranslate === wordObj.options[optIndex].wordTranslate) ? true : false;
+
+    const answerObj: AnswerType = {
+      correctAnswer: props.questions[questionIndex].word,
+      givenAnswer: props.questions[questionIndex].options[optIndex],
+      isCorrect: props.questions[questionIndex].word.id === props.questions[questionIndex].options[optIndex].id
+    }
+
+    saveAnswer(answerObj);
+
     if (sound) playAudio(status);
     updatePanel(status);
     loadNextQuestion(status);
-  }, [loadNextQuestion, props.questions, questionIndex, sound, updatePanel]);
+  }, [loadNextQuestion, props.questions, questionIndex, sound, updatePanel, saveAnswer]);
 
   const handleKeyPress = useCallback(event => {
     const { key } = event;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import IWord from "../../interfaces/IWord";
 import shuffle from "../../utils/shuffle";
 import { getWords } from "../../utils/WebClients";
-import { AnswerType, QuestionType } from "../AudiocallGame/Question";
+import { QuestionType } from "../AudiocallGame/Question";
 import Countdown from "./Countdown";
 import Game from "./Game";
 
@@ -12,7 +12,6 @@ export default function GamePage(props: {
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [questions, setQuestions] = useState<QuestionType[]>([]);
-  const [answers, setAnswers] = useState<AnswerType[]>([]);
   const onGameBegin = () => setIsLoading(false);
 
   useEffect(() => {
