@@ -21,7 +21,7 @@ export default function Question(props: {
     onTimeOver: () => {
       dispatch(updateResult({ questions: props.questions, answers, gameName: "sprint" }));
       updateStats({ userInfo, userStats, questions: props.questions, answers, updateLocalStats });
-      props.onGameEnd()
+      //props.onGameEnd()
     },
   })
 
@@ -101,35 +101,35 @@ export default function Question(props: {
   return <>
     <div className='flex items-center justify-between'>
       <div className='flex gap-2 bg-gray-900 bg-opacity-75 p-4 border-dashed border'>
-        {[...Array(tries)].map((_, i) => <div className='text-2xl' key={i}><MdFavoriteBorder className='fill-red-700' /></div>)}
+        {[...Array(tries)].map((_, i) => <div className='text-lg sm:text-2xl' key={i}><MdFavoriteBorder className='fill-red-700' /></div>)}
       </div>
       <div className='bg-gray-900 bg-opacity-75 p-4 border-dashed border cursor-pointer' onClick={toggleSound}>
-        {sound === true && <MdVolumeUp className='text-2xl fill-white' >on</MdVolumeUp>}
-        {sound === false && <MdVolumeOff className='text-2xl fill-white'>off</MdVolumeOff>}
+        {sound === true && <MdVolumeUp className='text-lg sm:text-2xl fill-white' >on</MdVolumeUp>}
+        {sound === false && <MdVolumeOff className='text-lg sm:text-2xl fill-white'>off</MdVolumeOff>}
       </div>
     </div>
     <div className='flex flex-col items-center gap-3'>
-      <div className='bg-gray-900 bg-opacity-75 border-dashed border p-4 text-white text-xl'><span>{questionIndex + 1}</span>/{props.questions.length}</div>
+      <div className='bg-gray-900 bg-opacity-75 border-dashed border p-2 sm:p-4 text-white text-xl'><span>{questionIndex + 1}</span>/{props.questions.length}</div>
       <div className='inline-flex gap-2 bg-gray-900 bg-opacity-75 flex-col justify-center items-center p-4 border-dashed border'>
-        <div><MdAccessTimeFilled className='fill-white text-7xl' /></div>
-        <div className='text-4xl text-white'>{time}</div>
+        <div><MdAccessTimeFilled className='fill-white text-4xl sm:text-7xl' /></div>
+        <div className='text-xl sm:text-4xl text-white'>{time}</div>
       </div>
-      <div className='flex items-center justify-center gap-2'>
+      <div className='flex flex-col items-center justify-center gap-2 xs:flex-row'>
         <div className='border-2 p-2 px-4 rounded-full bg-gray-900 bg-opacity-75 text-white'>Умножение <MdClear className='inline-flex' />
           <span>{boost}</span> + <span>10</span>
         </div>
         <div className='border-2 p-2 px-4 rounded-full bg-green-500 text-white'>Очки: <span>{score}</span></div>
       </div>
-      <div className='flex justify-center items-center relative bg-gray-900 bg-opacity-75 border border-dashed w-32 h-24'>
+      <div className='flex justify-center items-center relative bg-gray-900 bg-opacity-75 border border-dashed w-24 h-16 sm:w-32 sm:h-24'>
         <div className='absolute right-2 top-2'>
-          <div className='inline-flex items-center justify-center bg-yellow-400 rounded-full w-6 h-6'>{combo}</div>
+          <div className='inline-flex items-center justify-center bg-yellow-400 rounded-full w-5 h-5 sm:w-6 sm:h-6 text-sm sm:text'>{combo}</div>
         </div>
-        <MdCheck className='fill-white text-7xl p-2' />
+        <MdCheck className='fill-white text-5xl sm:text-7xl p-2' />
       </div>
-      <div className='flex justify-center gap-4 items-center border py-4 px-10 bg-gray-900 bg-opacity-75'>
-        <span className='text-yellow-400 text-4xl'>{props.questions[questionIndex].word.word}</span>
+      <div className='flex justify-center gap-4 items-center border py-2 px-5 sm:py-4 sm:px-10 bg-gray-900 bg-opacity-75'>
+        <span className='text-yellow-400 text-lg sm:text-4xl'>{props.questions[questionIndex].word.word}</span>
         <span className='text-white'>это</span>
-        <span className='text-yellow-400 text-4xl'>{props.questions[questionIndex].options[0].wordTranslate}</span>
+        <span className='text-yellow-400 text-lg sm:text-4xl'>{props.questions[questionIndex].options[0].wordTranslate}</span>
         <span className='text-white'>?</span>
       </div>
       <div className='flex text-white'>
