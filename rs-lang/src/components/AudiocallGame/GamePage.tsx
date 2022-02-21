@@ -103,6 +103,7 @@ const createQuestions = (words: IWord[]) => {
   return questions;
 };
 
+
 export const getLongestStreak = (answers: AnswerType[]) => {
   return answers.reduce<Record<string, number>>(
     (acc, val) => {
@@ -155,7 +156,7 @@ const updateStats = async ({
       Math.floor(
         ((currentRight + rightAnswers) /
           (currentRight + rightAnswers + currentWrong + wrongAnswers)) *
-          100
+        100
       ) || 0
     );
   };

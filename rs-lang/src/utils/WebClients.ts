@@ -6,7 +6,12 @@ export const getWords = async (page: number, group: number) => {
   return getRequest(`${base}/words?page=${page}&group=${group}`);
 };
 
-export const getUserWords = async (userId: string, page: number, group: number, token: string) => {
+export const getUserWords = async (
+  userId: string,
+  page: number,
+  group: number,
+  token: string
+) => {
   const filter = JSON.stringify({
     $and: [{ page: page }, { group: group }],
   });
@@ -25,7 +30,11 @@ export const getUserWords = async (userId: string, page: number, group: number, 
   return res.json();
 };
 
-export const getUserHardWords = async (userId: string, page: number, token: string) => {
+export const getUserHardWords = async (
+  userId: string,
+  page: number,
+  token: string
+) => {
   const filter = JSON.stringify({
     $and: [{ "userWord.difficulty": "hard" }],
   });
@@ -74,7 +83,11 @@ export const getUserStat = async (userId: string, token: string) => {
   return res.json();
 };
 
-export const updateUserStat = async <T>(userId: string, token: string, body: T) => {
+export const updateUserStat = async <T>(
+  userId: string,
+  token: string,
+  body: T
+) => {
   const res = await fetch(`${base}/users/${userId}/statistics`, {
     method: "PUT",
     headers: {
@@ -90,7 +103,12 @@ export const updateUserStat = async <T>(userId: string, token: string, body: T) 
   return res.json();
 };
 
-export const createUserWord = async ({ userId, wordId, word, token }: CreateUserWordDto) => {
+export const createUserWord = async ({
+  userId,
+  wordId,
+  word,
+  token,
+}: CreateUserWordDto) => {
   return postRequest(`${base}/users/${userId}/words/${wordId}`, word, token);
 };
 

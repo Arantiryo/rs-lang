@@ -1,7 +1,7 @@
-import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Audiocall from "../Containers/Games/Audiocall/Audiocall";
 import Games from "../Containers/Games/Games";
+import Sprint from "../Containers/Games/Sprint/Sprint";
 import Wordle from "../Containers/Games/Wordle/Wordle";
 import Home from "../Containers/Home/Home";
 import Login from "../Containers/Login/Login";
@@ -30,6 +30,9 @@ export default function Routes() {
       </Route>
       <Route exact path="/games/audiocall">
         <Audiocall />
+      </Route>
+      <Route exact path="/games/sprint">
+        <Sprint />
       </Route>
       <Route exact path="/games/wordle">
         <Wordle />

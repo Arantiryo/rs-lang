@@ -1,13 +1,13 @@
-import { MdRepeat } from "react-icons/md";
-import { IoReturnUpBackOutline } from "react-icons/io5";
-import LoaderButton from "../LoaderButton/LoaderButton";
-import { useAppSelector } from "../../app/hooks";
 import { useState } from "react";
+import { IoReturnUpBackOutline } from "react-icons/io5";
+import { MdRepeat } from "react-icons/md";
+import { useHistory, useLocation } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
 import IWord from "../../interfaces/IWord";
 import { getObjURL } from "../../utils/WebClients";
+import LoaderButton from "../LoaderButton/LoaderButton";
 import Extra from "./Extra";
 import Results from "./Results";
-import { useHistory, useLocation } from "react-router-dom";
 
 export type ResultDataType = {
   title: string;
@@ -70,18 +70,16 @@ export default function ResultsTrackingCard({
     <div className={`results-card w-full bg-gray-700 p-4 lg:p-5 ${size}`}>
       <ul className="list-none flex items-center justify-evenly gap-2 xs:mb-4">
         <li
-          className={`${
-            tab === "results" && "text-yellow-500 underline"
-          } text-white font-medium ${font} underline-offset-4 cursor-pointer`}
+          className={`${tab === "results" && "text-yellow-500 underline"
+            } text-white font-medium ${font} underline-offset-4 cursor-pointer`}
           onClick={showResultsTab}
         >
           Результаты
         </li>
         {showExtra && (
           <li
-            className={`${
-              tab === "extra" && "text-yellow-500 underline"
-            } text-white ${font} underline-offset-4 cursor-pointer`}
+            className={`${tab === "extra" && "text-yellow-500 underline"
+              } text-white ${font} underline-offset-4 cursor-pointer`}
             onClick={showExtraTab}
           >
             Подробнее
