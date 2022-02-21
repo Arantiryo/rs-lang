@@ -7,19 +7,22 @@ import AllTimeStats from "./AllTimeStats/AllTimeStats";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { getUserStat } from "../../utils/WebClients";
+import { UserStats } from "../../interfaces/app";
 
 export default function Statistics() {
   const userInfo = useAppSelector((state) => state.loginReducer);
-  const [statistics, setStatistics] = useState();
+  const [statistics, setStatistics] = useState<UserStats>();
 
   useEffect(() => {
     const getStats = async () => {
       const stats = await getUserStat(userInfo.userId, userInfo.token);
-      console.log(stats);
+      setStatistics(stats);
     };
 
     getStats();
   }, []);
+
+  console.log(statistics);
 
   return (
     <div className="h-screen flex flex-col">
@@ -32,7 +35,10 @@ export default function Statistics() {
             <h2 className="text-2xl font-bold tracking-wider text-emerald-700">Статистика</h2>
             <p className="text-base text-indigo-400">Статистика за сегодня</p>
           </div>
-          <GeneralStats />
+          <GeneralStats
+            totalWordsLearned={statistics?.learnedWords || 0}
+            totalRightAnswersPercent={statistics?.optional.totalCorrectAnswersPercent || 0}
+          />
           <GameStatsCards className="pt-[40px] mb-[40px]" />
           <p className="text-base text-indigo-400">Статистика за все время</p>
           <AllTimeStats />

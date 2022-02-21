@@ -1,6 +1,14 @@
 import pseudo1 from "../../../assets/svg/statistics__pseudo1.svg";
 
-export default function GeneralStats() {
+type GeneralStatsProps = {
+  totalWordsLearned: number;
+  totalRightAnswersPercent: number;
+};
+
+export default function GeneralStats({
+  totalWordsLearned,
+  totalRightAnswersPercent,
+}: GeneralStatsProps) {
   return (
     <div
       className={`relative flex justify-center gap-4 flex-wrap
@@ -14,15 +22,13 @@ export default function GeneralStats() {
       <div className="flex justify-center xl:justify-end gap-[15px] md:gap-[75px] w-[70%] pt-5">
         <div className="flex flex-col items-center">
           <span className="text-white font-extrabold text-[48px] leading-[54px] md:text-[72px] md:leading-[84px]">
-            100
+            {totalWordsLearned}
           </span>
-          <span className="text-white text-[24px] leading-[28px] text-center">
-            слов изучено
-          </span>
+          <span className="text-white text-[24px] leading-[28px] text-center">слов изучено</span>
         </div>
         <div className="flex flex-col items-center">
           <span className="text-white font-extrabold text-[48px] leading-[54px] md:text-[72px] md:leading-[84px]">
-            100%
+            {`${totalRightAnswersPercent}%`}
           </span>
           <span className="text-white text-[24px] leading-[28px] text-center">
             правильных ответов

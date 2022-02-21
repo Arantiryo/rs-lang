@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { GameStat, OptionalStat, State, UserStats } from "../../interfaces/app";
 import IWord from "../../interfaces/IWord";
-import { datesAreOnSameDay, getEmptyGameStat, updateStatsIfNeeded } from "../../utils/Statistics";
+import { updateStatsIfNeeded } from "../../utils/Statistics";
 import { getUserStat, getWords, updateUserStat } from "../../utils/WebClients";
 import { DangerAlert } from "../Alerts/Alerts";
 import { generateRandomIndexes, shuffle } from "./AudiocallGame";
