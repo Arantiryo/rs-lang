@@ -36,12 +36,11 @@ export default function GamePage(props: {
       })
 
       setData(data);
-      console.log(data)
     });
   }, [props.categoryIndex]);
 
   return (
-    <div className="h-full flex flex-col items-center justify-center">
+    <div className="h-full flex flex-col justify-center">
       {isLoading ? (
         <Countdown onGameBegin={onGameBegin} />
       ) : (

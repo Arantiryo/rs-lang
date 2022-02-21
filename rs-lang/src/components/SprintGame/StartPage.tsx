@@ -1,3 +1,4 @@
+import React from 'react';
 import { MdKeyboardArrowRight } from "react-icons/md";
 import LoaderButton from "../LoaderButton/LoaderButton";
 import { categoriesList } from "./SprintGame-data";

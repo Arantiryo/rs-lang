@@ -32,6 +32,8 @@ export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
     }
   };
 
+  //console.log(questions);
+
   setTimeout(() => setIsLoading(false), 4000);
 
   useEffect(() => {
@@ -73,6 +75,8 @@ const createQuestions = (words: IWord[]) => {
         (randomIndex) => shuffled[randomIndex]
       ),
     ];
+    console.log(word);
+    console.log(options);
     return { word, options };
   });
   return questions;
