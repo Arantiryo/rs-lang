@@ -7,7 +7,8 @@ import AllTimeStats from "./AllTimeStats/AllTimeStats";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { getUserStat } from "../../utils/WebClients";
-import { UserStats } from "../../interfaces/app";
+import { GameStat, UserStats } from "../../interfaces/app";
+import { defaultGameStat } from "../../utils/Statistics";
 
 export default function Statistics() {
   const userInfo = useAppSelector((state) => state.loginReducer);
@@ -24,6 +25,12 @@ export default function Statistics() {
 
   console.log(statistics);
 
+  const defaultGames = {
+    spirit: defaultGameStat,
+    audiocall: defaultGameStat,
+    wordle: defaultGameStat,
+  };
+
   return (
     <div className="h-screen flex flex-col">
       <div className="bg-gray-800 w-full">
@@ -39,7 +46,10 @@ export default function Statistics() {
             totalWordsLearned={statistics?.learnedWords || 0}
             totalRightAnswersPercent={statistics?.optional.totalCorrectAnswersPercent || 0}
           />
-          <GameStatsCards className="pt-[40px] mb-[40px]" />
+          <GameStatsCards
+            className="pt-[40px] mb-[40px]"
+            games={statistics?.optional.games || defaultGames}
+          />
           <p className="text-base text-indigo-400">Статистика за все время</p>
           <AllTimeStats />
         </Main>
