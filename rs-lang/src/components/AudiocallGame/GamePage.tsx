@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { GameStat, OptionalStat, State, UserStats } from "../../interfaces/app";
 import IWord from "../../interfaces/IWord";
-import { datesAreOnSameDay, getEmptyGameStat } from "../../utils/Statistics";
+import { datesAreOnSameDay, getEmptyGameStat, updateStatsIfNeeded } from "../../utils/Statistics";
 import { getUserStat, getWords, updateUserStat } from "../../utils/WebClients";
 import { DangerAlert } from "../Alerts/Alerts";
 import { generateRandomIndexes, shuffle } from "./AudiocallGame";
@@ -124,59 +124,49 @@ type UpdateStatsProps = {
 const updateStats = async ({ userInfo, questions, answers }: UpdateStatsProps) => {
   const rightAnswers = answers.filter((a) => a.isCorrect).length;
   const wrongAnswers = questions.length - rightAnswers;
-  const correctAnswersPercent = Math.floor((rightAnswers / questions.length) * 100) || 0;
   const learnedWords = answers.length;
   const { longest } = getLongestStreak(answers);
 
-  // const currentStats: UserStats = JSON.parse(
-  //   await getUserStat(userInfo.userId, userInfo.token),
-  //   (key, value) => (key === "date" ? new Date(value) : value)
-  // );
+  await updateStatsIfNeeded(userInfo.userId, userInfo.token);
 
   const currentStats: UserStats = await getUserStat(userInfo.userId, userInfo.token);
 
-  // console.log(currentStats);
-  // console.log(userInfo.userId);
-
-  // TODO: implement updating stats w/ default values on first login
-  // TODO: rewrite this part
-
   const audiocallStats = currentStats && currentStats.optional.games.audiocall;
-  console.log(audiocallStats);
+  const currentOptional = currentStats.optional;
 
-  const gameStat: GameStat = {
-    longestStreak: longest,
-    learnedWords: learnedWords,
-    rightAnswers: rightAnswers,
-    wrongAnswers: wrongAnswers,
-    correctAnswersPercent: correctAnswersPercent,
+  const calcCorrectAnswerPercent = (currentRight: number, currentWrong: number) => {
+    return (
+      Math.floor(
+        ((currentRight + rightAnswers) /
+          (currentRight + rightAnswers + currentWrong + wrongAnswers)) *
+          100
+      ) || 0
+    );
   };
 
-  const sameDay = datesAreOnSameDay(new Date(), new Date(currentStats.optional.date));
-
-  const calcTotalCorrectAnswerPercent = () => {
-    return sameDay
-      ? Math.floor(
-          ((currentStats.optional.totalRightAnswers + rightAnswers) /
-            (currentStats.optional.totalWrongAnswers + wrongAnswers)) *
-            100
-        ) || 0
-      : correctAnswersPercent;
+  const gameStat: GameStat = {
+    longestStreak: audiocallStats.longestStreak >= longest ? audiocallStats.longestStreak : longest,
+    learnedWords: audiocallStats.learnedWords + learnedWords,
+    rightAnswers: audiocallStats.rightAnswers + rightAnswers,
+    wrongAnswers: audiocallStats.wrongAnswers + wrongAnswers,
+    correctAnswersPercent: calcCorrectAnswerPercent(
+      audiocallStats.rightAnswers,
+      audiocallStats.wrongAnswers
+    ),
   };
 
   const optional: OptionalStat = {
-    totalRightAnswers: sameDay
-      ? currentStats.optional.totalRightAnswers + rightAnswers
-      : rightAnswers,
-    totalWrongAnswers: sameDay
-      ? currentStats.optional.totalWrongAnswers + wrongAnswers
-      : wrongAnswers,
-    totalCorrectAnswersPercent: calcTotalCorrectAnswerPercent(),
+    totalRightAnswers: currentOptional.totalRightAnswers + rightAnswers,
+    totalWrongAnswers: currentOptional.totalWrongAnswers + wrongAnswers,
+    totalCorrectAnswersPercent: calcCorrectAnswerPercent(
+      currentOptional.totalRightAnswers,
+      currentOptional.totalWrongAnswers
+    ),
     date: new Date(),
     games: {
-      spirit: currentStats ? currentStats.optional.games.spirit : getEmptyGameStat(),
+      spirit: currentOptional.games.spirit,
       audiocall: gameStat,
-      wordle: currentStats ? currentStats.optional.games.wordle : getEmptyGameStat(),
+      wordle: currentOptional.games.wordle,
     },
   };
 
@@ -185,29 +175,5 @@ const updateStats = async ({ userInfo, questions, answers }: UpdateStatsProps) =
     optional,
   };
 
-  const temp = await updateUserStat(userInfo.userId, userInfo.token, newStats);
-
-  console.log(answers);
-  console.log(newStats);
-  console.log(temp);
+  updateUserStat(userInfo.userId, userInfo.token, newStats);
 };
-
-// export interface GameStat {
-//   longestStreak: number;
-//   learntWords: number;
-//   rightAnswers: number;
-//   wrongAnswers: number;
-//   correctAnswersPercent: number;
-// }
-// export interface OptionalStat {
-//   totalRightAnswers: number;
-//   totalWrongAnswers: number;
-//   totalCorrectAnswersPercent: number;
-//   wordList: IWord[];
-//   date: Date;
-//   games: {
-//     spirit: GameStat;
-//     audiocall: GameStat;
-//     wordle: GameStat;
-//   };
-// }

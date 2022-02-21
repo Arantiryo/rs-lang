@@ -1,5 +1,5 @@
-import { GameStat, OptionalStat, State } from "../interfaces/app";
-import { updateUserStat } from "./WebClients";
+import { GameStat, OptionalStat, State, UserStats } from "../interfaces/app";
+import { getUserStat, updateUserStat } from "./WebClients";
 
 export const defaultGameStat: GameStat = {
   longestStreak: 0,
@@ -47,5 +47,20 @@ export const setDefaultStats = async (userId: State["userId"], token: State["tok
     return res;
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const updateStatsIfNeeded = async (userId: State["userId"], token: State["token"]) => {
+  try {
+    const currentStats: UserStats = await getUserStat(userId, token);
+    console.log(currentStats);
+
+    if (!datesAreOnSameDay(new Date(), new Date(currentStats.optional.date))) {
+      const res = await setDefaultStats(userId, token);
+      console.log(res);
+    }
+  } catch (err) {
+    const res = await setDefaultStats(userId, token);
+    console.log(res);
   }
 };
