@@ -3,11 +3,11 @@ import { MdAccessTimeFilled, MdArrowLeft, MdArrowRight, MdCheck, MdClear, MdFavo
 import { useTimer } from 'use-timer';
 import correctSound from '../../assets/sound/correct.mp3';
 import wrongSound from '../../assets/sound/wrong.mp3';
-import ISprintData from '../../interfaces/ISprintData';
+import { QuestionType } from '../AudiocallGame/Question';
 
 export default function Question(props: {
   onGameEnd: () => void,
-  data: ISprintData[],
+  questions: QuestionType[],
 }) {
   const { time, pause } = useTimer({
     initialTime: 30,
@@ -39,7 +39,7 @@ export default function Question(props: {
 
   const loadNextQuestion = useCallback((status: boolean) => {
     const restTries = (status === true) ? tries : tries - 1;
-    if (questionIndex < props.data.length - 1 && restTries > 0) {
+    if (questionIndex < props.questions.length - 1 && restTries > 0) {
       setQuestionIndex(questionIndex + 1)
     } else {
       pause();
@@ -64,12 +64,12 @@ export default function Question(props: {
   }, [boost, combo, score, setTries, tries]);
 
   const checkAnswer = useCallback((optIndex: number) => {
-    const wordObj = props.data[questionIndex];
-    const status = (wordObj.wordTranslate === wordObj.options[optIndex]) ? true : false;
+    const wordObj = props.questions[questionIndex];
+    const status = (wordObj.word.wordTranslate === wordObj.options[optIndex].wordTranslate) ? true : false;
     if (sound) playAudio(status);
     updatePanel(status);
     loadNextQuestion(status);
-  }, [loadNextQuestion, props.data, questionIndex, sound, updatePanel]);
+  }, [loadNextQuestion, props.questions, questionIndex, sound, updatePanel]);
 
   const handleKeyPress = useCallback(event => {
     const { key } = event;
@@ -88,7 +88,7 @@ export default function Question(props: {
       </div>
     </div>
     <div className='flex flex-col items-center gap-3'>
-      <div className='bg-gray-900 bg-opacity-75 border-dashed border p-4 text-white text-xl'><span>{questionIndex + 1}</span>/{props.data.length}</div>
+      <div className='bg-gray-900 bg-opacity-75 border-dashed border p-4 text-white text-xl'><span>{questionIndex + 1}</span>/{props.questions.length}</div>
       <div className='inline-flex gap-2 bg-gray-900 bg-opacity-75 flex-col justify-center items-center p-4 border-dashed border'>
         <div><MdAccessTimeFilled className='fill-white text-7xl' /></div>
         <div className='text-4xl text-white'>{time}</div>
@@ -106,9 +106,9 @@ export default function Question(props: {
         <MdCheck className='fill-white text-7xl p-2' />
       </div>
       <div className='flex justify-center gap-4 items-center border py-4 px-10 bg-gray-900 bg-opacity-75'>
-        <span className='text-yellow-400 text-4xl'>{props.data[questionIndex].word}</span>
+        <span className='text-yellow-400 text-4xl'>{props.questions[questionIndex].word.word}</span>
         <span className='text-white'>это</span>
-        <span className='text-yellow-400 text-4xl'>{props.data[questionIndex].options[0]}</span>
+        <span className='text-yellow-400 text-4xl'>{props.questions[questionIndex].options[0].wordTranslate}</span>
         <span className='text-white'>?</span>
       </div>
       <div className='flex text-white'>

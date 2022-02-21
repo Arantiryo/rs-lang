@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import ISprintData from "../../interfaces/ISprintData";
 import IWord from "../../interfaces/IWord";
 import shuffle from "../../utils/shuffle";
 import { getWords } from "../../utils/WebClients";
+import { AnswerType, QuestionType } from "../AudiocallGame/Question";
 import Countdown from "./Countdown";
 import Game from "./Game";
 
@@ -11,7 +11,8 @@ export default function GamePage(props: {
   onGameEnd: () => void,
 }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<ISprintData[]>([]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
+  const [answers, setAnswers] = useState<AnswerType[]>([]);
   const onGameBegin = () => setIsLoading(false);
 
   useEffect(() => {
@@ -21,21 +22,21 @@ export default function GamePage(props: {
       const MIN = 0;
       const MAX = list.length - 1;
 
-      const data = list.map(obj => {
-        const options = new Set([obj.wordTranslate]);
+      const data: QuestionType[] = list.map(obj => {
+        const options = new Set([obj]);
 
         while (options.size < LENGTH) {
           let randomIndex = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
-          options.add(list[randomIndex].wordTranslate);
+          options.add(list[randomIndex]);
         }
 
         return {
-          ...obj,
+          word: obj,
           options: shuffle(Array.from(options))
         }
       })
 
-      setData(data);
+      setQuestions(data);
     });
   }, [props.categoryIndex]);
 
@@ -44,7 +45,7 @@ export default function GamePage(props: {
       {isLoading ? (
         <Countdown onGameBegin={onGameBegin} />
       ) : (
-        <Game data={data} onGameEnd={props.onGameEnd} />
+        <Game questions={questions} onGameEnd={props.onGameEnd} />
       )}
     </div>
   );
