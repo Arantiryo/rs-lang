@@ -21,7 +21,7 @@ export default function Question(props: {
     onTimeOver: () => {
       dispatch(updateResult({ questions: props.questions, answers, gameName: "sprint" }));
       updateStats({ userInfo, userStats, questions: props.questions, answers, updateLocalStats });
-      //props.onGameEnd()
+      props.onGameEnd()
     },
   })
 
