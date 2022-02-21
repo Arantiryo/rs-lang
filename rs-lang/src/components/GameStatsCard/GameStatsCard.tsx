@@ -1,27 +1,16 @@
 import imgSprint from "../../assets/images/card__sprint.png";
 import imgAudioCall from "../../assets/images/card__audio-call.png";
 import imgWordle from "../../assets/images/card__wordle.png";
-import {
-  BsCheckCircleFill,
-  BsCheckLg,
-  BsFillBarChartFill,
-} from "react-icons/bs";
+import { BsCheckCircleFill, BsCheckLg, BsFillBarChartFill } from "react-icons/bs";
+import { GameStat } from "../../interfaces/app";
 
 type GameProps = {
   name: string;
-  learntWords: number;
-  correctAnswersPrc: number;
-  longestStreak: number;
   picture: string;
+  stats: GameStat;
 };
 
-export function GameStatsCard({
-  name,
-  learntWords,
-  correctAnswersPrc,
-  longestStreak,
-  picture,
-}: GameProps) {
+export function GameStatsCard({ name, picture, stats }: GameProps) {
   return (
     <div
       className={`relative flex items-center justify-start max-w-[280px] max-h-[130px] 
@@ -29,19 +18,17 @@ export function GameStatsCard({
       `}
     >
       <div className={`overflow-hidden min-w-[170px] sm:h-full`}>
-        <h4
-          className={`text-white font-semibold tracking-[1px] text-[18px] leading-[21px] mb-2`}
-        >
+        <h4 className={`text-white font-semibold tracking-[1px] text-[18px] leading-[21px] mb-2`}>
           {name}
         </h4>
         <p className={`text-white font-medium text-[12px] leading-[14px] mb-2`}>
           <span className="flex gap-1">
-            <BsCheckCircleFill /> {`Изучено ${learntWords} слов`}
+            <BsCheckCircleFill /> {`Изучено ${stats.learnedWords} слов`}
           </span>
         </p>
         <p className={`text-white font-medium text-[12px] leading-[14px] mb-2`}>
           <span className="flex gap-1">
-            <BsCheckLg /> {`Правильных ответов: ${correctAnswersPrc}%`}
+            <BsCheckLg /> {`Правильных ответов: ${stats.correctAnswersPercent}%`}
           </span>
         </p>
         <p className={`text-white font-medium text-[12px] leading-[14px] mb-2`}>
@@ -49,7 +36,7 @@ export function GameStatsCard({
             <span className="text-[14px]">
               <BsFillBarChartFill />
             </span>{" "}
-            {`Самая длинная серия правильных ответов: ${longestStreak}`}
+            {`Самая длинная серия правильных ответов: ${stats.longestStreak}`}
           </span>
         </p>
       </div>
@@ -62,36 +49,12 @@ export function GameStatsCard({
   );
 }
 
-export function GameStatsSprint() {
-  return (
-    <GameStatsCard
-      name="Sprint"
-      learntWords={10}
-      correctAnswersPrc={66}
-      longestStreak={3}
-      picture={imgSprint}
-    />
-  );
+export function GameStatsSprint({ stats }: { stats: GameStat }) {
+  return <GameStatsCard name="Sprint" picture={imgSprint} stats={stats} />;
 }
-export function GameStatsAudioCall() {
-  return (
-    <GameStatsCard
-      name="Audio call"
-      learntWords={10}
-      correctAnswersPrc={66}
-      longestStreak={3}
-      picture={imgAudioCall}
-    />
-  );
+export function GameStatsAudioCall({ stats }: { stats: GameStat }) {
+  return <GameStatsCard name="Audio call" picture={imgAudioCall} stats={stats} />;
 }
-export function GameStatsWordle() {
-  return (
-    <GameStatsCard
-      name="Wordle"
-      learntWords={10}
-      correctAnswersPrc={66}
-      longestStreak={3}
-      picture={imgWordle}
-    />
-  );
+export function GameStatsWordle({ stats }: { stats: GameStat }) {
+  return <GameStatsCard name="Wordle" picture={imgWordle} stats={stats} />;
 }
