@@ -139,7 +139,6 @@ const updateStats = async ({
   const learnedWords = answers.length;
   const { longest } = getLongestStreak(answers);
 
-  console.log(userInfo);
   const userIsLoggedIn = userInfo.userId !== "";
 
   userIsLoggedIn && (await updateStatsIfNeeded(userInfo.userId, userInfo.token));
@@ -179,7 +178,7 @@ const updateStats = async ({
       currentOptional.totalRightAnswers,
       currentOptional.totalWrongAnswers
     ),
-    date: JSON.stringify(new Date()),
+    date: new Date().toString(),
     games: {
       spirit: currentOptional.games.spirit,
       audiocall: gameStat,
@@ -188,7 +187,7 @@ const updateStats = async ({
   };
 
   const newStats: UserStats = {
-    learnedWords: currentStats ? currentStats.learnedWords + rightAnswers : rightAnswers,
+    learnedWords: currentStats.learnedWords + learnedWords,
     optional,
   };
 

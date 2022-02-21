@@ -53,11 +53,9 @@ export const setDefaultStats = async (userId: State["userId"], token: State["tok
 export const updateStatsIfNeeded = async (userId: State["userId"], token: State["token"]) => {
   try {
     const currentStats: UserStats = await getUserStat(userId, token);
-    console.log(currentStats);
 
     if (!datesAreOnSameDay(new Date(), new Date(currentStats.optional.date))) {
-      const res = await setDefaultStats(userId, token);
-      console.log(res);
+      await setDefaultStats(userId, token);
     }
   } catch (err) {
     const res = await setDefaultStats(userId, token);

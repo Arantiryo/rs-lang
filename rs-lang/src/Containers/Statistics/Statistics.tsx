@@ -25,8 +25,6 @@ export default function Statistics() {
     getStats();
   }, [userInfo]);
 
-  console.log(statistics);
-
   const defaultGames = {
     spirit: defaultGameStat,
     audiocall: defaultGameStat,

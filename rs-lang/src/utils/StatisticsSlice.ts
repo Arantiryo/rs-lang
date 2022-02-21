@@ -13,9 +13,7 @@ export const statSlice = createSlice({
   reducers: {
     updateUserStats: (state, action: PayloadAction<UserStats>) => {
       const { learnedWords, optional } = action.payload;
-      // const dateStr = JSON.stringify(optional.date);
       state.learnedWords = learnedWords;
-      // state.optional = { ...optional, date: dateStr };
       state.optional = optional;
     },
   },
