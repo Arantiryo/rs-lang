@@ -120,7 +120,7 @@ export const getLongestStreak = (answers: AnswerType[]) => {
   );
 };
 
-type UpdateStatsProps = {
+export type UpdateStatsProps = {
   userInfo: State;
   userStats: UserStats;
   questions: QuestionType[];
