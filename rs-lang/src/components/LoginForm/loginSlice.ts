@@ -10,7 +10,7 @@ export const initialState: State = {
 };
 
 export const loginSlice = createSlice({
-  name: "counter",
+  name: "login",
   initialState,
   reducers: {
     updateUserInfo: (state, action: PayloadAction<UserLoginInfo>) => {

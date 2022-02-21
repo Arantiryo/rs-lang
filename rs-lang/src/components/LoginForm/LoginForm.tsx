@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import closeIcon from "../../assets/svg/close.svg";
 import { UserDto, UserLoginInfo } from "../../interfaces/user";
+import { updateStatsIfNeeded } from "../../utils/Statistics";
 import { loginUser } from "../../utils/WebClients";
 import { DangerAlert, SuccessAlert } from "../Alerts/Alerts";
 import CustomInput from "../CustomInput/CustomInput";
@@ -36,6 +37,8 @@ export default function LoginForm() {
         setTimeout(() => setAlertActive(false), 3000);
 
         dispatch(updateUserInfo(res));
+        updateStatsIfNeeded(res.userId, res.token);
+
         setTimeout(() => history.push("/"), 3000);
       })
       .catch((err) => {

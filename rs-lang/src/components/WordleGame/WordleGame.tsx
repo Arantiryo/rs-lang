@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { UserStats } from "../../interfaces/app";
+import { updateUserStats } from "../../utils/StatisticsSlice";
 import { getWordFromDictionary } from "../../utils/WebClients";
 import Delayed from "../Delayed/Delayed";
 import LoaderButton from "../LoaderButton/LoaderButton";
@@ -7,6 +10,7 @@ import { CurrentGuess } from "./CurrentGuess";
 import { EmptyGuess } from "./EmptyGuess";
 import { Keyboard } from "./Keyboard";
 import { SubmittedGuess } from "./SubmittedGuess";
+import { updateWordleStats } from "./WordleStats";
 
 export type GuessType = string[];
 
@@ -28,15 +32,27 @@ const getWordCharCount = (word: string) =>
 
 export default function WordleGame({ word = "hello" }) {
   const history = useHistory();
+  const dispatch = useAppDispatch();
+  const [statsUpdated, setStatsUpdated] = useState(false);
   const [guess, setGuess] = useState<GuessType>([]);
   const [submittedGuesses, setSubmittedGuesses] = useState<GuessType[]>([]);
   const [isCorrect, setIsCorrect] = useState(false);
   const [noSuchWord, setNoSuchWord] = useState(false);
 
+  const userInfo = useAppSelector((state) => state.loginReducer);
+  const userStats = useAppSelector((state) => state.statsReducer);
+  const updateLocalStats = (newStats: UserStats) => dispatch(updateUserStats(newStats));
+
   const [usedChars, setUsedChars] = useState<Record<string, string>>({});
 
   const wordCharMap = getWordCharCount(word);
   const isFinished = submittedGuesses.length === maxGuesses && !isCorrect;
+
+  // update stats after the game just once
+  if (isFinished && !statsUpdated) {
+    updateWordleStats({ userInfo, userStats, updateLocalStats, isCorrect });
+    setStatsUpdated(true);
+  }
 
   const showNoSuchWordWarning = () => {
     setNoSuchWord(true);
@@ -51,11 +67,7 @@ export default function WordleGame({ word = "hello" }) {
         const isCorrect = char === word[i];
         const isPresent = !isCorrect && word.includes(char);
 
-        const charStatus = isCorrect
-          ? "correct"
-          : isPresent
-          ? "present"
-          : "missing";
+        const charStatus = isCorrect ? "correct" : isPresent ? "present" : "missing";
 
         if (tempChars.hasOwnProperty(char)) {
           if (isCorrect || (isPresent && tempChars[char] !== "correct"))
@@ -94,11 +106,7 @@ export default function WordleGame({ word = "hello" }) {
         });
       } else if (isChar && !isGuessFinished) {
         setGuess((prev) => [...prev, key]);
-      } else if (
-        isGuessFinished &&
-        isSubmit &&
-        submittedGuesses.length < maxGuesses
-      ) {
+      } else if (isGuessFinished && isSubmit && submittedGuesses.length < maxGuesses) {
         getWordFromDictionary(guess.join(""))
           .then((res) => {
             if (res?.title === "No Definitions Found") {
@@ -138,12 +146,7 @@ export default function WordleGame({ word = "hello" }) {
       )}
       <div className="max-w-[350px] max-h-[420px] flex flex-col gap-1 pb-5">
         {submittedGuesses.map((guess, i) => (
-          <SubmittedGuess
-            key={i}
-            guess={guess}
-            word={word}
-            wordCharMap={wordCharMap}
-          />
+          <SubmittedGuess key={i} guess={guess} word={word} wordCharMap={wordCharMap} />
         ))}
         {!isCorrect && submittedGuesses.length < maxGuesses && (
           <CurrentGuess currentGuess={guess} />
