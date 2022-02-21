@@ -35,6 +35,27 @@ export default function Question({ questionData, loadNextQuestion, saveAnswer }:
     audio.play();
   };
 
+  // keyboard controls
+  useEffect(() => {
+    const handleKeyDown = ({ key }: { key: string }) => {
+      const allowedKeys = ["1", "2", "3", "4", "5"];
+
+      if (key === " ") {
+        resetAnswer();
+        loadNextQuestion();
+      } else if (allowedKeys.includes(key)) {
+        !answer && handleAnswer(shuffledOptions[+key - 1]);
+      } else {
+        return;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [answer, shuffledOptions]);
+
   // switch options around so the right answer isn't obvious
   useEffect(() => {
     setShuffledOptions(shuffle(questionData.options));
@@ -42,13 +63,21 @@ export default function Question({ questionData, loadNextQuestion, saveAnswer }:
 
   // audio and image URLs
   useEffect(() => {
+    let isSubscribed = true;
+
     getObjURL(questionData.word.audio).then((url) => {
-      setAudioURL(url);
-      new Audio(url).play();
+      if (isSubscribed) {
+        setAudioURL(url);
+        new Audio(url).play();
+      }
     });
     getObjURL(questionData.word.image).then((imgUrl) => {
-      setImgURL(imgUrl);
+      isSubscribed && setImgURL(imgUrl);
     });
+
+    return () => {
+      isSubscribed = false;
+    };
   }, [questionData.word]);
 
   const handleAnswer = (givenAnswer: IWord) => {
@@ -77,7 +106,12 @@ export default function Question({ questionData, loadNextQuestion, saveAnswer }:
         {shuffledOptions.map((word, idx) => {
           return (
             <li key={idx}>
-              <Option word={word} answer={answer} onClick={() => handleAnswer(word)} />
+              <Option
+                word={word}
+                idx={idx + 1}
+                answer={answer}
+                onClick={() => handleAnswer(word)}
+              />
             </li>
           );
         })}
