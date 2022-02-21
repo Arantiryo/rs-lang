@@ -46,7 +46,10 @@ export default function GamePage({ categoryIndex, onGameEnd }: GamePageProps) {
     }
   };
 
-  setTimeout(() => questions.length > 0 && setIsLoading(false), 3000);
+  useEffect(() => {
+    const t = setTimeout(() => questions.length > 0 && setIsLoading(false), 3000);
+    return () => clearTimeout(t);
+  }, [questions]);
 
   useEffect(() => {
     const getData = async (categoryIndex: number) => {
@@ -103,7 +106,6 @@ const createQuestions = (words: IWord[]) => {
   return questions;
 };
 
-
 export const getLongestStreak = (answers: AnswerType[]) => {
   return answers.reduce<Record<string, number>>(
     (acc, val) => {
@@ -156,7 +158,7 @@ const updateStats = async ({
       Math.floor(
         ((currentRight + rightAnswers) /
           (currentRight + rightAnswers + currentWrong + wrongAnswers)) *
-        100
+          100
       ) || 0
     );
   };
