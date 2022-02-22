@@ -1,15 +1,15 @@
 import { MdKeyboardArrowRight } from "react-icons/md";
-import LoaderButton from "../../../components/LoaderButton/LoaderButton";
-import { GameAudioCall, GameSprint, GameWordle } from "../../../components/GameCard/GameCard";
+import { useHistory } from "react-router-dom";
 import pseudoElem1 from "../../../assets/svg/minigames__pseudo-1.svg";
 import pseudoZip from "../../../assets/svg/minigames__pseudo-zip.svg";
-import { useHistory } from "react-router-dom";
+import { GameAudioCall, GameSprint, GameWordle } from "../../../components/GameCard/GameCard";
+import LoaderButton from "../../../components/LoaderButton/LoaderButton";
 
 export default function MiniGames() {
   const history = useHistory();
 
   const handleToGames = () => {
-    history.push("/textbook");
+    history.push("/games");
   };
 
   return (
